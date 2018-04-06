@@ -1,0 +1,102 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`[@mt-advertising/main/utils/getAdUnits] When I get ad units from a given config with size mappings the result is correct 1`] = `
+Array [
+  Object {
+    "bids": Array [
+      Object {
+        "bidder": "bidder-foo",
+        "params": Object {
+          "foo": "bar",
+        },
+      },
+    ],
+    "code": "div-gpt-ad-foo",
+    "sizes": Array [
+      Array [
+        320,
+        240,
+      ],
+    ],
+  },
+  Object {
+    "bids": Array [
+      Object {
+        "bidder": "bidder-bar",
+        "params": Object {
+          "bar": "foo",
+        },
+      },
+    ],
+    "code": "div-gpt-ad-bar",
+    "sizeMapping": Array [
+      Object {
+        "minWidth": 1050,
+        "sizes": Array [],
+      },
+      Object {
+        "minWidth": 320,
+        "sizes": Array [
+          Array [
+            300,
+            250,
+          ],
+          Array [
+            320,
+            50,
+          ],
+        ],
+      },
+      Object {
+        "minWidth": 0,
+        "sizes": Array [],
+      },
+    ],
+    "sizes": Array [
+      Array [
+        320,
+        240,
+      ],
+    ],
+  },
+]
+`;
+
+exports[`[@mt-advertising/main/utils/getAdUnits] When I get ad units from a given config without size mappings the result is correct 1`] = `
+Array [
+  Object {
+    "bids": Array [
+      Object {
+        "bidder": "bidder-foo",
+        "params": Object {
+          "foo": "bar",
+        },
+      },
+    ],
+    "code": "div-gpt-ad-foo",
+    "sizes": Array [
+      Array [
+        320,
+        240,
+      ],
+    ],
+  },
+  Object {
+    "bids": Array [
+      Object {
+        "bidder": "bidder-bar",
+        "params": Object {
+          "bar": "foo",
+        },
+      },
+    ],
+    "code": "div-gpt-ad-bar",
+    "sizes": Array [
+      Array [
+        320,
+        240,
+      ],
+    ],
+  },
+]
+`;

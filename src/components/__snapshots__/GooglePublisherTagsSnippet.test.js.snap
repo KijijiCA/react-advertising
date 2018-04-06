@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`[@mt-advertising/components/GooglePublisherTagsSnippet] The GooglePublisherTagsSnippet component with active prop set is rendered correctly 1`] = `
+<div>
+  <script
+    async={true}
+    src="//www.googletagservices.com/tag/js/gpt.js"
+  />
+  <script
+    dangerouslySetInnerHTML={
+      Object {
+        "__html": "var googletag=googletag||{};googletag.cmd=googletag.cmd||[]",
+      }
+    }
+  />
+</div>
+`;
+
+exports[`[@mt-advertising/components/GooglePublisherTagsSnippet] The GooglePublisherTagsSnippet component with no props is rendered correctly 1`] = `
+<div>
+  <script
+    dangerouslySetInnerHTML={
+      Object {
+        "__html": "var googletag=googletag||{};googletag.cmd=googletag.cmd||[]",
+      }
+    }
+  />
+</div>
+`;

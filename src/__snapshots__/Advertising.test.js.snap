@@ -1,0 +1,356 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`[@mt-advertising/main] When I instantiate an advertising main module and call the setup method a GPT slot is defined for the “bar” ad with the correct parameters 1`] = `
+Array [
+  "slot/ad/unit/path",
+  Array [
+    "fluid",
+    Array [
+      320,
+      240,
+    ],
+  ],
+  "div-gpt-ad-bar",
+]
+`;
+
+exports[`[@mt-advertising/main] When I instantiate an advertising main module and call the setup method a GPT slot is defined for the “foo” ad with the correct parameters 1`] = `
+Array [
+  "global/ad/unit/path",
+  Array [
+    "fluid",
+    Array [
+      320,
+      240,
+    ],
+  ],
+  "div-gpt-ad-foo",
+]
+`;
+
+exports[`[@mt-advertising/main] When I instantiate an advertising main module and call the setup method and I activate the “foo” ad a bid with the correct parameters is requested 1`] = `
+Array [
+  Array [
+    Object {
+      "adUnitCodes": Array [
+        "div-gpt-ad-foo",
+      ],
+      "bidsBackHandler": [Function],
+      "timeout": 5000,
+    },
+  ],
+]
+`;
+
+exports[`[@mt-advertising/main] When I instantiate an advertising main module and call the setup method and I activate the “foo” ad the ad slot is refreshed 1`] = `
+Array [
+  Array [
+    Array [
+      Object {
+        "addService": [Function],
+        "defineSizeMapping": [Function],
+        "setCollapseEmptyDiv": [Function],
+        "setTargeting": [Function],
+      },
+    ],
+  ],
+]
+`;
+
+exports[`[@mt-advertising/main] When I instantiate an advertising main module and call the setup method and I activate the “foo” ad the targeting for asynchronous GPT is set correctly 1`] = `
+Array [
+  Array [
+    Array [
+      "div-gpt-ad-foo",
+    ],
+  ],
+]
+`;
+
+exports[`[@mt-advertising/main] When I instantiate an advertising main module and call the setup method and I call the method to adjust the bid CPM for AppNexus the result is correct 1`] = `1332`;
+
+exports[`[@mt-advertising/main] When I instantiate an advertising main module and call the setup method and I call the method to adjust the bid CPM for Rubicon the result is correct 1`] = `1238.76`;
+
+exports[`[@mt-advertising/main] When I instantiate an advertising main module and call the setup method and call the teardown method the Prebid ad units are removed 1`] = `
+Array [
+  Array [
+    "div-gpt-ad-foo",
+  ],
+  Array [
+    "div-gpt-ad-bar",
+  ],
+]
+`;
+
+exports[`[@mt-advertising/main] When I instantiate an advertising main module and call the setup method global GPT targeting parameters are set correctly 1`] = `
+Array [
+  Array [
+    "mt-u4",
+    false,
+  ],
+  Array [
+    "mt-thread",
+    Array [
+      6666,
+    ],
+  ],
+  Array [
+    "mt-ab",
+    "test",
+  ],
+  Array [
+    "mt-ma",
+    Array [
+      "make",
+    ],
+  ],
+  Array [
+    "mt-mo",
+    "models",
+  ],
+  Array [
+    "mt-u2",
+    Array [
+      "00",
+    ],
+  ],
+  Array [
+    "eagt",
+    Array [
+      100,
+    ],
+  ],
+]
+`;
+
+exports[`[@mt-advertising/main] When I instantiate an advertising main module and call the setup method size mappings for responsive ads are defined using GPT 1`] = `
+Array [
+  Array [
+    Array [
+      0,
+      0,
+    ],
+    Array [],
+  ],
+  Array [
+    Array [
+      320,
+      700,
+    ],
+    Array [
+      Array [
+        300,
+        250,
+      ],
+      Array [
+        320,
+        50,
+      ],
+    ],
+  ],
+  Array [
+    Array [
+      1050,
+      200,
+    ],
+    Array [],
+  ],
+]
+`;
+
+exports[`[@mt-advertising/main] When I instantiate an advertising main module and call the setup method the GPT size mappings of the advertising module instance are correct 1`] = `
+Object {
+  "mobailAndTablet": Array [
+    Array [
+      Array [
+        0,
+        0,
+      ],
+      Array [],
+    ],
+    Array [
+      Array [
+        320,
+        700,
+      ],
+      Array [
+        Array [
+          300,
+          250,
+        ],
+        Array [
+          320,
+          50,
+        ],
+      ],
+    ],
+    Array [
+      Array [
+        1050,
+        200,
+      ],
+      Array [],
+    ],
+  ],
+}
+`;
+
+exports[`[@mt-advertising/main] When I instantiate an advertising main module and call the setup method the GPT slot that is defined for the “bar” ad collapses empty divs 1`] = `
+Array [
+  Array [
+    true,
+    true,
+  ],
+]
+`;
+
+exports[`[@mt-advertising/main] When I instantiate an advertising main module and call the setup method the GPT slot that is defined for the “bar” ad gets a size mapping 1`] = `
+Array [
+  Array [
+    Array [
+      Array [
+        Array [
+          0,
+          0,
+        ],
+        Array [],
+      ],
+      Array [
+        Array [
+          320,
+          700,
+        ],
+        Array [
+          Array [
+            300,
+            250,
+          ],
+          Array [
+            320,
+            50,
+          ],
+        ],
+      ],
+      Array [
+        Array [
+          1050,
+          200,
+        ],
+        Array [],
+      ],
+    ],
+  ],
+]
+`;
+
+exports[`[@mt-advertising/main] When I instantiate an advertising main module and call the setup method the GPT slot that is defined for the “bar” ad gets the correct targeting parameters 1`] = `
+Array [
+  Array [
+    "a",
+    Array [
+      11,
+      666,
+    ],
+  ],
+]
+`;
+
+exports[`[@mt-advertising/main] When I instantiate an advertising main module and call the setup method the GPT slot that is defined for the “foo” ad gets the correct targeting parameters 1`] = `
+Array [
+  Array [
+    "a",
+    666,
+  ],
+]
+`;
+
+exports[`[@mt-advertising/main] When I instantiate an advertising main module and call the setup method the ad units object added to Prebid is correct 1`] = `
+Array [
+  Object {
+    "bids": Array [
+      Object {
+        "bidder": "bidder-foo",
+        "params": Object {
+          "foo": "bar",
+        },
+      },
+    ],
+    "code": "div-gpt-ad-foo",
+    "sizes": Array [
+      Array [
+        320,
+        240,
+      ],
+    ],
+  },
+  Object {
+    "bids": Array [
+      Object {
+        "bidder": "bidder-bar",
+        "params": Object {
+          "bar": "foo",
+        },
+      },
+    ],
+    "code": "div-gpt-ad-bar",
+    "sizeMapping": Array [
+      Object {
+        "minWidth": 1050,
+        "sizes": Array [],
+      },
+      Object {
+        "minWidth": 320,
+        "sizes": Array [
+          Array [
+            300,
+            250,
+          ],
+          Array [
+            320,
+            50,
+          ],
+        ],
+      },
+      Object {
+        "minWidth": 0,
+        "sizes": Array [],
+      },
+    ],
+    "sizes": Array [
+      Array [
+        320,
+        240,
+      ],
+    ],
+  },
+]
+`;
+
+exports[`[@mt-advertising/main] When I instantiate an advertising main module and call the setup method the bidder sequence for Prebid is set correctly 1`] = `
+Array [
+  "random",
+]
+`;
+
+exports[`[@mt-advertising/main] When I instantiate an advertising main module and call the setup method the price granularity for Prebid is set correctly 1`] = `
+Array [
+  "medium",
+]
+`;
+
+exports[`[@mt-advertising/main] When I instantiate an advertising main module and call the setup method the slots of the advertising module instance are correct 1`] = `
+Object {
+  "div-gpt-ad-bar": Object {
+    "addService": [Function],
+    "defineSizeMapping": [Function],
+    "setCollapseEmptyDiv": [Function],
+    "setTargeting": [Function],
+  },
+  "div-gpt-ad-foo": Object {
+    "addService": [Function],
+    "defineSizeMapping": [Function],
+    "setCollapseEmptyDiv": [Function],
+    "setTargeting": [Function],
+  },
+}
+`;

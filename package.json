@@ -1,0 +1,71 @@
+{
+  "name": "react-prebid",
+  "version": "0.0.0",
+  "description": "Library for ad placements with Prebid header bidding in React applications",
+  "main": "index.js",
+  "esnext": "index-esnext.js",
+  "scripts": {
+    "test": "jest",
+    "build": "NODE_ENV=production webpack",
+    "eslint": "eslint '**/*.js'",
+    "prettier": "prettier '**/*.js' --write",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "linters": {
+      "*.js": [
+        "prettier --write",
+        "eslint --fix",
+        "git add",
+        "jest --bail --findRelatedTests"
+      ]
+    },
+    "ignore": [
+      "index.js"
+    ]
+  },
+  "jest": {
+    "setupTestFrameworkScriptFile": "<rootDir>/src/utils/setupTests.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/technology-ebay-de/react-prebid.git"
+  },
+  "author": "Patrick Hund <pahund@team.mobile.de>",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": ">=15.0.0 <16.0.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.2.2",
+    "babel-jest": "^23.0.0-alpha.0",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "prop-types": "15.6.0",
+    "babel-plugin-transform-react-remove-prop-types": "^0.4.13",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "chai": "^4.1.2",
+    "chai-enzyme": "^1.0.0-beta.0",
+    "check-prop-types": "^1.1.2",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-15": "^1.0.5",
+    "eslint": "^4.19.0",
+    "eslint-config-motor-talk": "^5.0.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-prettier": "^2.6.0",
+    "eslint-plugin-react": "^7.7.0",
+    "husky": "^0.14.3",
+    "jest": "^22.4.2",
+    "lint-staged": "^7.0.0",
+    "prettier": "^1.11.1",
+    "react": "^15.0.0",
+    "react-dom": "^15.0.0",
+    "react-required-if": "^1.0.3",
+    "react-test-renderer": "^15.0.0",
+    "sinon": "^4.5.0",
+    "sinon-chai": "^3.0.0",
+    "webpack": "^4.1.1",
+    "webpack-cli": "^2.0.10"
+  }
+}

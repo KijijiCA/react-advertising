@@ -1,0 +1,132 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`[@mt-advertising/main/utils/testAdvertisingConfig] The test advertising configuration for unit tests is correct 1`] = `
+Object {
+  "active": true,
+  "metaData": Object {
+    "adUnitPath": Object {
+      "path": "global/ad/unit/path",
+    },
+    "boardMakeAndModels": Array [
+      Object {
+        "make": "make",
+        "models": "models",
+      },
+    ],
+    "loggedIn": false,
+    "threadId": 6666,
+    "usdToEurRate": 2,
+  },
+  "placementTestId": 100,
+  "prebid": Object {
+    "timeout": 5000,
+  },
+  "sizeMappings": Object {
+    "mobailAndTablet": Array [
+      Object {
+        "sizes": Array [],
+        "viewPortSize": Array [
+          0,
+          0,
+        ],
+      },
+      Object {
+        "sizes": Array [
+          Array [
+            300,
+            250,
+          ],
+          Array [
+            320,
+            50,
+          ],
+        ],
+        "viewPortSize": Array [
+          320,
+          700,
+        ],
+      },
+      Object {
+        "sizes": Array [],
+        "viewPortSize": Array [
+          1050,
+          200,
+        ],
+      },
+    ],
+  },
+  "slot": Object {
+    "bar": Object {
+      "adUnitPath": "slot/ad/unit/path",
+      "collapseEmptyDiv": Array [
+        true,
+        true,
+      ],
+      "divId": "div-gpt-ad-bar",
+      "prebid": Array [
+        Object {
+          "bids": Array [
+            Object {
+              "bidder": "bidder-bar",
+              "params": Object {
+                "bar": "foo",
+              },
+            },
+          ],
+          "sizes": Array [
+            Array [
+              320,
+              240,
+            ],
+          ],
+        },
+      ],
+      "sizeMappingName": "mobailAndTablet",
+      "sizes": Array [
+        "fluid",
+        Array [
+          320,
+          240,
+        ],
+      ],
+      "targeting": Object {
+        "a": Array [
+          11,
+          666,
+        ],
+      },
+    },
+    "foo": Object {
+      "divId": "div-gpt-ad-foo",
+      "prebid": Array [
+        Object {
+          "bids": Array [
+            Object {
+              "bidder": "bidder-foo",
+              "params": Object {
+                "foo": "bar",
+              },
+            },
+          ],
+          "sizes": Array [
+            Array [
+              320,
+              240,
+            ],
+          ],
+        },
+      ],
+      "sizes": Array [
+        "fluid",
+        Array [
+          320,
+          240,
+        ],
+      ],
+      "targeting": Object {
+        "a": 666,
+      },
+    },
+  },
+}
+`;

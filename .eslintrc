@@ -1,0 +1,17 @@
+{
+  "extends": [
+    "motor-talk",
+    "prettier",
+    "prettier/standard",
+    "prettier/react"
+  ],
+  "rules": {
+    "max-len": ["error", {"code": 120, "ignoreUrls": true}],
+    "prettier/prettier": "error"
+  },
+  "parser": "babel-eslint",
+  "plugins": ["prettier"],
+  "env": {
+    "jest": true
+  }
+}
