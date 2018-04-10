@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`[@mt-advertising/main/utils/getAdUnits] When I get ad units from a given config with size mappings the result is correct 1`] = `
+exports[`When I get ad units from a given config with size mappings the result is correct 1`] = `
 Array [
   Object {
     "bids": Array [
@@ -62,7 +62,7 @@ Array [
 ]
 `;
 
-exports[`[@mt-advertising/main/utils/getAdUnits] When I get ad units from a given config without size mappings the result is correct 1`] = `
+exports[`When I get ad units from a given config without size mappings the result is correct 1`] = `
 Array [
   Object {
     "bids": Array [

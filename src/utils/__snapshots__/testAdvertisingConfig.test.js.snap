@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`[@mt-advertising/main/utils/testAdvertisingConfig] The test advertising configuration for unit tests is correct 1`] = `
+exports[`The test advertising configuration for unit tests is correct 1`] = `
 Object {
   "active": true,
   "metaData": Object {

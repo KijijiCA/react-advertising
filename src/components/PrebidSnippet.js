@@ -1,12 +1,3 @@
-/**
- * PrebidSnippet.js
- *
- * (C) 2017 mobile.de GmbH
- *
- * @author <a href="mailto:pahund@team.mobile.de">Patrick Hund</a>
- * @since 09 Aug 2017
- */
-
 import PropTypes from 'prop-types';
 import React from 'react';
 

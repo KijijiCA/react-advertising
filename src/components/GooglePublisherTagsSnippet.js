@@ -1,12 +1,3 @@
-/**
- * GooglePublisherTagsSnippet.js
- *
- * (C) 2017 mobile.de GmbH
- *
- * @author <a href="mailto:pahund@team.mobile.de">Patrick Hund</a>
- * @since 07 Jul 2017
- */
-
 import PropTypes from 'prop-types';
 import React from 'react';
 

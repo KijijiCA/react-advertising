@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`[@mt-advertising/main] When I instantiate an advertising main module and call the setup method a GPT slot is defined for the “bar” ad with the correct parameters 1`] = `
+exports[`When I instantiate an advertising main module and call the setup method a GPT slot is defined for the “bar” ad with the correct parameters 1`] = `
 Array [
   "slot/ad/unit/path",
   Array [
@@ -14,7 +14,7 @@ Array [
 ]
 `;
 
-exports[`[@mt-advertising/main] When I instantiate an advertising main module and call the setup method a GPT slot is defined for the “foo” ad with the correct parameters 1`] = `
+exports[`When I instantiate an advertising main module and call the setup method a GPT slot is defined for the “foo” ad with the correct parameters 1`] = `
 Array [
   "global/ad/unit/path",
   Array [
@@ -28,7 +28,7 @@ Array [
 ]
 `;
 
-exports[`[@mt-advertising/main] When I instantiate an advertising main module and call the setup method and I activate the “foo” ad a bid with the correct parameters is requested 1`] = `
+exports[`When I instantiate an advertising main module and call the setup method and I activate the “foo” ad a bid with the correct parameters is requested 1`] = `
 Array [
   Array [
     Object {
@@ -42,7 +42,7 @@ Array [
 ]
 `;
 
-exports[`[@mt-advertising/main] When I instantiate an advertising main module and call the setup method and I activate the “foo” ad the ad slot is refreshed 1`] = `
+exports[`When I instantiate an advertising main module and call the setup method and I activate the “foo” ad the ad slot is refreshed 1`] = `
 Array [
   Array [
     Array [
@@ -57,7 +57,7 @@ Array [
 ]
 `;
 
-exports[`[@mt-advertising/main] When I instantiate an advertising main module and call the setup method and I activate the “foo” ad the targeting for asynchronous GPT is set correctly 1`] = `
+exports[`When I instantiate an advertising main module and call the setup method and I activate the “foo” ad the targeting for asynchronous GPT is set correctly 1`] = `
 Array [
   Array [
     Array [
@@ -67,11 +67,11 @@ Array [
 ]
 `;
 
-exports[`[@mt-advertising/main] When I instantiate an advertising main module and call the setup method and I call the method to adjust the bid CPM for AppNexus the result is correct 1`] = `1332`;
+exports[`When I instantiate an advertising main module and call the setup method and I call the method to adjust the bid CPM for AppNexus the result is correct 1`] = `1332`;
 
-exports[`[@mt-advertising/main] When I instantiate an advertising main module and call the setup method and I call the method to adjust the bid CPM for Rubicon the result is correct 1`] = `1238.76`;
+exports[`When I instantiate an advertising main module and call the setup method and I call the method to adjust the bid CPM for Rubicon the result is correct 1`] = `1238.76`;
 
-exports[`[@mt-advertising/main] When I instantiate an advertising main module and call the setup method and call the teardown method the Prebid ad units are removed 1`] = `
+exports[`When I instantiate an advertising main module and call the setup method and call the teardown method the Prebid ad units are removed 1`] = `
 Array [
   Array [
     "div-gpt-ad-foo",
@@ -82,7 +82,7 @@ Array [
 ]
 `;
 
-exports[`[@mt-advertising/main] When I instantiate an advertising main module and call the setup method global GPT targeting parameters are set correctly 1`] = `
+exports[`When I instantiate an advertising main module and call the setup method global GPT targeting parameters are set correctly 1`] = `
 Array [
   Array [
     "mt-u4",
@@ -123,7 +123,7 @@ Array [
 ]
 `;
 
-exports[`[@mt-advertising/main] When I instantiate an advertising main module and call the setup method size mappings for responsive ads are defined using GPT 1`] = `
+exports[`When I instantiate an advertising main module and call the setup method size mappings for responsive ads are defined using GPT 1`] = `
 Array [
   Array [
     Array [
@@ -158,7 +158,7 @@ Array [
 ]
 `;
 
-exports[`[@mt-advertising/main] When I instantiate an advertising main module and call the setup method the GPT size mappings of the advertising module instance are correct 1`] = `
+exports[`When I instantiate an advertising main module and call the setup method the GPT size mappings of the advertising module instance are correct 1`] = `
 Object {
   "mobailAndTablet": Array [
     Array [
@@ -195,7 +195,7 @@ Object {
 }
 `;
 
-exports[`[@mt-advertising/main] When I instantiate an advertising main module and call the setup method the GPT slot that is defined for the “bar” ad collapses empty divs 1`] = `
+exports[`When I instantiate an advertising main module and call the setup method the GPT slot that is defined for the “bar” ad collapses empty divs 1`] = `
 Array [
   Array [
     true,
@@ -204,7 +204,7 @@ Array [
 ]
 `;
 
-exports[`[@mt-advertising/main] When I instantiate an advertising main module and call the setup method the GPT slot that is defined for the “bar” ad gets a size mapping 1`] = `
+exports[`When I instantiate an advertising main module and call the setup method the GPT slot that is defined for the “bar” ad gets a size mapping 1`] = `
 Array [
   Array [
     Array [
@@ -243,7 +243,7 @@ Array [
 ]
 `;
 
-exports[`[@mt-advertising/main] When I instantiate an advertising main module and call the setup method the GPT slot that is defined for the “bar” ad gets the correct targeting parameters 1`] = `
+exports[`When I instantiate an advertising main module and call the setup method the GPT slot that is defined for the “bar” ad gets the correct targeting parameters 1`] = `
 Array [
   Array [
     "a",
@@ -255,7 +255,7 @@ Array [
 ]
 `;
 
-exports[`[@mt-advertising/main] When I instantiate an advertising main module and call the setup method the GPT slot that is defined for the “foo” ad gets the correct targeting parameters 1`] = `
+exports[`When I instantiate an advertising main module and call the setup method the GPT slot that is defined for the “foo” ad gets the correct targeting parameters 1`] = `
 Array [
   Array [
     "a",
@@ -264,7 +264,7 @@ Array [
 ]
 `;
 
-exports[`[@mt-advertising/main] When I instantiate an advertising main module and call the setup method the ad units object added to Prebid is correct 1`] = `
+exports[`When I instantiate an advertising main module and call the setup method the ad units object added to Prebid is correct 1`] = `
 Array [
   Object {
     "bids": Array [
@@ -326,19 +326,19 @@ Array [
 ]
 `;
 
-exports[`[@mt-advertising/main] When I instantiate an advertising main module and call the setup method the bidder sequence for Prebid is set correctly 1`] = `
+exports[`When I instantiate an advertising main module and call the setup method the bidder sequence for Prebid is set correctly 1`] = `
 Array [
   "random",
 ]
 `;
 
-exports[`[@mt-advertising/main] When I instantiate an advertising main module and call the setup method the price granularity for Prebid is set correctly 1`] = `
+exports[`When I instantiate an advertising main module and call the setup method the price granularity for Prebid is set correctly 1`] = `
 Array [
   "medium",
 ]
 `;
 
-exports[`[@mt-advertising/main] When I instantiate an advertising main module and call the setup method the slots of the advertising module instance are correct 1`] = `
+exports[`When I instantiate an advertising main module and call the setup method the slots of the advertising module instance are correct 1`] = `
 Object {
   "div-gpt-ad-bar": Object {
     "addService": [Function],

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`[@mt-advertising/components/PrebidSnippet] The PrebidSnippet component with active prop set is rendered correctly 1`] = `
+exports[`The PrebidSnippet component with active prop set is rendered correctly 1`] = `
 <div>
   <script
     async={true}
@@ -16,7 +16,7 @@ exports[`[@mt-advertising/components/PrebidSnippet] The PrebidSnippet component 
 </div>
 `;
 
-exports[`[@mt-advertising/components/PrebidSnippet] The PrebidSnippet component with just a mount point is rendered correctly 1`] = `
+exports[`The PrebidSnippet component with just a mount point is rendered correctly 1`] = `
 <div>
   <script
     dangerouslySetInnerHTML={

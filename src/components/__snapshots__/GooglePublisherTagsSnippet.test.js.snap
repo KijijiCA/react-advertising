@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`[@mt-advertising/components/GooglePublisherTagsSnippet] The GooglePublisherTagsSnippet component with active prop set is rendered correctly 1`] = `
+exports[`The GooglePublisherTagsSnippet component with active prop set is rendered correctly 1`] = `
 <div>
   <script
     async={true}
@@ -16,7 +16,7 @@ exports[`[@mt-advertising/components/GooglePublisherTagsSnippet] The GooglePubli
 </div>
 `;
 
-exports[`[@mt-advertising/components/GooglePublisherTagsSnippet] The GooglePublisherTagsSnippet component with no props is rendered correctly 1`] = `
+exports[`The GooglePublisherTagsSnippet component with no props is rendered correctly 1`] = `
 <div>
   <script
     dangerouslySetInnerHTML={
