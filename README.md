@@ -17,32 +17,37 @@ with npm:
 
 Make sure that the external JavaScript libs for Google Publisher Tags (GPT) and Prebid are included in your page.
 
-### Including the Snippets
+### Including External Libraries
 
 You need to load two external libraries, *gpt.js* and *prebid.js*, just the same way you would do with a “classic”, 
 non-React web page.
 
-For your convenience, *react-prebid* provides two React components to do this for you, *&lt;GooglePublisherTagsSnippet /&gt;*
-and *&lt;PrebidSnippet /&gt;*.
+The script tags that load and initialize these libraries need to be included in your static HTML code.
 
-Example for including the snippets in a React component:
+Example for including the snippets in an HTML file:
 
-    import React from 'react';
-    import { GooglePublisherTagsSnippet, PrebidSnippet } from 'react-prebid';
-    
-    function MyPage() {
-        return (
-            <div>
-                <GooglePublisherTagsSnippet />
-                <PrebidSnippet scriptPath="./js/prebid.js" />
-                <h1>Hello World</h1>
-            </div>
-        );
-    )
+    <!DOCTYPE html>
+    <html lang="en">
+        <head>
+            <meta charset="utf-8">
+            <title>Demo</title>
+            <script async src="//www.googletagservices.com/tag/js/gpt.js"></script>
+            <script async src="//acdn.adnxs.com/prebid/not-for-prod/1/prebid.js"></script>
+            <script>
+                var googletag = googletag || {};
+                googletag.cmd=googletag.cmd || [];
+                var pbjs = pbjs || {};
+                pbjs.que = pbjs.que || [];
+            </script>
+        </head>
+        <body>
+            <!-- rest of your HTML code goes here -->
+        </body>
+    </html>
 
-**Note** he prop *scriptPath* for the *&lt;PrebidSnippet /&gt;* component – because it is best practice to compile the
-Prebid lib yourself with the bidder adapters you need, the the Prebid.js script is not included in this lib. You can
-create it yourself using the [Prebid.js download page](http://prebid.org/download.html).
+**Important:** This example uses a test version of Prebid.js hosted on a CDN that is not recommended for production use.
+It includes all available adapters. Production implementations should build from source or customize the
+build using the [Prebid.js download page](http://prebid.org/download.html) to make sure only the necessary bidder adapters are included:
 
 ### Adding the Provider
 
@@ -56,7 +61,7 @@ The provider should wrap your main page content, which contains the ad slots.
 Example:
 
     import React from 'react';
-    import { GooglePublisherTagsSnippet, PrebidSnippet, AdvertisingProvider } from 'react-prebid';
+    import { AdvertisingProvider } from 'react-prebid';
     
     const config = {
         slots: [
@@ -92,8 +97,6 @@ Example:
     function MyPage() {
         return (
             <div>
-                <GooglePublisherTagsSnippet />
-                <PrebidSnippet scriptPath="./js/prebid.js" />
                 <AdvertisingProvider config={config}>
                     <h1>Hello World</h1>
                 </AdvertisingProvider>
@@ -117,12 +120,7 @@ creatives from the ad server.
 The final code example:
 
     import React from 'react';
-    import {
-        GooglePublisherTagsSnippet,
-        PrebidSnippet,
-        AdvertisingProvider,
-        AdvertisingSlot
-    } from 'react-prebid';
+    import { AdvertisingProvider, AdvertisingSlot } from 'react-prebid';
     
     const config = {
         slots: [
@@ -158,8 +156,6 @@ The final code example:
     function MyPage() {
         return (
             <div>
-                <GooglePublisherTagsSnippet />
-                <PrebidSnippet scriptPath="./js/prebid.js" />
                 <AdvertisingProvider config={config}>
                     <h1>Hello World</h1>
                     <h2>Slot 1</h2>
