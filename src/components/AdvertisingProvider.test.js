@@ -45,7 +45,7 @@ FakePlacement.contextTypes = {
     activate: PropTypes.func.isRequired
 };
 
-const baseConfig = {
+const config = {
     metaData: {
         adUnitPath: {
             path: '/ad/unit/path'
@@ -59,10 +59,9 @@ const baseConfig = {
 };
 
 describe('When I render a placement provider component with some placement in it', () => {
-    describe('with advertising configured to be active', () => {
-        let wrapper, config;
+    describe('with advertising configured to be active (default, active prop omitted)', () => {
+        let wrapper;
         beforeEach(() => {
-            config = { active: true, ...baseConfig };
             wrapper = mount(
                 <AdvertisingProvider config={config}>
                     <FakePlacement />
@@ -84,11 +83,10 @@ describe('When I render a placement provider component with some placement in it
         });
     });
     describe('with advertising configured to be active', () => {
-        let wrapper, config;
+        let wrapper;
         beforeEach(() => {
-            config = { active: false, ...baseConfig };
             wrapper = mount(
-                <AdvertisingProvider config={config}>
+                <AdvertisingProvider active={false} config={config}>
                     <FakePlacement />
                 </AdvertisingProvider>
             );

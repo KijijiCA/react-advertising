@@ -6,7 +6,7 @@ import AdvertisingConfigPropType from './utils/AdvertisingConfigPropType';
 export default class AdvertisingProvider extends Component {
     constructor(props) {
         super(props);
-        this.advertising = this.props.config.active ? new Advertising(props.config) : null;
+        this.advertising = this.props.active ? new Advertising(props.config) : null;
     }
 
     getChildContext() {
@@ -43,6 +43,11 @@ AdvertisingProvider.childContextTypes = {
 };
 
 AdvertisingProvider.propTypes = {
+    active: PropTypes.bool,
     config: AdvertisingConfigPropType,
     children: PropTypes.node
+};
+
+AdvertisingProvider.defaultProps = {
+    active: true
 };

@@ -11,7 +11,6 @@ MyComponent.propTypes = {
 };
 
 const config = {
-    active: true,
     metaData: {
         adUnitPath: {
             path: '/ad/unit/path'
@@ -24,18 +23,13 @@ const config = {
     slot: {}
 };
 
-describe('When I check the prop types for a config that has active set to false and no other config', () => {
-    let result;
-    beforeEach(() => (result = checkPropTypes(MyComponent.propTypes, { config: { active: false } })));
-    describe('the prop type validation', () => it('passes', () => void expect(result).toBeUndefined()));
-});
-describe('When I check the prop types for a config that has active set to true and no other config', () => {
-    let result;
-    beforeEach(() => (result = checkPropTypes(MyComponent.propTypes, { config: { active: true } })));
-    describe('the prop type validation', () => it('fails', () => void expect(result).toBeTruthy()));
-});
-describe('When I check the prop types for a config with active === true and other config set properly', () => {
+describe('When I check the prop types for a valid config', () => {
     let result;
     beforeEach(() => (result = checkPropTypes(MyComponent.propTypes, { config })));
     describe('the prop type validation', () => it('passes', () => void expect(result).toBeUndefined()));
+});
+describe('When I check the prop types for an invalid config', () => {
+    let result;
+    beforeEach(() => (result = checkPropTypes(MyComponent.propTypes, { config: { metaData: 'foo' } })));
+    describe('the prop type validation', () => it('fails', () => void expect(result).toBeTruthy()));
 });

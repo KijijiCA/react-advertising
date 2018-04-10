@@ -165,7 +165,7 @@ The final code example:
                     <h2>Slot 1</h2>
                     <AdvertisingSlot id="div-gpt-ad-1460505748561-0" />
                     <h2>Slot 2</h2>
-                    <AdvertisingSlot id="div-gpt-ad-1460505661639-0"" />
+                    <AdvertisingSlot id="div-gpt-ad-1460505661639-0" />
                 </AdvertisingProvider>
             </div>
         );

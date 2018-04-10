@@ -20,6 +20,7 @@ const withQueue = Symbol('with queue (private method)');
 const queueForGPT = Symbol('queue for GPT (private method)');
 const queueForPrebid = Symbol('queue for Prebid (private method)');
 const removeBackground = Symbol('remove background (private method)');
+const setDefaultConfig = Symbol('set default config (private method)');
 
 export default class Advertising {
     constructor(config) {
@@ -33,6 +34,7 @@ export default class Advertising {
     // ---------- PUBLIC METHODS ----------
 
     async setup() {
+        this[setDefaultConfig]();
         const { slots, config: { prebid: { timeout } }, collapseCallbacks, queue } = this;
         this[setupCollapseEmtpyAdvertisingSlots]();
         await Promise.all([
@@ -212,6 +214,15 @@ export default class Advertising {
 
     [teardownGpt]() {
         googletag.destroySlots();
+    }
+
+    [setDefaultConfig]() {
+        if (!this.config.prebid) {
+            this.config.prebid = {};
+        }
+        if (!this.config.prebid.timeout) {
+            this.config.prebid.timeout = 700;
+        }
     }
 
     static [queueForGPT](func) {
