@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`The div component wrapped by the advertising slot component with CSS classes is rendered correctly 1`] = `
+<div
+  className="large pink"
+  id="my-beautiful-id"
+  style={undefined}
+/>
+`;
+
+exports[`The div component wrapped by the advertising slot component with CSS styles is rendered correctly 1`] = `
+<div
+  className={undefined}
+  id="my-beautiful-id"
+  style={undefined}
+/>
+`;
+
+exports[`The div component wrapped by the advertising slot component with children is rendered correctly 1`] = `
+<div
+  className={undefined}
+  id="my-beautiful-id"
+  style={undefined}
+>
+  <h1>
+    Hello!1!
+  </h1>
+</div>
+`;
+
+exports[`The div component wrapped by the advertising slot component with just an ID is rendered correctly 1`] = `
+<div
+  className={undefined}
+  id="my-beautiful-id"
+  style={undefined}
+/>
+`;

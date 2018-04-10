@@ -62,7 +62,7 @@ Example:
         slots: [
             {
                 path: '/19968336/header-bid-tag-0',
-                code: 'div-gpt-ad-1460505748561-0',
+                id: 'div-gpt-ad-1460505748561-0',
                 sizes: [[300, 250], [300, 600]],
                 bids: [
                     {
@@ -75,7 +75,7 @@ Example:
             },
             {
                 path: '/19968336/header-bid-tag-1',
-                code: 'div-gpt-ad-1460505661639-0',
+                id: 'div-gpt-ad-1460505661639-0',
                 sizes: [[728, 90], [970, 90]],
                 bids: [
                   {
@@ -111,11 +111,8 @@ fallback when no bids have come back in time.
 
 Finally, with the provider in place, you can add slot components that display the ads from the ad server.
 
-This library includes a higher-order component *connectToAdServer* that allows you to connect any React component so that it can be filled
-with advertising creatives.
-
-The React component that is connected will typically be a plain old div, which you may want to style with a placeholder 
-background and some default width and height to reduce layout jumps when the slot is filled.
+This library includes a component *AdvertisingSlot* that you can use to put div elements on your page that are filled with
+creatives from the ad server.
 
 The final code example:
 
@@ -124,14 +121,14 @@ The final code example:
         GooglePublisherTagsSnippet,
         PrebidSnippet,
         AdvertisingProvider,
-        connectToAdServer
+        AdvertisingSlot
     } from 'react-prebid';
     
     const config = {
         slots: [
             {
                 path: '/19968336/header-bid-tag-0',
-                code: 'div-gpt-ad-1460505748561-0',
+                id: 'div-gpt-ad-1460505748561-0',
                 sizes: [[300, 250], [300, 600]],
                 bids: [
                     {
@@ -144,7 +141,7 @@ The final code example:
             },
             {
                 path: '/19968336/header-bid-tag-1',
-                code: 'div-gpt-ad-1460505661639-0',
+                id: 'div-gpt-ad-1460505661639-0',
                 sizes: [[728, 90], [970, 90]],
                 bids: [
                   {
@@ -158,12 +155,6 @@ The final code example:
         ]
     };
     
-    function AdSlotDiv({ code }) {
-        return <div id={code} />;
-    }
-    
-    const AdSlot = connectToAdServer(AdSlot);
-    
     function MyPage() {
         return (
             <div>
@@ -172,16 +163,19 @@ The final code example:
                 <AdvertisingProvider config={config}>
                     <h1>Hello World</h1>
                     <h2>Slot 1</h2>
-                    <AdSlot code="div-gpt-ad-1460505748561-0" />
+                    <AdvertisingSlot id="div-gpt-ad-1460505748561-0" />
                     <h2>Slot 2</h2>
-                    <AdSlot code="div-gpt-ad-1460505661639-0"" />
+                    <AdvertisingSlot id="div-gpt-ad-1460505661639-0"" />
                 </AdvertisingProvider>
             </div>
         );
     );
     
-**Note:** The critical part about the ad slot is the *code* prop – this is used by the script from the ad server to
-find your container div in the page's DOM.
+**Note:** The critical part about the ad slot is the *id* prop – it corresponds to the IDs in your configuration and 
+is used by the script from the ad server to find your container div in the page's DOM.
+
+You can also add CSS classes to the *AdvertisingSlot* component (using the *className* prop) or inline styles (using
+the *style* prop).
 
 ## License
 
