@@ -1,6 +1,18 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`The PrebidSnippet component with active prop set is rendered correctly 1`] = `
+exports[`The PrebidSnippet component with active prop set to false is rendered correctly 1`] = `
+<div>
+  <script
+    dangerouslySetInnerHTML={
+      Object {
+        "__html": "var pbjs=pbjs||{};pbjs.que=pbjs.que||[]",
+      }
+    }
+  />
+</div>
+`;
+
+exports[`The PrebidSnippet component with active prop set to true is rendered correctly 1`] = `
 <div>
   <script
     async={true}
@@ -18,6 +30,10 @@ exports[`The PrebidSnippet component with active prop set is rendered correctly 
 
 exports[`The PrebidSnippet component with just a mount point is rendered correctly 1`] = `
 <div>
+  <script
+    async={true}
+    src="path/to/my/script.js"
+  />
   <script
     dangerouslySetInnerHTML={
       Object {

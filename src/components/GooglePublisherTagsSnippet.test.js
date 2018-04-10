@@ -4,7 +4,8 @@ import renderer from 'react-test-renderer';
 
 describe('The GooglePublisherTagsSnippet component', () => {
     describe('with no props', () => snapshotTest(<GooglePublisherTagsSnippet />));
-    describe('with active prop set', () => snapshotTest(<GooglePublisherTagsSnippet active />));
+    describe('with active prop set to true', () => snapshotTest(<GooglePublisherTagsSnippet active />));
+    describe('with active prop set to false', () => snapshotTest(<GooglePublisherTagsSnippet active={false} />));
 });
 
 function snapshotTest(component) {

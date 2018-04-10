@@ -20,4 +20,8 @@ PrebidSnippet.propTypes = {
     scriptPath: PropTypes.string.isRequired
 };
 
+PrebidSnippet.defaultProps = {
+    active: true
+};
+
 export default PrebidSnippet;

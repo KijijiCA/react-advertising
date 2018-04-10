@@ -1,7 +1,5 @@
-import GooglePublisherTagsSnippet from './src/components/GooglePublisherTagsSnippet';
-import PrebidSnippet from './src/components/PrebidSnippet';
-import AdvertisingProvider from './src/components/AdvertisingProvider';
-import AdvertisingSlot from './src/components/AdvertisingSlot';
-import connectToAdServer from './src/components/utils/connectToAdServer';
-
-export default { GooglePublisherTagsSnippet, PrebidSnippet, AdvertisingProvider, AdvertisingSlot, connectToAdServer };
+export { default as GooglePublisherTagsSnippet } from './src/components/GooglePublisherTagsSnippet';
+export { default as PrebidSnippet } from './src/components/PrebidSnippet';
+export { default as AdvertisingProvider } from './src/components/AdvertisingProvider';
+export { default as AdvertisingSlot } from './src/components/AdvertisingSlot';
+export { default as connectToAdServer } from './src/components/utils/connectToAdServer';

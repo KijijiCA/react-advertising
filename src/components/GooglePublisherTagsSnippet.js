@@ -19,4 +19,8 @@ GooglePublisherTagsSnippet.propTypes = {
     active: PropTypes.bool
 };
 
+GooglePublisherTagsSnippet.defaultProps = {
+    active: true
+};
+
 export default GooglePublisherTagsSnippet;
