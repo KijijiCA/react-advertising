@@ -200,6 +200,18 @@ describe('When I instantiate an advertising main module', () => {
     });
 });
 
+describe('When I instantiate an advertising main module', () => {
+    describe('without prebid config', () => {
+        let advertising;
+        beforeEach(() => (advertising = new Advertising({})));
+        describe('the prebid config', () => {
+            it('is set to sensible defaults', () => {
+                void expect(advertising.config).toMatchSnapshot();
+            });
+        });
+    });
+});
+
 function setupGetElementById() {
     const originalGetElementById = global.document.getElementById;
     const fakeElement = { style: { backgroundColor: 'shmackground-color', backgroundImage: 'shmackground-image' } };

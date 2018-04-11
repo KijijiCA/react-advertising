@@ -29,12 +29,12 @@ export default class Advertising {
         this.gptSizeMappings = {};
         this.collapseCallbacks = {};
         this.queue = [];
+        this[setDefaultConfig]();
     }
 
     // ---------- PUBLIC METHODS ----------
 
     async setup() {
-        this[setDefaultConfig]();
         const { slots, config: { prebid: { timeout } }, collapseCallbacks, queue } = this;
         this[setupCollapseEmtpyAdvertisingSlots]();
         await Promise.all([
@@ -44,11 +44,11 @@ export default class Advertising {
         if (queue.length === 0) {
             return;
         }
-        for (const { divId, collapse } of queue) {
-            collapseCallbacks[divId] = collapse;
+        for (const { id, collapse } of queue) {
+            collapseCallbacks[id] = collapse;
         }
-        const divIds = queue.map(({ divId }) => divId);
-        const selectedSlots = queue.map(({ divId }) => slots[divId]);
+        const divIds = queue.map(({ id }) => id);
+        const selectedSlots = queue.map(({ id }) => slots[id]);
         Advertising[queueForPrebid](() =>
             pbjs.requestBids({
                 timeout,
@@ -76,22 +76,22 @@ export default class Advertising {
         this.queue = {};
     }
 
-    activate(divId, collapse = () => {}) {
+    activate(id, collapse = () => {}) {
         const { slots, config: { prebid: { timeout } }, collapseCallbacks } = this;
         if (Object.values(slots).length === 0) {
-            this.queue.push({ divId, collapse });
+            this.queue.push({ id, collapse });
             return;
         }
-        collapseCallbacks[divId] = collapse;
+        collapseCallbacks[id] = collapse;
         Advertising[queueForPrebid](() =>
             pbjs.requestBids({
                 timeout,
-                adUnitCodes: [divId],
+                adUnitCodes: [id],
                 bidsBackHandler() {
-                    pbjs.setTargetingForGPTAsync([divId]);
+                    pbjs.setTargetingForGPTAsync([id]);
                     Advertising[queueForGPT](() => {
-                        googletag.pubads().refresh([slots[divId]]);
-                        Advertising[removeBackground](divId);
+                        googletag.pubads().refresh([slots[id]]);
+                        Advertising[removeBackground](id);
                     });
                 }
             })
@@ -100,14 +100,16 @@ export default class Advertising {
 
     // ---------- PRIVATE METHODS ----------
 
+    // this is specific to mobile.de / MOTOR-TALK, should eventually
+    // be removed from the open source version of this lib */
     [setupCollapseEmtpyAdvertisingSlots]() {
         const { collapseCallbacks } = this;
         this[collapseEmptyAdvertisingSlots] = ({ data }) => {
             if (typeof data !== 'string' || !data.startsWith('CloseAdvContainer:')) {
                 return;
             }
-            const divId = `div-gpt-ad-${data.replace(/^CloseAdvContainer:/, '')}`;
-            const collapseCallback = collapseCallbacks[divId];
+            const id = `div-gpt-ad-${data.replace(/^CloseAdvContainer:/, '')}`;
+            const collapseCallback = collapseCallbacks[id];
             if (collapseCallback) {
                 collapseCallback();
             }
@@ -137,33 +139,31 @@ export default class Advertising {
     }
 
     [defineSlots]() {
-        Object.values(this.config.slot).forEach(
-            ({ divId, targeting = {}, sizes, sizeMappingName, adUnitPath, collapseEmptyDiv }) => {
-                const slot = googletag.defineSlot(adUnitPath || this.config.metaData.adUnitPath.path, sizes, divId);
+        this.config.slots.forEach(({ id, targeting = {}, sizes, sizeMappingName, adUnitPath, collapseEmptyDiv }) => {
+            const slot = googletag.defineSlot(adUnitPath || this.config.metaData.adUnitPath.path, sizes, id);
 
-                const sizeMapping = this[getGptSizeMapping](sizeMappingName);
-                if (sizeMapping) {
-                    slot.defineSizeMapping(sizeMapping);
-                }
-
-                if (collapseEmptyDiv && collapseEmptyDiv.length && collapseEmptyDiv.length > 0) {
-                    slot.setCollapseEmptyDiv(...collapseEmptyDiv);
-                }
-
-                Object.entries(targeting).forEach(([key, value]) => slot.setTargeting(key, value));
-
-                slot.addService(googletag.pubads());
-                this.slots[divId] = slot;
+            const sizeMapping = this[getGptSizeMapping](sizeMappingName);
+            if (sizeMapping) {
+                slot.defineSizeMapping(sizeMapping);
             }
-        );
+
+            if (collapseEmptyDiv && collapseEmptyDiv.length && collapseEmptyDiv.length > 0) {
+                slot.setCollapseEmptyDiv(...collapseEmptyDiv);
+            }
+
+            Object.entries(targeting).forEach(([key, value]) => slot.setTargeting(key, value));
+
+            slot.addService(googletag.pubads());
+            this.slots[id] = slot;
+        });
     }
 
     [displaySlots]() {
-        Object.values(this.config.slot).forEach(({ divId }) => googletag.display(divId));
+        this.config.slots.forEach(({ id }) => googletag.display(id));
     }
 
     [setupPrebid]() {
-        pbjs.addAdUnits(getAdUnits(this.config.slot, this.config.sizeMappings));
+        pbjs.addAdUnits(getAdUnits(this.config.slots, this.config.sizeMappings));
         pbjs.setPriceGranularity(PRICE_GRANULARITY);
         pbjs.setBidderSequence(BIDDER_SEQUENCE);
         const usdToEurRate = this.config.metaData.usdToEurRate;
@@ -182,7 +182,7 @@ export default class Advertising {
     }
 
     [teardownPrebid]() {
-        getAdUnits(this.config.slot, this.config.sizeMappings).forEach(({ code }) => pbjs.removeAdUnit(code));
+        getAdUnits(this.config.slots, this.config.sizeMappings).forEach(({ code }) => pbjs.removeAdUnit(code));
     }
 
     [setupGpt]() {
@@ -242,8 +242,8 @@ export default class Advertising {
         );
     }
 
-    static [removeBackground](divId) {
-        const divEl = document.getElementById(divId);
+    static [removeBackground](id) {
+        const divEl = document.getElementById(id);
         if (!divEl) {
             return;
         }

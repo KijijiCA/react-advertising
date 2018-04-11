@@ -55,14 +55,45 @@ Object {
       },
     ],
   },
-  "slot": Object {
-    "bar": Object {
+  "slots": Array [
+    Object {
+      "id": "div-gpt-ad-foo",
+      "prebid": Array [
+        Object {
+          "bids": Array [
+            Object {
+              "bidder": "bidder-foo",
+              "params": Object {
+                "foo": "bar",
+              },
+            },
+          ],
+          "sizes": Array [
+            Array [
+              320,
+              240,
+            ],
+          ],
+        },
+      ],
+      "sizes": Array [
+        "fluid",
+        Array [
+          320,
+          240,
+        ],
+      ],
+      "targeting": Object {
+        "a": 666,
+      },
+    },
+    Object {
       "adUnitPath": "slot/ad/unit/path",
       "collapseEmptyDiv": Array [
         true,
         true,
       ],
-      "divId": "div-gpt-ad-bar",
+      "id": "div-gpt-ad-bar",
       "prebid": Array [
         Object {
           "bids": Array [
@@ -96,37 +127,6 @@ Object {
         ],
       },
     },
-    "foo": Object {
-      "divId": "div-gpt-ad-foo",
-      "prebid": Array [
-        Object {
-          "bids": Array [
-            Object {
-              "bidder": "bidder-foo",
-              "params": Object {
-                "foo": "bar",
-              },
-            },
-          ],
-          "sizes": Array [
-            Array [
-              320,
-              240,
-            ],
-          ],
-        },
-      ],
-      "sizes": Array [
-        "fluid",
-        Array [
-          320,
-          240,
-        ],
-      ],
-      "targeting": Object {
-        "a": 666,
-      },
-    },
-  },
+  ],
 }
 `;

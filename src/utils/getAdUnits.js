@@ -1,12 +1,12 @@
 import getPrebidSizeMapping from './getPrebidSizeMapping';
 
-export default (slot, sizeMappings) =>
-    Object.values(slot).reduce(
+export default (slots, sizeMappings) =>
+    slots.reduce(
         (acc, currSlot) =>
             acc.concat(
                 currSlot.prebid.map(currPrebid => {
                     const adUnit = {
-                        code: currSlot.divId,
+                        code: currSlot.id,
                         sizes: currPrebid.sizes,
                         bids: currPrebid.bids
                     };

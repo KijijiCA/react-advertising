@@ -16,7 +16,7 @@ describe('When I check the prop types for a valid slot config', () => {
         () =>
             (result = checkPropTypes(MyComponent.propTypes, {
                 config: {
-                    divId: 'my-precious-div-id',
+                    id: 'my-precious-div-id',
                     targeting: { a: 666 },
                     sizes: ['fluid', [320, 240]],
                     prebid: [

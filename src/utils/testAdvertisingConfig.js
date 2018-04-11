@@ -28,9 +28,9 @@ export const config = {
     prebid: {
         timeout: TIMEOUT
     },
-    slot: {
-        foo: {
-            divId: DIV_ID_FOO,
+    slots: [
+        {
+            id: DIV_ID_FOO,
             targeting: { a: SLOT_ID_FOO },
             sizes: GPT_SIZES,
             prebid: [
@@ -45,8 +45,8 @@ export const config = {
                 }
             ]
         },
-        bar: {
-            divId: DIV_ID_BAR,
+        {
+            id: DIV_ID_BAR,
             adUnitPath: SLOT_AD_UNIT_PATH,
             targeting: { a: SLOT_ID_BAR },
             sizes: GPT_SIZES,
@@ -64,7 +64,7 @@ export const config = {
                 }
             ]
         }
-    },
+    ],
     sizeMappings: {
         mobailAndTablet: [
             {

@@ -26,5 +26,5 @@ export default PropTypes.shape({
             })
         )
     ),
-    slot: PropTypes.objectOf(AdvertisingSlotConfigPropType)
+    slots: PropTypes.arrayOf(AdvertisingSlotConfigPropType)
 });

@@ -11,9 +11,9 @@ const mockContext = {};
 class MockProvider extends Component {
     getChildContext() {
         return {
-            activate: (divId, collapseCallback) => {
+            activate: (id, collapseCallback) => {
                 mockContext.collapseCallback = collapseCallback;
-                return mockActivate(divId, collapseCallback);
+                return mockActivate(id, collapseCallback);
             }
         };
     }
@@ -33,7 +33,7 @@ MockProvider.propTypes = {
 
 describe('When I create a component that is connected to the ad server', () => {
     let MyPlacement;
-    beforeEach(() => (MyPlacement = connectToAdServer(({ divId }) => <div id={divId} />)));
+    beforeEach(() => (MyPlacement = connectToAdServer(({ id }) => <div id={id} />)));
 
     describe('and the component is mounted', () => {
         let wrapper;
@@ -41,7 +41,7 @@ describe('When I create a component that is connected to the ad server', () => {
             () =>
                 (wrapper = mount(
                     <MockProvider>
-                        <MyPlacement divId="bla" />
+                        <MyPlacement id="bla" />
                     </MockProvider>
                 ))
         );

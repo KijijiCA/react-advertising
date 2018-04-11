@@ -9,9 +9,9 @@ export default PlacementComponent => {
         }
 
         componentDidMount() {
-            const { divId } = this.props;
+            const { id } = this.props;
             const { activate } = this.context;
-            activate(divId, () => this.setState({ hidden: true }));
+            activate(id, () => this.setState({ hidden: true }));
         }
 
         render() {
@@ -22,7 +22,7 @@ export default PlacementComponent => {
         }
     };
     HoC.propTypes = {
-        divId: PropTypes.string.isRequired
+        id: PropTypes.string.isRequired
     };
     HoC.contextTypes = {
         activate: PropTypes.func.isRequired

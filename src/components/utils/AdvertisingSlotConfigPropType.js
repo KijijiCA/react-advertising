@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
 export default PropTypes.shape({
-    divId: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
     targeting: PropTypes.object,
     sizes: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.number)])).isRequired,
     prebid: PropTypes.arrayOf(

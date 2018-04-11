@@ -20,13 +20,56 @@ const config = {
     prebid: {
         timeout: 666
     },
-    slot: {}
+    slots: []
 };
 
-describe('When I check the prop types for a valid config', () => {
+describe('When I check the prop types for a valid config with no slots', () => {
     let result;
     beforeEach(() => (result = checkPropTypes(MyComponent.propTypes, { config })));
     describe('the prop type validation', () => it('passes', () => void expect(result).toBeUndefined()));
+});
+describe('When I check the prop types for a valud config with a valid slot', () => {
+    let result;
+    beforeEach(
+        () =>
+            (result = checkPropTypes(MyComponent.propTypes, {
+                config: {
+                    ...config,
+                    slots: [
+                        {
+                            id: 'foo',
+                            sizes: ['bar'],
+                            prebid: [
+                                {
+                                    sizes: [[666]],
+                                    bids: [
+                                        {
+                                            bidder: 'qux'
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }))
+    );
+    describe('the prop type validation', () => it('passes', () => void expect(result).toBeUndefined()));
+});
+describe('When I check the prop types for a valud config with an invalid slot', () => {
+    let result;
+    beforeEach(
+        () =>
+            (result = checkPropTypes(MyComponent.propTypes, {
+                config: {
+                    ...config,
+                    slots: {
+                        bla: 'blub'
+                    }
+                }
+            }))
+    );
+    describe('the prop type validation', () => it('fails', () => void expect(result).toBeTruthy()));
 });
 describe('When I check the prop types for an invalid config', () => {
     let result;
