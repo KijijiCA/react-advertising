@@ -357,6 +357,7 @@ Object {
 
 exports[`When I instantiate an advertising main module without prebid config the prebid config is set to sensible defaults 1`] = `
 Object {
+  "metaData": Object {},
   "prebid": Object {
     "timeout": 700,
   },

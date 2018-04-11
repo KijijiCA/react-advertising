@@ -47,7 +47,7 @@ export const config = {
         },
         {
             id: DIV_ID_BAR,
-            adUnitPath: SLOT_AD_UNIT_PATH,
+            path: SLOT_AD_UNIT_PATH,
             targeting: { a: SLOT_ID_BAR },
             sizes: GPT_SIZES,
             sizeMappingName: 'mobailAndTablet',

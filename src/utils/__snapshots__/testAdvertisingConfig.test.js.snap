@@ -88,12 +88,12 @@ Object {
       },
     },
     Object {
-      "adUnitPath": "slot/ad/unit/path",
       "collapseEmptyDiv": Array [
         true,
         true,
       ],
       "id": "div-gpt-ad-bar",
+      "path": "slot/ad/unit/path",
       "prebid": Array [
         Object {
           "bids": Array [

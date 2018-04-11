@@ -139,8 +139,8 @@ export default class Advertising {
     }
 
     [defineSlots]() {
-        this.config.slots.forEach(({ id, targeting = {}, sizes, sizeMappingName, adUnitPath, collapseEmptyDiv }) => {
-            const slot = googletag.defineSlot(adUnitPath || this.config.metaData.adUnitPath.path, sizes, id);
+        this.config.slots.forEach(({ id, targeting = {}, sizes, sizeMappingName, path, collapseEmptyDiv }) => {
+            const slot = googletag.defineSlot(path || this.config.metaData.adUnitPath.path, sizes, id);
 
             const sizeMapping = this[getGptSizeMapping](sizeMappingName);
             if (sizeMapping) {
@@ -166,19 +166,21 @@ export default class Advertising {
         pbjs.addAdUnits(getAdUnits(this.config.slots, this.config.sizeMappings));
         pbjs.setPriceGranularity(PRICE_GRANULARITY);
         pbjs.setBidderSequence(BIDDER_SEQUENCE);
-        const usdToEurRate = this.config.metaData.usdToEurRate;
-        pbjs.bidderSettings = {
-            appnexus: {
-                bidCpmAdjustment(bidCpm) {
-                    return bidCpm * usdToEurRate;
+        if (this.config.metaData.usdToEurRate) {
+            const usdToEurRate = this.config.metaData.usdToEurRate;
+            pbjs.bidderSettings = {
+                appnexus: {
+                    bidCpmAdjustment(bidCpm) {
+                        return bidCpm * usdToEurRate;
+                    }
+                },
+                rubicon: {
+                    bidCpmAdjustment(bidCpm) {
+                        return bidCpm * usdToEurRate * GROSS_TO_NET_RATE;
+                    }
                 }
-            },
-            rubicon: {
-                bidCpmAdjustment(bidCpm) {
-                    return bidCpm * usdToEurRate * GROSS_TO_NET_RATE;
-                }
-            }
-        };
+            };
+        }
     }
 
     [teardownPrebid]() {
@@ -222,6 +224,9 @@ export default class Advertising {
         }
         if (!this.config.prebid.timeout) {
             this.config.prebid.timeout = 700;
+        }
+        if (!this.config.metaData) {
+            this.config.metaData = {};
         }
     }
 
