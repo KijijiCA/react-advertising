@@ -1,6 +1,12 @@
-/* global pbjs, googletag */
-
 import getAdUnits from './utils/getAdUnits';
+
+// eslint-disable-next-line no-native-reassign
+window.googletag = window.googletag || {};
+window.googletag.cmd = window.googletag.cmd || [];
+
+// eslint-disable-next-line no-native-reassign
+window.pbjs = window.pbjs || {};
+window.pbjs.que = window.pbjs.que || [];
 
 const GROSS_TO_NET_RATE = 0.93;
 const PRICE_GRANULARITY = 'medium';
@@ -50,13 +56,13 @@ export default class Advertising {
         const divIds = queue.map(({ id }) => id);
         const selectedSlots = queue.map(({ id }) => slots[id]);
         Advertising[queueForPrebid](() =>
-            pbjs.requestBids({
+            window.pbjs.requestBids({
                 timeout,
                 adUnitCodes: divIds,
                 bidsBackHandler() {
-                    pbjs.setTargetingForGPTAsync(divIds);
+                    window.pbjs.setTargetingForGPTAsync(divIds);
                     Advertising[queueForGPT](() => {
-                        googletag.pubads().refresh(selectedSlots);
+                        window.googletag.pubads().refresh(selectedSlots);
                         divIds.forEach(Advertising[removeBackground]);
                     });
                 }
@@ -84,13 +90,13 @@ export default class Advertising {
         }
         collapseCallbacks[id] = collapse;
         Advertising[queueForPrebid](() =>
-            pbjs.requestBids({
+            window.pbjs.requestBids({
                 timeout,
                 adUnitCodes: [id],
                 bidsBackHandler() {
-                    pbjs.setTargetingForGPTAsync([id]);
+                    window.pbjs.setTargetingForGPTAsync([id]);
                     Advertising[queueForGPT](() => {
-                        googletag.pubads().refresh([slots[id]]);
+                        window.googletag.pubads().refresh([slots[id]]);
                         Advertising[removeBackground](id);
                     });
                 }
@@ -126,7 +132,7 @@ export default class Advertising {
             return;
         }
         Object.keys(this.config.sizeMappings).forEach(key => {
-            const sizeMapping = googletag.sizeMapping();
+            const sizeMapping = window.googletag.sizeMapping();
             this.config.sizeMappings[key].forEach(({ viewPortSize, sizes }) =>
                 sizeMapping.addSize(viewPortSize, sizes)
             );
@@ -140,7 +146,7 @@ export default class Advertising {
 
     [defineSlots]() {
         this.config.slots.forEach(({ id, targeting = {}, sizes, sizeMappingName, path, collapseEmptyDiv }) => {
-            const slot = googletag.defineSlot(path || this.config.metaData.adUnitPath.path, sizes, id);
+            const slot = window.googletag.defineSlot(path || this.config.metaData.adUnitPath.path, sizes, id);
 
             const sizeMapping = this[getGptSizeMapping](sizeMappingName);
             if (sizeMapping) {
@@ -153,22 +159,25 @@ export default class Advertising {
 
             Object.entries(targeting).forEach(([key, value]) => slot.setTargeting(key, value));
 
-            slot.addService(googletag.pubads());
+            slot.addService(window.googletag.pubads());
             this.slots[id] = slot;
         });
     }
 
     [displaySlots]() {
-        this.config.slots.forEach(({ id }) => googletag.display(id));
+        this.config.slots.forEach(({ id }) => window.googletag.display(id));
     }
 
     [setupPrebid]() {
-        pbjs.addAdUnits(getAdUnits(this.config.slots, this.config.sizeMappings));
-        pbjs.setPriceGranularity(PRICE_GRANULARITY);
-        pbjs.setBidderSequence(BIDDER_SEQUENCE);
+        const adUnits = getAdUnits(this.config.slots, this.config.sizeMappings);
+        window.pbjs.addAdUnits(adUnits);
+        window.pbjs.setConfig({
+            priceGranularity: PRICE_GRANULARITY,
+            bidderSequence: BIDDER_SEQUENCE
+        });
         if (this.config.metaData.usdToEurRate) {
             const usdToEurRate = this.config.metaData.usdToEurRate;
-            pbjs.bidderSettings = {
+            window.pbjs.bidderSettings = {
                 appnexus: {
                     bidCpmAdjustment(bidCpm) {
                         return bidCpm * usdToEurRate;
@@ -184,11 +193,11 @@ export default class Advertising {
     }
 
     [teardownPrebid]() {
-        getAdUnits(this.config.slots, this.config.sizeMappings).forEach(({ code }) => pbjs.removeAdUnit(code));
+        getAdUnits(this.config.slots, this.config.sizeMappings).forEach(({ code }) => window.pbjs.removeAdUnit(code));
     }
 
     [setupGpt]() {
-        const pubads = googletag.pubads();
+        const pubads = window.googletag.pubads();
         const { metaData, placementTestId } = this.config;
         this[defineGptSizeMappings]();
         this[defineSlots]();
@@ -210,12 +219,12 @@ export default class Advertising {
         }
         pubads.disableInitialLoad();
         pubads.enableSingleRequest();
-        googletag.enableServices();
+        window.googletag.enableServices();
         this[displaySlots]();
     }
 
     [teardownGpt]() {
-        googletag.destroySlots();
+        window.googletag.destroySlots();
     }
 
     [setDefaultConfig]() {
@@ -231,11 +240,11 @@ export default class Advertising {
     }
 
     static [queueForGPT](func) {
-        return Advertising[withQueue](googletag.cmd, func);
+        return Advertising[withQueue](window.googletag.cmd, func);
     }
 
     static [queueForPrebid](func) {
-        return Advertising[withQueue](pbjs.que, func);
+        return Advertising[withQueue](window.pbjs.que, func);
     }
 
     static [withQueue](queue, func) {

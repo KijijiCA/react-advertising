@@ -21,12 +21,12 @@ describe('When I instantiate an advertising main module', () => {
         describe('the ad units object added to Prebid', () =>
             it('is correct', () => void expect(global.pbjs.addAdUnits.firstCall.args[0]).toMatchSnapshot()));
         describe('the price granularity for Prebid', () => {
-            it('is set', () => void expect(global.pbjs.setPriceGranularity).to.have.been.calledOnce);
-            it('is set correctly', () => void expect(global.pbjs.setPriceGranularity.firstCall.args).toMatchSnapshot());
+            it('is set', () =>
+                void expect(global.pbjs.setConfig).to.have.been.calledWithMatch({ priceGranularity: 'medium' }));
         });
         describe('the bidder sequence for Prebid', () => {
-            it('is set', () => void expect(global.pbjs.setBidderSequence).to.have.been.calledOnce);
-            it('is set correctly', () => void expect(global.pbjs.setBidderSequence.firstCall.args).toMatchSnapshot());
+            it('is set', () =>
+                void expect(global.pbjs.setConfig).to.have.been.calledWithMatch({ bidderSequence: 'random' }));
         });
         describe('bidder settings for AppNexus', () =>
             it('are set', () => void expect(global.pbjs.bidderSettings.appnexus).to.exist));
@@ -227,7 +227,7 @@ function setupPbjs() {
     global.pbjs.removeAdUnit = spy();
     global.pbjs.requestBids = stub().callsFake(requestBidsConfig => requestBidsConfig.bidsBackHandler());
     global.pbjs.getAdserverTargeting = spy();
-    global.pbjs.setPriceGranularity = spy();
+    global.pbjs.setConfig = spy();
     global.pbjs.setTargetingForGPTAsync = spy();
     global.pbjs.setBidderSequence = spy();
     return originalPbjs;

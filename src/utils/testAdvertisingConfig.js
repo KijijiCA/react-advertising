@@ -35,7 +35,11 @@ export const config = {
             sizes: GPT_SIZES,
             prebid: [
                 {
-                    sizes: PREBID_SIZES_FOO,
+                    mediaTypes: {
+                        banner: {
+                            sizes: PREBID_SIZES_FOO
+                        }
+                    },
                     bids: [
                         {
                             bidder: BIDDER_FOO,
@@ -54,7 +58,11 @@ export const config = {
             collapseEmptyDiv: COLLAPSE_EMPTY_DIV,
             prebid: [
                 {
-                    sizes: PREBID_SIZES_BAR,
+                    mediaTypes: {
+                        banner: {
+                            sizes: PREBID_SIZES_BAR
+                        }
+                    },
                     bids: [
                         {
                             bidder: BIDDER_BAR,

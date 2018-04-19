@@ -8,7 +8,11 @@ export default PropTypes.shape({
     sizes: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.number)])).isRequired,
     prebid: PropTypes.arrayOf(
         PropTypes.shape({
-            sizes: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired,
+            mediaTypes: PropTypes.objectOf(
+                PropTypes.shape({
+                    sizes: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number))
+                })
+            ).isRequired,
             bids: PropTypes.arrayOf(
                 PropTypes.shape({
                     bidder: PropTypes.string.isRequired,

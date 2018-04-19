@@ -41,7 +41,11 @@ describe('When I check the prop types for a valud config with a valid slot', () 
                             sizes: ['bar'],
                             prebid: [
                                 {
-                                    sizes: [[666]],
+                                    mediaTypes: {
+                                        banner: {
+                                            sizes: [[666]]
+                                        }
+                                    },
                                     bids: [
                                         {
                                             bidder: 'qux'

@@ -7,10 +7,11 @@ export default (slots, sizeMappings) =>
                 currSlot.prebid.map(currPrebid => {
                     const adUnit = {
                         code: currSlot.id,
-                        sizes: currPrebid.sizes,
+                        mediaTypes: currPrebid.mediaTypes,
                         bids: currPrebid.bids
                     };
 
+                    // PH_TODO: this is obsolete with Prebid 1.0!
                     const sizeMapping = getPrebidSizeMapping(currSlot.sizeMappingName, sizeMappings);
                     if (sizeMapping) {
                         adUnit.sizeMapping = sizeMapping;

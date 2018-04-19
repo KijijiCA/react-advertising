@@ -1,3 +1,5 @@
+![alt text](ebay-tech-logo.png "eBay Tech")
+
 # react-prebid
 
 Library for ad placements with [Prebid](http://prebid.org) header bidding in [React](https://reactjs.org) applications.
@@ -15,12 +17,12 @@ with npm:
 
     npm install --save react-prebid
 
-Make sure that the external JavaScript libs for Google Publisher Tags (GPT) and Prebid are included in your page.
-
 ### Including External Libraries
 
 You need to load two external libraries, *gpt.js* and *prebid.js*, just the same way you would do with a “classic”, 
 non-React web page.
+
+The Prebid library should at least be version 1.0. Older versions of Prebid are not supported.
 
 The script tags that load and initialize these libraries need to be included in your static HTML code.
 
@@ -33,12 +35,6 @@ Example for including the snippets in an HTML file:
             <title>Demo</title>
             <script async src="//www.googletagservices.com/tag/js/gpt.js"></script>
             <script async src="//acdn.adnxs.com/prebid/not-for-prod/1/prebid.js"></script>
-            <script>
-                var googletag = googletag || {};
-                googletag.cmd=googletag.cmd || [];
-                var pbjs = pbjs || {};
-                pbjs.que = pbjs.que || [];
-            </script>
         </head>
         <body>
             <!-- rest of your HTML code goes here -->

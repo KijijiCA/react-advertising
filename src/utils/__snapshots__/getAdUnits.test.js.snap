@@ -12,12 +12,16 @@ Array [
       },
     ],
     "code": "div-gpt-ad-foo",
-    "sizes": Array [
-      Array [
-        320,
-        240,
-      ],
-    ],
+    "mediaTypes": Object {
+      "banner": Object {
+        "sizes": Array [
+          Array [
+            320,
+            240,
+          ],
+        ],
+      },
+    },
   },
   Object {
     "bids": Array [
@@ -29,6 +33,16 @@ Array [
       },
     ],
     "code": "div-gpt-ad-bar",
+    "mediaTypes": Object {
+      "banner": Object {
+        "sizes": Array [
+          Array [
+            320,
+            240,
+          ],
+        ],
+      },
+    },
     "sizeMapping": Array [
       Object {
         "minWidth": 1050,
@@ -52,12 +66,6 @@ Array [
         "sizes": Array [],
       },
     ],
-    "sizes": Array [
-      Array [
-        320,
-        240,
-      ],
-    ],
   },
 ]
 `;
@@ -74,12 +82,16 @@ Array [
       },
     ],
     "code": "div-gpt-ad-foo",
-    "sizes": Array [
-      Array [
-        320,
-        240,
-      ],
-    ],
+    "mediaTypes": Object {
+      "banner": Object {
+        "sizes": Array [
+          Array [
+            320,
+            240,
+          ],
+        ],
+      },
+    },
   },
   Object {
     "bids": Array [
@@ -91,12 +103,16 @@ Array [
       },
     ],
     "code": "div-gpt-ad-bar",
-    "sizes": Array [
-      Array [
-        320,
-        240,
-      ],
-    ],
+    "mediaTypes": Object {
+      "banner": Object {
+        "sizes": Array [
+          Array [
+            320,
+            240,
+          ],
+        ],
+      },
+    },
   },
 ]
 `;

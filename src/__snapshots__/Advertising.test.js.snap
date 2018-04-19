@@ -276,12 +276,16 @@ Array [
       },
     ],
     "code": "div-gpt-ad-foo",
-    "sizes": Array [
-      Array [
-        320,
-        240,
-      ],
-    ],
+    "mediaTypes": Object {
+      "banner": Object {
+        "sizes": Array [
+          Array [
+            320,
+            240,
+          ],
+        ],
+      },
+    },
   },
   Object {
     "bids": Array [
@@ -293,6 +297,16 @@ Array [
       },
     ],
     "code": "div-gpt-ad-bar",
+    "mediaTypes": Object {
+      "banner": Object {
+        "sizes": Array [
+          Array [
+            320,
+            240,
+          ],
+        ],
+      },
+    },
     "sizeMapping": Array [
       Object {
         "minWidth": 1050,
@@ -316,25 +330,7 @@ Array [
         "sizes": Array [],
       },
     ],
-    "sizes": Array [
-      Array [
-        320,
-        240,
-      ],
-    ],
   },
-]
-`;
-
-exports[`When I instantiate an advertising main module and call the setup method the bidder sequence for Prebid is set correctly 1`] = `
-Array [
-  "random",
-]
-`;
-
-exports[`When I instantiate an advertising main module and call the setup method the price granularity for Prebid is set correctly 1`] = `
-Array [
-  "medium",
 ]
 `;
 

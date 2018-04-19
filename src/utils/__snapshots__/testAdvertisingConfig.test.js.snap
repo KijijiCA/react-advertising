@@ -68,12 +68,16 @@ Object {
               },
             },
           ],
-          "sizes": Array [
-            Array [
-              320,
-              240,
-            ],
-          ],
+          "mediaTypes": Object {
+            "banner": Object {
+              "sizes": Array [
+                Array [
+                  320,
+                  240,
+                ],
+              ],
+            },
+          },
         },
       ],
       "sizes": Array [
@@ -104,12 +108,16 @@ Object {
               },
             },
           ],
-          "sizes": Array [
-            Array [
-              320,
-              240,
-            ],
-          ],
+          "mediaTypes": Object {
+            "banner": Object {
+              "sizes": Array [
+                Array [
+                  320,
+                  240,
+                ],
+              ],
+            },
+          },
         },
       ],
       "sizeMappingName": "mobailAndTablet",

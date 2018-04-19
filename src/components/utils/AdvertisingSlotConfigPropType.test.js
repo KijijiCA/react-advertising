@@ -21,7 +21,11 @@ describe('When I check the prop types for a valid slot config', () => {
                     sizes: ['fluid', [320, 240]],
                     prebid: [
                         {
-                            sizes: [[320, 240]],
+                            mediaTypes: {
+                                banner: {
+                                    sizes: [[320, 240]]
+                                }
+                            },
                             bids: [
                                 {
                                     bidder: 'my-precious-bidder',
