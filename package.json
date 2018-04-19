@@ -1,6 +1,6 @@
 {
   "name": "react-prebid",
-  "version": "0.1.0",
+  "version": "1.0.0-beta.0",
   "description": "Library for ad placements with Prebid header bidding in React applications",
   "main": "index.js",
   "esnext": "index-esnext.js",
