@@ -1,5 +1,5 @@
 module.exports = {
-    entry: ['regenerator-runtime', './index-esnext.js'],
+    entry: ['regenerator-runtime/runtime', './index-esnext.js'],
     output: {
         path: __dirname,
         filename: 'index.js',
