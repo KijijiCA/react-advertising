@@ -8,9 +8,7 @@ export default class AdvertisingProvider extends Component {
     constructor(props) {
         super(props);
         this.advertising = this.props.active ? new Advertising(props.config) : null;
-        if (this.advertising) {
-            this.activate = this.advertising.activate.bind(this.advertising);
-        }
+        this.activate = this.props.active ? this.advertising.activate.bind(this.advertising) : () => {};
     }
 
     componentDidMount() {
