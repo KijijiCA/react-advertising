@@ -25,7 +25,10 @@
     ]
   },
   "jest": {
-    "setupTestFrameworkScriptFile": "<rootDir>/src/utils/setupTests.js"
+    "setupTestFrameworkScriptFile": "<rootDir>/src/utils/setupTests.js",
+    "transformIgnorePatterns": [
+      "node_modules/(?!(@mt-testutils)/)"
+    ]
   },
   "repository": {
     "type": "git",
@@ -37,6 +40,7 @@
     "react": ">=16.0.0 <17.0.0"
   },
   "devDependencies": {
+    "@mt-testutils/expect-snapshot": "^1.0.5",
     "babel-eslint": "^8.2.2",
     "babel-jest": "^23.0.0-alpha.0",
     "babel-loader": "^7.1.4",
