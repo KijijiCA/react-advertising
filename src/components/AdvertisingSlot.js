@@ -3,13 +3,17 @@ import connectToAdServer from './utils/connectToAdServer';
 import PropTypes from 'prop-types';
 
 class AdvertisingSlot extends Component {
+    constructor(props) {
+        super(props);
+        this.state = { hidden: false };
+    }
     componentDidMount() {
         const { activate, id } = this.props;
-        activate(id);
+        activate(id, () => this.setState({ hidden: true }));
     }
     render() {
         const { id, style, className, children } = this.props;
-        return <div id={id} style={style} className={className} children={children} />;
+        return this.state.hidden ? null : <div id={id} style={style} className={className} children={children} />;
     }
 }
 

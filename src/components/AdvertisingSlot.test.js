@@ -1,5 +1,5 @@
 import React from 'react';
-import { spy } from 'sinon';
+import { spy, match } from 'sinon';
 import expectSnapshot from '@mt-testutils/expect-snapshot';
 import { mount } from 'enzyme';
 
@@ -22,7 +22,9 @@ describe('The advertising slot component', () => {
         ));
     describe('when mounted', () => {
         beforeEach(() => mount(<AdvertisingSlot id={id} />));
-        it('calls the activate function', () => void mockActivate.should.have.been.calledWith(id));
+        it('calls the activate function with the ID', () => void mockActivate.should.have.been.calledWith(id));
+        it('calls the activate function with a collapse callback', () =>
+            void mockActivate.should.have.been.calledWith(match.any, match.func));
     });
     afterEach(() => jest.resetModules());
 });
