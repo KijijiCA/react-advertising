@@ -1,4 +1,4 @@
-![alt text](https://github.com/technology-ebay-de/react-prebid/raw/master/ebay-tech-logo.png 'eBay Tech')
+![alt text](https://github.com/technology-ebay-de/react-prebid/raw/master/ebay-tech-logo.png "eBay Tech")
 
 # react-prebid
 
