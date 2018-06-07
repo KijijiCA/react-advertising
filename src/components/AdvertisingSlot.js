@@ -1,16 +1,29 @@
-import React from 'react';
+import React, { Component } from 'react';
 import connectToAdServer from './utils/connectToAdServer';
 import PropTypes from 'prop-types';
 
-export function AdvertisingSlotDiv({ id, style, className, children }) {
-    return <div id={id} style={style} className={className} children={children} />;
+class AdvertisingSlot extends Component {
+    componentDidMount() {
+        const { activate, id, hide } = this.props;
+        activate(id, hide);
+    }
+    render() {
+        const { id, style, className, children } = this.props;
+        return <div id={id} style={style} className={className} children={children} />;
+    }
 }
 
-AdvertisingSlotDiv.propTypes = {
+AdvertisingSlot.propTypes = {
     id: PropTypes.string.isRequired,
     style: PropTypes.object,
     className: PropTypes.string,
-    children: PropTypes.node
+    children: PropTypes.node,
+    activate: PropTypes.func.isRequired,
+    hide: PropTypes.func.isRequired
 };
 
-export default connectToAdServer(AdvertisingSlotDiv);
+AdvertisingSlot.defaultProps = {
+    hide: () => {}
+};
+
+export default connectToAdServer(AdvertisingSlot);

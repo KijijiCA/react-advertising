@@ -2,23 +2,13 @@ import React, { Component } from 'react';
 import Advertising from '../Advertising';
 import PropTypes from 'prop-types';
 import AdvertisingConfigPropType from './utils/AdvertisingConfigPropType';
+import AdvertisingContext from '../AdvertisingContext';
 
 export default class AdvertisingProvider extends Component {
     constructor(props) {
         super(props);
         this.advertising = this.props.active ? new Advertising(props.config) : null;
-    }
-
-    getChildContext() {
-        if (!this.advertising) {
-            return {
-                activate: () => {}
-            };
-        }
-        const { activate } = this.advertising;
-        return {
-            activate: (...args) => activate.call(this.advertising, ...args)
-        };
+        this.activate = this.props.active ? this.advertising.activate.bind(this.advertising) : () => {};
     }
 
     componentDidMount() {
@@ -34,13 +24,9 @@ export default class AdvertisingProvider extends Component {
     }
 
     render() {
-        return <span>{this.props.children}</span>;
+        return <AdvertisingContext.Provider value={this.activate}>{this.props.children}</AdvertisingContext.Provider>;
     }
 }
-
-AdvertisingProvider.childContextTypes = {
-    activate: PropTypes.func
-};
 
 AdvertisingProvider.propTypes = {
     active: PropTypes.bool,

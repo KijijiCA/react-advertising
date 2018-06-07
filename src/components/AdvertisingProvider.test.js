@@ -1,110 +1,72 @@
-import { mount } from 'enzyme';
-import PropTypes from 'prop-types';
-import React, { Component } from 'react';
-import { sandbox } from 'sinon';
+import React from 'react';
+import expectSnapshot from '@mt-testutils/expect-snapshot';
 import AdvertisingProvider from './AdvertisingProvider';
+import { spy } from 'sinon';
+import { mount } from 'enzyme';
+import config from '../utils/testAdvertisingConfig';
 
-const mySandbox = sandbox.create();
-const mockAdvertisingConstructor = mySandbox.spy();
-const mockAdvertisingSetup = mySandbox.spy();
-const mockAdvertisingTeardown = mySandbox.spy();
-const mockAdvertisingActivate = mySandbox.spy();
+const mockActivate = spy();
+const mockSetup = spy();
+const mockTeardown = spy();
+const mockConstructor = spy();
+const mockValueSpy = spy();
+
+jest.mock('../AdvertisingContext', () => ({
+    // eslint-disable-next-line react/prop-types
+    Provider({ value, children }) {
+        mockValueSpy(value);
+        return <div id="advertising-context-provider">{children}</div>;
+    }
+}));
 
 jest.mock(
     '../Advertising',
     () =>
         class {
             constructor(...args) {
-                mockAdvertisingConstructor(...args);
+                mockConstructor(...args);
             }
-
-            setup(...args) {
-                mockAdvertisingSetup(...args);
-            }
-
-            teardown(...args) {
-                mockAdvertisingTeardown(...args);
-            }
-
             activate(...args) {
-                mockAdvertisingActivate(...args);
+                mockActivate(...args);
+            }
+            setup(...args) {
+                mockSetup(...args);
+            }
+            teardown(...args) {
+                mockTeardown(...args);
             }
         }
 );
 
-class FakePlacement extends Component {
-    componentDidMount() {
-        this.context.activate('fred');
-    }
-    render() {
-        return <div />;
-    }
-}
-
-FakePlacement.contextTypes = {
-    activate: PropTypes.func.isRequired
-};
-
-const config = {
-    metaData: {
-        adUnitPath: {
-            path: '/ad/unit/path'
-        },
-        usdToEurRate: 1.1
-    },
-    prebid: {
-        timeout: 666
-    },
-    slot: {}
-};
-
-describe('When I render a placement provider component with some placement in it', () => {
-    describe('with advertising configured to be active (default, active prop omitted)', () => {
-        let wrapper;
-        beforeEach(() => {
-            wrapper = mount(
-                <AdvertisingProvider config={config}>
-                    <FakePlacement />
-                </AdvertisingProvider>
-            );
-        });
-        describe('an instance of the main advertising module', () =>
-            it('is created with the provided configuration', () =>
-                void expect(mockAdvertisingConstructor).to.have.been.calledWith(config)));
-        describe('the setup method of the main advertising module instance', () =>
-            it('is called', () => void expect(mockAdvertisingSetup).to.have.been.calledOnce));
-        describe('the activate method of the main advertising module instance', () =>
-            it('is called by the placement child component', () =>
-                void expect(mockAdvertisingActivate).to.have.been.calledWith('fred')));
-        describe('and the component is unmounted', () => {
-            beforeEach(() => wrapper.unmount());
-            describe('the teardown method of the main advertising module instance', () =>
-                it('is called', () => void expect(mockAdvertisingTeardown).to.have.been.calledOnce));
-        });
+describe('The AdvertisingProvider component', () => {
+    it('renders correctly', () =>
+        expectSnapshot(
+            <AdvertisingProvider config={config}>
+                <h1>hello</h1>
+            </AdvertisingProvider>
+        ));
+    describe('when mounted', () => {
+        beforeEach(() => mount(<AdvertisingProvider config={config} />));
+        it('constructs an Advertising module with the provided configuration', () =>
+            void mockConstructor.should.have.been.calledWith(config));
+        it('sets up the Advertising module', () => void mockSetup.should.have.been.called);
+        it('uses an AdvertisingContext.Provider to pass the activate method of the advertising module', () =>
+            expect(mockValueSpy.firstCall.args[0]).toMatchSnapshot());
+        afterEach(resetMocks);
     });
-    describe('with advertising configured to be active', () => {
-        let wrapper;
-        beforeEach(() => {
-            wrapper = mount(
-                <AdvertisingProvider active={false} config={config}>
-                    <FakePlacement />
-                </AdvertisingProvider>
-            );
-        });
-        describe('an instance of the main advertising module', () =>
-            it('is not created', () => void expect(mockAdvertisingConstructor).to.not.have.been.called));
-        describe('the setup method of the main advertising module instance', () =>
-            it('is not called', () => void expect(mockAdvertisingSetup).to.not.have.been.called));
-        describe('the activate method of the main advertising module instance', () =>
-            it('is not called by the placement child component', () =>
-                void expect(mockAdvertisingActivate).to.not.have.been.called));
-        describe('and the component is unmounted', () => {
-            beforeEach(() => wrapper.unmount());
-            describe('the teardown method of the main advertising module instance', () =>
-                it('is not called', () => void expect(mockAdvertisingTeardown).to.not.have.been.called));
-        });
+    describe('when mounted with active = false', () => {
+        beforeEach(() => mount(<AdvertisingProvider config={config} active={false} />));
+        it('constructs an Advertising module with the provided configuration', () =>
+            void mockConstructor.should.not.have.been.called);
+        it('does not set up an Advertising module', () => void mockSetup.should.not.have.been.called);
+        afterEach(resetMocks);
     });
-    // https://github.com/sinonjs/sinon/issues/1712
-    // Vanilla reset shows a warning!
-    afterEach(() => mySandbox.resetHistory());
 });
+
+function resetMocks() {
+    mockConstructor.resetHistory();
+    mockSetup.resetHistory();
+    mockTeardown.resetHistory();
+    mockActivate.resetHistory();
+    mockValueSpy.resetHistory();
+}

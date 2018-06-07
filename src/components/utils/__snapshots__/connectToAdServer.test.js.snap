@@ -1,12 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`When I create a component that is connected to the ad server and the component is mounted and I call the collapse callback function passed to the wrapper the render output is correct (contains not placement, because it is hidden now) 1`] = `"<span id=\\"wrapper\\"><!-- react-empty: 3 --></span>"`;
-
-exports[`When I create a component that is connected to the ad server and the component is mounted the render output is correct (contains the placement) 1`] = `"<span id=\\"wrapper\\"><div id=\\"bla\\"></div></span>"`;
-
-exports[`When I create a component that is connected to the ad server and the component is mounted the “activate” function provided by the wrapper around the component is called with the correct arguments 1`] = `
-Array [
-  "bla",
-  [Function],
-]
+exports[`When I connect a component to the ad server the connected component renders correctly (activate prop is added, other props are proxied through) 1`] = `
+<div
+  activate="activate"
+  foo="bar"
+/>
 `;

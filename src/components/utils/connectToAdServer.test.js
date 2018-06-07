@@ -1,65 +1,17 @@
-import { sandbox } from 'sinon';
-import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import React from 'react';
 import connectToAdServer from './connectToAdServer';
-import { mount } from 'enzyme';
+import expectSnapshot from '@mt-testutils/expect-snapshot';
 
-const mySandbox = sandbox.create();
-const mockActivate = mySandbox.spy();
-const mockContext = {};
-
-class MockProvider extends Component {
-    getChildContext() {
-        return {
-            activate: (id, collapseCallback) => {
-                mockContext.collapseCallback = collapseCallback;
-                return mockActivate(id, collapseCallback);
-            }
-        };
+jest.mock('../../AdvertisingContext', () => ({
+    Consumer({ children }) {
+        return children('activate');
     }
+}));
 
-    render() {
-        return <span id="wrapper">{this.props.children}</span>;
-    }
-}
-
-MockProvider.childContextTypes = {
-    activate: PropTypes.func
-};
-
-MockProvider.propTypes = {
-    children: PropTypes.node
-};
-
-describe('When I create a component that is connected to the ad server', () => {
-    let MyPlacement;
-    beforeEach(() => (MyPlacement = connectToAdServer(({ id }) => <div id={id} />)));
-
-    describe('and the component is mounted', () => {
-        let wrapper;
-        beforeEach(
-            () =>
-                (wrapper = mount(
-                    <MockProvider>
-                        <MyPlacement id="bla" />
-                    </MockProvider>
-                ))
-        );
-        describe('the render output', () =>
-            it('is correct (contains the placement)', () => expect(wrapper.html()).toMatchSnapshot()));
-        describe('the “activate” function provided by the wrapper around the component', () => {
-            it('is called exactly once', () => void expect(mockActivate).to.have.been.calledOnce);
-            it('is called with the correct arguments', () =>
-                void expect(mockActivate.firstCall.args).toMatchSnapshot());
-        });
-        describe('and I call the collapse callback function passed to the wrapper', () => {
-            beforeEach(() => mockContext.collapseCallback());
-            describe('the render output', () =>
-                it('is correct (contains not placement, because it is hidden now)', () =>
-                    void expect(wrapper.html()).toMatchSnapshot()));
-        });
-    });
+describe('When I connect a component to the ad server', () => {
+    let ConnectedComponent;
+    beforeEach(() => (ConnectedComponent = connectToAdServer(props => <div {...props} />)));
+    describe('the connected component', () =>
+        it('renders correctly (activate prop is added, other props are proxied through)', () =>
+            expectSnapshot(<ConnectedComponent foo="bar" />)));
 });
-// https://github.com/sinonjs/sinon/issues/1712
-// Vanilla reset shows a warning!
-afterEach(() => mySandbox.resetHistory());

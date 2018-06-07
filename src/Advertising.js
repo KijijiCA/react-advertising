@@ -1,13 +1,5 @@
 import getAdUnits from './utils/getAdUnits';
 
-// eslint-disable-next-line no-native-reassign
-window.googletag = window.googletag || {};
-window.googletag.cmd = window.googletag.cmd || [];
-
-// eslint-disable-next-line no-native-reassign
-window.pbjs = window.pbjs || {};
-window.pbjs.que = window.pbjs.que || [];
-
 const GROSS_TO_NET_RATE = 0.93;
 const PRICE_GRANULARITY = 'medium';
 const BIDDER_SEQUENCE = 'random';

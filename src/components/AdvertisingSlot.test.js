@@ -1,41 +1,30 @@
 import React from 'react';
-import { spy } from 'sinon';
-import renderer from 'react-test-renderer';
-import { AdvertisingSlotDiv } from './AdvertisingSlot';
+import { spy, match } from 'sinon';
+import expectSnapshot from '@mt-testutils/expect-snapshot';
+import { mount } from 'enzyme';
 
-const id = 'my-beautiful-id';
-const className = 'large pink';
-const styles = {
-    color: 'hotpink',
-    fontSize: '2em'
-};
+const id = 'my-id';
 
 describe('The advertising slot component', () => {
-    let mockConnectToAdServer;
+    let AdvertisingSlot, mockActivate;
     beforeEach(() => {
-        jest.resetModules();
-        mockConnectToAdServer = spy();
-        jest.doMock('./utils/connectToAdServer', () => component => {
-            mockConnectToAdServer(component);
-            return component;
-        });
-        require('./AdvertisingSlot');
-    });
-    it('is connected to the ad server', () => void expect(mockConnectToAdServer).to.have.been.called);
-});
-
-describe('The div component wrapped by the advertising slot component', () => {
-    describe('with just an ID', () => snapshotTest(<AdvertisingSlotDiv id={id} />));
-    describe('with CSS classes', () => snapshotTest(<AdvertisingSlotDiv id={id} className={className} />));
-    describe('with CSS styles', () => snapshotTest(<AdvertisingSlotDiv id={id} styles={styles} />));
-    describe('with children', () =>
-        snapshotTest(
-            <AdvertisingSlotDiv id={id}>
-                <h1>Hello!1!</h1>
-            </AdvertisingSlotDiv>
+        mockActivate = spy();
+        jest.mock('./utils/connectToAdServer', () => Component => props => (
+            <Component {...props} activate={mockActivate} />
         ));
+        AdvertisingSlot = require('./AdvertisingSlot').default;
+    });
+    it('renders correctly', () =>
+        expectSnapshot(
+            <AdvertisingSlot id={id} style={{ color: 'hotpink' }} className="my-class">
+                <h1>hello</h1>
+            </AdvertisingSlot>
+        ));
+    describe('when mounted', () => {
+        beforeEach(() => mount(<AdvertisingSlot id={id} />));
+        it('calls the activate function with the ID', () => void mockActivate.should.have.been.calledWith(id));
+        it('calls the activate function with a collapse callback', () =>
+            void mockActivate.should.have.been.calledWith(match.any, match.func));
+    });
+    afterEach(() => jest.resetModules());
 });
-
-function snapshotTest(component) {
-    it('is rendered correctly', () => expect(renderer.create(component).toJSON()).toMatchSnapshot());
-}
