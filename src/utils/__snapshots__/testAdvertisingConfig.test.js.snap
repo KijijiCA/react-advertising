@@ -3,6 +3,12 @@
 exports[`The test advertising configuration for unit tests is correct 1`] = `
 Object {
   "active": true,
+  "customEvents": Object {
+    "collapse": Object {
+      "divIdPrefix": "div-gpt-ad-",
+      "eventMessagePrefix": "CloseAdvContainer:",
+    },
+  },
   "metaData": Object {
     "adUnitPath": Object {
       "path": "global/ad/unit/path",

@@ -11,9 +11,9 @@ const setupPrebid = Symbol('setup Prebid (private method)');
 const teardownPrebid = Symbol('teardown Prebid (private method)');
 const setupGpt = Symbol('setup GPT (private method)');
 const teardownGpt = Symbol('teardown GPT (private method)');
-const setupCollapseEmtpyAdvertisingSlots = Symbol('setup collapse empty advertising slots (private method)');
-const teardownCollapseEmtpyAdvertisingSlots = Symbol('teardown collapse empty advertising slots (private method)');
-const collapseEmptyAdvertisingSlots = Symbol('collapse empty advertising slots (private method)');
+const setupCustomEvents = Symbol('setup custom events (private method)');
+const setupCustomEvent = Symbol('setup custom event (private method)');
+const teardownCustomEvents = Symbol('teardown custom events (private method)');
 const withQueue = Symbol('with queue (private method)');
 const queueForGPT = Symbol('queue for GPT (private method)');
 const queueForPrebid = Symbol('queue for Prebid (private method)');
@@ -25,7 +25,8 @@ export default class Advertising {
         this.config = config;
         this.slots = {};
         this.gptSizeMappings = {};
-        this.collapseCallbacks = {};
+        this.customEventCallbacks = {};
+        this.customEventHandlers = {};
         this.queue = [];
         this[setDefaultConfig]();
     }
@@ -33,8 +34,8 @@ export default class Advertising {
     // ---------- PUBLIC METHODS ----------
 
     async setup() {
-        const { slots, config: { prebid: { timeout } }, collapseCallbacks, queue } = this;
-        this[setupCollapseEmtpyAdvertisingSlots]();
+        const { slots, config: { prebid: { timeout } }, queue } = this;
+        this[setupCustomEvents]();
         await Promise.all([
             Advertising[queueForPrebid](this[setupPrebid].bind(this)),
             Advertising[queueForGPT](this[setupGpt].bind(this))
@@ -42,8 +43,13 @@ export default class Advertising {
         if (queue.length === 0) {
             return;
         }
-        for (const { id, collapse } of queue) {
-            collapseCallbacks[id] = collapse;
+        for (const { id, customEventHandlers } of queue) {
+            Object.keys(customEventHandlers).forEach(customEventId => {
+                if (!this.customEventCallbacks[customEventId]) {
+                    this.customEventCallbacks[customEventId] = {};
+                }
+                return (this.customEventCallbacks[customEventId][id] = customEventHandlers[customEventId]);
+            });
         }
         const divIds = queue.map(({ id }) => id);
         const selectedSlots = queue.map(({ id }) => slots[id]);
@@ -63,24 +69,28 @@ export default class Advertising {
     }
 
     async teardown() {
-        this[teardownCollapseEmtpyAdvertisingSlots]();
+        this[teardownCustomEvents]();
         await Promise.all([
             Advertising[queueForPrebid](this[teardownPrebid].bind(this)),
             Advertising[queueForGPT](this[teardownGpt].bind(this))
         ]);
         this.slots = {};
         this.gptSizeMappings = {};
-        this.collapseCallbacks = {};
         this.queue = {};
     }
 
-    activate(id, collapse = () => {}) {
-        const { slots, config: { prebid: { timeout } }, collapseCallbacks } = this;
+    activate(id, customEventHandlers = {}) {
+        const { slots, config: { prebid: { timeout } } } = this;
         if (Object.values(slots).length === 0) {
-            this.queue.push({ id, collapse });
+            this.queue.push({ id, customEventHandlers });
             return;
         }
-        collapseCallbacks[id] = collapse;
+        Object.keys(customEventHandlers).forEach(customEventId => {
+            if (!this.customEventCallbacks[customEventId]) {
+                this.customEventCallbacks[customEventId] = {};
+            }
+            return (this.customEventCallbacks[customEventId][id] = customEventHandlers[customEventId]);
+        });
         Advertising[queueForPrebid](() =>
             window.pbjs.requestBids({
                 timeout,
@@ -98,25 +108,41 @@ export default class Advertising {
 
     // ---------- PRIVATE METHODS ----------
 
-    // this is specific to mobile.de / MOTOR-TALK, should eventually
-    // be removed from the open source version of this lib */
-    [setupCollapseEmtpyAdvertisingSlots]() {
-        const { collapseCallbacks } = this;
-        this[collapseEmptyAdvertisingSlots] = ({ data }) => {
-            if (typeof data !== 'string' || !data.startsWith('CloseAdvContainer:')) {
-                return;
-            }
-            const id = `div-gpt-ad-${data.replace(/^CloseAdvContainer:/, '')}`;
-            const collapseCallback = collapseCallbacks[id];
-            if (collapseCallback) {
-                collapseCallback();
-            }
-        };
-        window.addEventListener('message', this[collapseEmptyAdvertisingSlots]);
+    [setupCustomEvents]() {
+        if (!this.config.customEvents) {
+            return;
+        }
+        Object.keys(this.config.customEvents).forEach(customEventId =>
+            this[setupCustomEvent](customEventId, this.config.customEvents[customEventId])
+        );
     }
 
-    [teardownCollapseEmtpyAdvertisingSlots]() {
-        window.removeEventListener('message', this[collapseEmptyAdvertisingSlots]);
+    [setupCustomEvent](customEventId, { eventMessagePrefix, divIdPrefix }) {
+        const { customEventCallbacks } = this;
+        this.customEventHandlers[customEventId] = ({ data }) => {
+            if (typeof data !== 'string' || !data.startsWith(`${eventMessagePrefix}`)) {
+                return;
+            }
+            const divId = `${divIdPrefix || ''}${data.substr(eventMessagePrefix.length)}`;
+            const callbacks = customEventCallbacks[customEventId];
+            if (!callbacks) {
+                return;
+            }
+            const callback = callbacks[divId];
+            if (callback) {
+                callback();
+            }
+        };
+        window.addEventListener('message', this.customEventHandlers[customEventId]);
+    }
+
+    [teardownCustomEvents]() {
+        if (!this.config.customEvents) {
+            return;
+        }
+        Object.keys(this.config.customEvents).forEach(customEventId =>
+            window.removeEventListener('message', this.customEventHandlers[customEventId])
+        );
     }
 
     [defineGptSizeMappings]() {

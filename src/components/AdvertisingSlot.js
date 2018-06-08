@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 
 class AdvertisingSlot extends Component {
     componentDidMount() {
-        const { activate, id, hide } = this.props;
-        activate(id, hide);
+        const { activate, id, customEventHandlers } = this.props;
+        activate(id, customEventHandlers);
     }
     render() {
         const { id, style, className, children } = this.props;
@@ -19,11 +19,11 @@ AdvertisingSlot.propTypes = {
     className: PropTypes.string,
     children: PropTypes.node,
     activate: PropTypes.func.isRequired,
-    hide: PropTypes.func.isRequired
+    customEventHandlers: PropTypes.objectOf(PropTypes.func).isRequired
 };
 
 AdvertisingSlot.defaultProps = {
-    hide: () => {}
+    customEventHandlers: {}
 };
 
 export default connectToAdServer(AdvertisingSlot);

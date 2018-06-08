@@ -120,11 +120,11 @@ describe('When I instantiate an advertising main module', () => {
             describe("the background image of the ad slot's DOM element", () =>
                 it('is set to none', () => void expect(fakeElement.style.backgroundImage).to.equal('none')));
         });
-        describe('and I activate the “foo” ad with a callback function to collapse its slot', () => {
-            let collapseCallback;
+        describe('and I activate the “foo” ad with a custom events object to collapse its slot', () => {
+            let collapse;
             beforeEach(() => {
-                collapseCallback = spy();
-                advertising.activate(DIV_ID_FOO, collapseCallback);
+                collapse = spy();
+                advertising.activate(DIV_ID_FOO, { collapse });
             });
             describe('and I send a message event to collapse the ad slot', () => {
                 beforeEach(done => {
@@ -132,7 +132,7 @@ describe('When I instantiate an advertising main module', () => {
                     setTimeout(() => done());
                 });
                 describe('the provided collapse callback', () =>
-                    it('is called', () => void expect(collapseCallback).to.have.been.calledOnce));
+                    it('is called', () => void expect(collapse).to.have.been.calledOnce));
             });
             describe('and I send some message event', () => {
                 beforeEach(done => {
@@ -140,7 +140,7 @@ describe('When I instantiate an advertising main module', () => {
                     setTimeout(() => done());
                 });
                 describe('the provided collapse callback', () =>
-                    it('is not called', () => void expect(collapseCallback).to.not.have.been.called));
+                    it('is not called', () => void expect(collapse).to.not.have.been.called));
             });
             describe('and I send a message event to collapse another ad slot', () => {
                 beforeEach(done => {
@@ -148,7 +148,7 @@ describe('When I instantiate an advertising main module', () => {
                     setTimeout(() => done());
                 });
                 describe('the provided collapse callback', () =>
-                    it('is not called', () => void expect(collapseCallback).to.not.have.been.called));
+                    it('is not called', () => void expect(collapse).to.not.have.been.called));
             });
         });
     });

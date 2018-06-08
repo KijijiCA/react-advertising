@@ -103,5 +103,11 @@ export const config = {
         loggedIn: LOGGED_IN,
         threadId: THREAD_ID
     },
-    placementTestId: PLACEMENT_TEST_ID
+    placementTestId: PLACEMENT_TEST_ID,
+    customEvents: {
+        collapse: {
+            eventMessagePrefix: 'CloseAdvContainer:',
+            divIdPrefix: 'div-gpt-ad-'
+        }
+    }
 };

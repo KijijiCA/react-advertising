@@ -24,7 +24,7 @@ describe('The advertising slot component', () => {
         beforeEach(() => mount(<AdvertisingSlot id={id} />));
         it('calls the activate function with the ID', () => void mockActivate.should.have.been.calledWith(id));
         it('calls the activate function with a collapse callback', () =>
-            void mockActivate.should.have.been.calledWith(match.any, match.func));
+            void mockActivate.should.have.been.calledWith(match.any, match.object));
     });
     afterEach(() => jest.resetModules());
 });
