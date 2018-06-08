@@ -20,7 +20,13 @@ const config = {
     prebid: {
         timeout: 666
     },
-    slots: []
+    slots: [],
+    customEvents: {
+        foo: {
+            eventMessagePrefix: 'fasel',
+            divIdPrefix: 'baz'
+        }
+    }
 };
 
 describe('When I check the prop types for a valid config with no slots', () => {
@@ -28,7 +34,7 @@ describe('When I check the prop types for a valid config with no slots', () => {
     beforeEach(() => (result = checkPropTypes(MyComponent.propTypes, { config })));
     describe('the prop type validation', () => it('passes', () => void expect(result).toBeUndefined()));
 });
-describe('When I check the prop types for a valud config with a valid slot', () => {
+describe('When I check the prop types for a valid config with a valid slot', () => {
     let result;
     beforeEach(
         () =>
@@ -60,7 +66,7 @@ describe('When I check the prop types for a valud config with a valid slot', () 
     );
     describe('the prop type validation', () => it('passes', () => void expect(result).toBeUndefined()));
 });
-describe('When I check the prop types for a valud config with an invalid slot', () => {
+describe('When I check the prop types for a valid config with an invalid slot', () => {
     let result;
     beforeEach(
         () =>

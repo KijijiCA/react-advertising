@@ -26,5 +26,11 @@ export default PropTypes.shape({
             })
         )
     ),
-    slots: PropTypes.arrayOf(AdvertisingSlotConfigPropType)
+    slots: PropTypes.arrayOf(AdvertisingSlotConfigPropType),
+    customEvents: PropTypes.objectOf(
+        PropTypes.shape({
+            eventMessagePrefix: PropTypes.string.isRequired,
+            divIdPrefix: PropTypes.string
+        })
+    )
 });
