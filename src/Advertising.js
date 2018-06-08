@@ -1,8 +1,6 @@
 import getAdUnits from './utils/getAdUnits';
 
 const GROSS_TO_NET_RATE = 0.93;
-const PRICE_GRANULARITY = 'medium';
-const BIDDER_SEQUENCE = 'random';
 const defineGptSizeMappings = Symbol('define GTP size mappings (private method)');
 const getGptSizeMapping = Symbol('get GPT size mapping (private method)');
 const defineSlots = Symbol('define slots (private method)');
@@ -34,7 +32,7 @@ export default class Advertising {
     // ---------- PUBLIC METHODS ----------
 
     async setup() {
-        const { slots, config: { prebid: { timeout } }, queue } = this;
+        const { slots, queue } = this;
         this[setupCustomEvents]();
         await Promise.all([
             Advertising[queueForPrebid](this[setupPrebid].bind(this)),
@@ -55,7 +53,6 @@ export default class Advertising {
         const selectedSlots = queue.map(({ id }) => slots[id]);
         Advertising[queueForPrebid](() =>
             window.pbjs.requestBids({
-                timeout,
                 adUnitCodes: divIds,
                 bidsBackHandler() {
                     window.pbjs.setTargetingForGPTAsync(divIds);
@@ -80,7 +77,7 @@ export default class Advertising {
     }
 
     activate(id, customEventHandlers = {}) {
-        const { slots, config: { prebid: { timeout } } } = this;
+        const { slots } = this;
         if (Object.values(slots).length === 0) {
             this.queue.push({ id, customEventHandlers });
             return;
@@ -93,7 +90,6 @@ export default class Advertising {
         });
         Advertising[queueForPrebid](() =>
             window.pbjs.requestBids({
-                timeout,
                 adUnitCodes: [id],
                 bidsBackHandler() {
                     window.pbjs.setTargetingForGPTAsync([id]);
@@ -189,10 +185,7 @@ export default class Advertising {
     [setupPrebid]() {
         const adUnits = getAdUnits(this.config.slots, this.config.sizeMappings);
         window.pbjs.addAdUnits(adUnits);
-        window.pbjs.setConfig({
-            priceGranularity: PRICE_GRANULARITY,
-            bidderSequence: BIDDER_SEQUENCE
-        });
+        window.pbjs.setConfig(this.config.prebid);
         if (this.config.metaData.usdToEurRate) {
             const usdToEurRate = this.config.metaData.usdToEurRate;
             window.pbjs.bidderSettings = {
@@ -248,9 +241,6 @@ export default class Advertising {
     [setDefaultConfig]() {
         if (!this.config.prebid) {
             this.config.prebid = {};
-        }
-        if (!this.config.prebid.timeout) {
-            this.config.prebid.timeout = 700;
         }
         if (!this.config.metaData) {
             this.config.metaData = {};

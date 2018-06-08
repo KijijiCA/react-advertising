@@ -28,6 +28,10 @@ describe('When I instantiate an advertising main module', () => {
             it('is set', () =>
                 void expect(global.pbjs.setConfig).to.have.been.calledWithMatch({ bidderSequence: 'random' }));
         });
+        describe('the bidder timeout for Prebid', () => {
+            it('is set', () =>
+                void expect(global.pbjs.setConfig).to.have.been.calledWithMatch({ bidderTimeout: 1500 }));
+        });
         describe('bidder settings for AppNexus', () =>
             it('are set', () => void expect(global.pbjs.bidderSettings.appnexus).to.exist));
         describe('bidder settings for Rubicon', () =>

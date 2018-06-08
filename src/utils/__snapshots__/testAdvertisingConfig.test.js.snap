@@ -25,7 +25,9 @@ Object {
   },
   "placementTestId": 100,
   "prebid": Object {
-    "timeout": 5000,
+    "bidderSequence": "random",
+    "bidderTimeout": 1500,
+    "priceGranularity": "medium",
   },
   "sizeMappings": Object {
     "mobailAndTablet": Array [

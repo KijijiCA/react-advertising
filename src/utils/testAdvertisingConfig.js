@@ -11,7 +11,6 @@ const BIDDER_BAR = 'bidder-bar';
 const PARAMS_BAR = { bar: 'foo' };
 const COLLAPSE_EMPTY_DIV = [true, true];
 
-const TIMEOUT = 5000;
 const GPT_SIZES = ['fluid', [320, 240]];
 
 const GLOBAL_AD_UNIT_PATH = 'global/ad/unit/path';
@@ -26,7 +25,9 @@ const PLACEMENT_TEST_ID = 100;
 export const config = {
     active: true,
     prebid: {
-        timeout: TIMEOUT
+        bidderTimeout: 1500,
+        priceGranularity: 'medium',
+        bidderSequence: 'random'
     },
     slots: [
         {
