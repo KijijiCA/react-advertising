@@ -3,20 +3,14 @@ import AdvertisingSlotConfigPropType from './AdvertisingSlotConfigPropType';
 
 export default PropTypes.shape({
     metaData: PropTypes.shape({
-        adUnitPath: PropTypes.shape({
-            path: PropTypes.string.isRequired
-        }).isRequired,
-        boardMakeAndModels: PropTypes.arrayOf(
-            PropTypes.shape({
-                make: PropTypes.string.isRequired,
-                models: PropTypes.arrayOf(PropTypes.string).isRequired
-            })
-        ),
-        loggedIn: PropTypes.bool,
         usdToEurRate: PropTypes.number.isRequired
     }),
+    path: PropTypes.string,
+    targeting: PropTypes.object,
     prebid: PropTypes.shape({
-        timeout: PropTypes.number
+        bidderTimeout: PropTypes.number,
+        priceGranularity: PropTypes.string,
+        bidderSequence: PropTypes.string
     }),
     sizeMappings: PropTypes.objectOf(
         PropTypes.arrayOf(

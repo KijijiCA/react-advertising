@@ -160,7 +160,7 @@ export default class Advertising {
 
     [defineSlots]() {
         this.config.slots.forEach(({ id, targeting = {}, sizes, sizeMappingName, path, collapseEmptyDiv }) => {
-            const slot = window.googletag.defineSlot(path || this.config.metaData.adUnitPath.path, sizes, id);
+            const slot = window.googletag.defineSlot(path || this.config.path, sizes, id);
 
             const sizeMapping = this[getGptSizeMapping](sizeMappingName);
             if (sizeMapping) {

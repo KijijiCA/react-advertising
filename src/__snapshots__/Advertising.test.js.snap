@@ -84,13 +84,9 @@ Array [
 exports[`When I instantiate an advertising main module and call the setup method global GPT targeting parameters are set correctly 1`] = `
 Array [
   Array [
-    "mt-u4",
-    false,
-  ],
-  Array [
-    "mt-thread",
+    "eagt",
     Array [
-      6666,
+      666,
     ],
   ],
   Array [
@@ -100,12 +96,21 @@ Array [
   Array [
     "mt-ma",
     Array [
-      "make",
+      "Poserwagen",
     ],
   ],
   Array [
     "mt-mo",
-    "models",
+    Array [
+      "Brummstinko",
+      "Grand Umweltverpestino",
+    ],
+  ],
+  Array [
+    "mt-thread",
+    Array [
+      666,
+    ],
   ],
   Array [
     "mt-u2",
@@ -114,10 +119,8 @@ Array [
     ],
   ],
   Array [
-    "eagt",
-    Array [
-      100,
-    ],
+    "mt-u4",
+    true,
   ],
 ]
 `;
@@ -354,5 +357,6 @@ exports[`When I instantiate an advertising main module without prebid config the
 Object {
   "metaData": Object {},
   "prebid": Object {},
+  "targeting": Object {},
 }
 `;
