@@ -2,15 +2,69 @@ import PropTypes from 'prop-types';
 import AdvertisingSlotConfigPropType from './AdvertisingSlotConfigPropType';
 
 export default PropTypes.shape({
-    metaData: PropTypes.shape({
-        usdToEurRate: PropTypes.number.isRequired
-    }),
     path: PropTypes.string,
     targeting: PropTypes.object,
     prebid: PropTypes.shape({
+        debug: PropTypes.bool,
         bidderTimeout: PropTypes.number,
-        priceGranularity: PropTypes.string,
-        bidderSequence: PropTypes.string
+        enableSendAllBids: PropTypes.bool,
+        bidderSequence: PropTypes.oneOf(['random', 'fixed']),
+        publisherDomain: PropTypes.string,
+        cookieSyncDelay: PropTypes.number,
+        priceGranularity: PropTypes.oneOfType([
+            PropTypes.oneOf(['low', 'medium', 'high', 'auto', 'dense']),
+            PropTypes.shape({
+                buckets: PropTypes.arrayOf(
+                    PropTypes.shape({
+                        precision: PropTypes.number,
+                        min: PropTypes.number.isRequired,
+                        max: PropTypes.number.isRequired,
+                        increment: PropTypes.number.isRequired
+                    })
+                ).isRequired
+            })
+        ]),
+        mediaTypePriceGranularity: PropTypes.shape({
+            video: PropTypes.oneOfType([
+                PropTypes.oneOf(['low', 'medium', 'high', 'auto', 'dense']),
+                PropTypes.shape({
+                    buckets: PropTypes.arrayOf(
+                        PropTypes.shape({
+                            precision: PropTypes.number,
+                            min: PropTypes.number.isRequired,
+                            max: PropTypes.number.isRequired,
+                            increment: PropTypes.number.isRequired
+                        })
+                    ).isRequired
+                })
+            ]),
+            banner: PropTypes.oneOfType([
+                PropTypes.oneOf(['low', 'medium', 'high', 'auto', 'dense']),
+                PropTypes.shape({
+                    buckets: PropTypes.arrayOf(
+                        PropTypes.shape({
+                            precision: PropTypes.number,
+                            min: PropTypes.number.isRequired,
+                            max: PropTypes.number.isRequired,
+                            increment: PropTypes.number.isRequired
+                        })
+                    ).isRequired
+                })
+            ]),
+            native: PropTypes.oneOfType([
+                PropTypes.oneOf(['low', 'medium', 'high', 'auto', 'dense']),
+                PropTypes.shape({
+                    buckets: PropTypes.arrayOf(
+                        PropTypes.shape({
+                            precision: PropTypes.number,
+                            min: PropTypes.number.isRequired,
+                            max: PropTypes.number.isRequired,
+                            increment: PropTypes.number.isRequired
+                        })
+                    ).isRequired
+                })
+            ])
+        })
     }),
     sizeMappings: PropTypes.objectOf(
         PropTypes.arrayOf(
