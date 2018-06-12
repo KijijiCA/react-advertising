@@ -22,9 +22,11 @@ The demo uses the same test Prebid configuration as the
 You can find documentation on how to use this library in the project's wiki:
 
 * [Usage](https://github.com/technology-ebay-de/react-prebid/wiki/Usage)
+* [API](https://github.com/technology-ebay-de/react-prebid/wiki/API)
 * [Configuration](https://github.com/technology-ebay-de/react-prebid/wiki/Configuration)
 * [Custom Events](https://github.com/technology-ebay-de/react-prebid/wiki/Custom-Events)
 * [Plugins](https://github.com/technology-ebay-de/react-prebid/wiki/Custom-Events)
+* [Importing the Library As ESNext Module](https://github.com/technology-ebay-de/react-prebid/wiki/Importing-the-Library-As-ESNext-Module)
 
 ## License
 
