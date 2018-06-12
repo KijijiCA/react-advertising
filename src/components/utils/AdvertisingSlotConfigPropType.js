@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 export default PropTypes.shape({
     id: PropTypes.string.isRequired,
     path: PropTypes.string,
-    collapseEmptyDiv: PropTypes.bool,
+    collapseEmptyDiv: PropTypes.arrayOf(PropTypes.bool),
     targeting: PropTypes.object,
     sizes: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.number)])).isRequired,
     prebid: PropTypes.arrayOf(

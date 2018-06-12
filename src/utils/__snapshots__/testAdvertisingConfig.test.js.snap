@@ -10,20 +10,9 @@ Object {
     },
   },
   "metaData": Object {
-    "adUnitPath": Object {
-      "path": "global/ad/unit/path",
-    },
-    "boardMakeAndModels": Array [
-      Object {
-        "make": "make",
-        "models": "models",
-      },
-    ],
-    "loggedIn": false,
-    "threadId": 6666,
     "usdToEurRate": 2,
   },
-  "placementTestId": 100,
+  "path": "global/ad/unit/path",
   "prebid": Object {
     "bidderSequence": "random",
     "bidderTimeout": 1500,
@@ -144,5 +133,25 @@ Object {
       },
     },
   ],
+  "targeting": Object {
+    "eagt": Array [
+      666,
+    ],
+    "mt-ab": "test",
+    "mt-ma": Array [
+      "Poserwagen",
+    ],
+    "mt-mo": Array [
+      "Brummstinko",
+      "Grand Umweltverpestino",
+    ],
+    "mt-thread": Array [
+      666,
+    ],
+    "mt-u2": Array [
+      "00",
+    ],
+    "mt-u4": true,
+  },
 }
 `;

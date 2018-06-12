@@ -5,9 +5,8 @@ import { config, DIV_ID_BAR, DIV_ID_FOO } from './utils/testAdvertisingConfig';
 const GPT_SIZE_MAPPING = [[[0, 0], []], [[320, 700], [[300, 250], [320, 50]]], [[1050, 200], []]];
 
 describe('When I instantiate an advertising main module', () => {
-    let originalGetElementById, fakeElement, originalPbjs, originalGoogletag, advertising;
+    let originalPbjs, originalGoogletag, advertising;
     beforeEach(() => {
-        ({ originalGetElementById, fakeElement } = setupGetElementById());
         originalPbjs = setupPbjs();
         originalGoogletag = setupGoogletag();
         advertising = new Advertising(config);
@@ -31,20 +30,6 @@ describe('When I instantiate an advertising main module', () => {
         describe('the bidder timeout for Prebid', () => {
             it('is set', () =>
                 void expect(global.pbjs.setConfig).to.have.been.calledWithMatch({ bidderTimeout: 1500 }));
-        });
-        describe('bidder settings for AppNexus', () =>
-            it('are set', () => void expect(global.pbjs.bidderSettings.appnexus).to.exist));
-        describe('bidder settings for Rubicon', () =>
-            it('are set', () => void expect(global.pbjs.bidderSettings.rubicon).to.exist));
-        describe('and I call the method to adjust the bid CPM for AppNexus', () => {
-            let result;
-            beforeEach(() => (result = global.pbjs.bidderSettings.appnexus.bidCpmAdjustment(666)));
-            describe('the result', () => it('is correct', () => void expect(result).toMatchSnapshot()));
-        });
-        describe('and I call the method to adjust the bid CPM for Rubicon', () => {
-            let result;
-            beforeEach(() => (result = global.pbjs.bidderSettings.rubicon.bidCpmAdjustment(666)));
-            describe('the result', () => it('is correct', () => void expect(result).toMatchSnapshot()));
         });
         describe('initial loading of ad creatives through GPT', () =>
             it('is disabled', () => void expect(global.googletag.pubads().disableInitialLoad).to.have.been.calledOnce));
@@ -95,10 +80,6 @@ describe('When I instantiate an advertising main module', () => {
             it('are correct', () => void expect(advertising.slots).toMatchSnapshot()));
         describe('the GPT size mappings of the advertising module instance', () =>
             it('are correct', () => void expect(advertising.gptSizeMappings).toMatchSnapshot()));
-        describe("the background color of the ad slot's DOM element", () =>
-            it('is not changed', () => void expect(fakeElement.style.backgroundColor).to.equal('shmackground-color')));
-        describe("the background image of the ad slot's DOM element", () =>
-            it('is not changed', () => void expect(fakeElement.style.backgroundImage).to.equal('shmackground-image')));
         describe('and call the teardown method', () => {
             beforeEach(() => advertising.teardown());
             describe('the Prebid ad units', () =>
@@ -118,11 +99,6 @@ describe('When I instantiate an advertising main module', () => {
                 it('is set correctly', () => void expect(global.pbjs.setTargetingForGPTAsync.args).toMatchSnapshot()));
             describe('the ad slot', () =>
                 it('is refreshed', () => void expect(global.googletag.pubads().refresh.args).toMatchSnapshot()));
-            describe("the background color of the ad slot's DOM element", () =>
-                it('is set to transparent', () =>
-                    void expect(fakeElement.style.backgroundColor).to.equal('transparent')));
-            describe("the background image of the ad slot's DOM element", () =>
-                it('is set to none', () => void expect(fakeElement.style.backgroundImage).to.equal('none')));
         });
         describe('and I activate the “foo” ad with a custom events object to collapse its slot', () => {
             let collapse;
@@ -157,15 +133,13 @@ describe('When I instantiate an advertising main module', () => {
         });
     });
     afterEach(() => {
-        global.document = originalGetElementById;
         global.pbjs = originalPbjs;
         global.googletag = originalGoogletag;
     });
 });
 describe('When I instantiate an advertising main module', () => {
-    let originalGetElementById, fakeElement, originalPbjs, originalGoogletag, advertising;
+    let originalPbjs, originalGoogletag, advertising;
     beforeEach(() => {
-        ({ originalGetElementById, fakeElement } = setupGetElementById());
         originalPbjs = setupPbjs();
         originalGoogletag = setupGoogletag();
         advertising = new Advertising(config);
@@ -178,10 +152,6 @@ describe('When I instantiate an advertising main module', () => {
             it('is not set', () => void expect(global.pbjs.setTargetingForGPTAsync).to.not.have.been.called));
         describe('the ad slot', () =>
             it('is not refreshed', () => void expect(global.googletag.pubads().refresh).to.not.have.been.called));
-        describe("the background color of the ad slot's DOM element", () =>
-            it('is not changed', () => void expect(fakeElement.style.backgroundColor).to.equal('shmackground-color')));
-        describe("the background image of the ad slot's DOM element", () =>
-            it('is not changed', () => void expect(fakeElement.style.backgroundImage).to.equal('shmackground-image')));
         describe('and I call the setup method', () => {
             beforeEach(() => advertising.setup());
             describe('a bid', () =>
@@ -190,15 +160,9 @@ describe('When I instantiate an advertising main module', () => {
                 it('is set', () => void expect(global.pbjs.setTargetingForGPTAsync).to.have.been.calledOnce));
             describe('the ad slot', () =>
                 it('is refreshed', () => void expect(global.googletag.pubads().refresh).to.have.been.calledOnce));
-            describe("the background color of the ad slot's DOM element", () =>
-                it('is set to transparent', () =>
-                    void expect(fakeElement.style.backgroundColor).to.equal('transparent')));
-            describe("the background image of the ad slot's DOM element", () =>
-                it('is set to none', () => void expect(fakeElement.style.backgroundImage).to.equal('none')));
         });
     });
     afterEach(() => {
-        global.document = originalGetElementById;
         global.pbjs = originalPbjs;
         global.googletag = originalGoogletag;
     });
@@ -216,12 +180,49 @@ describe('When I instantiate an advertising main module', () => {
     });
 });
 
-function setupGetElementById() {
-    const originalGetElementById = global.document.getElementById;
-    const fakeElement = { style: { backgroundColor: 'shmackground-color', backgroundImage: 'shmackground-image' } };
-    global.document.getElementById = () => fakeElement;
-    return { fakeElement, originalGetElementById };
-}
+describe('When I instantiate an advertising main module with plugins', () => {
+    let originalPbjs, originalGoogletag, advertising, plugins;
+    beforeEach(() => {
+        originalPbjs = setupPbjs();
+        originalGoogletag = setupGoogletag();
+        plugins = [
+            {
+                setupPrebid: spy(),
+                teardownPrebid: spy(),
+                setupGpt: spy(),
+                teardownGpt: spy()
+            }
+        ];
+        advertising = new Advertising(config, plugins);
+    });
+    describe('and call the setup method', () => {
+        beforeEach(() => advertising.setup());
+        describe("the plugin's hook for Prebid setup", () =>
+            it('is called', () => void plugins[0].setupPrebid.should.have.been.called));
+        describe("the plugin's hook for Prebid teardown", () =>
+            it('is not called', () => void plugins[0].teardownPrebid.should.not.have.been.called));
+        describe("the plugin's hook for GPT setup", () =>
+            it('is called', () => void plugins[0].setupGpt.should.have.been.called));
+        describe("the plugin's hook for GPT teardown", () =>
+            it('is not called', () => void plugins[0].teardownGpt.should.not.have.been.called));
+    });
+    describe('and call the teardown method', () => {
+        beforeEach(() => advertising.teardown());
+        describe("the plugin's hook for Prebid setup", () =>
+            it('is not called', () => void plugins[0].setupPrebid.should.not.have.been.called));
+        describe("the plugin's hook for Prebid teardown", () =>
+            it('is called', () => void plugins[0].teardownPrebid.should.have.been.called));
+        describe("the plugin's hook for GPT setup", () =>
+            it('is not called', () => void plugins[0].setupGpt.should.not.have.been.called));
+        describe("the plugin's hook for GPT teardown", () =>
+            it('is called', () => void plugins[0].teardownGpt.should.have.been.called));
+    });
+    afterEach(() => {
+        global.pbjs = originalPbjs;
+        global.googletag = originalGoogletag;
+    });
+});
+
 function setupPbjs() {
     const originalPbjs = global.pbjs;
     global.pbjs = {

@@ -1,6 +1,5 @@
 import getAdUnits from './utils/getAdUnits';
 
-const GROSS_TO_NET_RATE = 0.93;
 const defineGptSizeMappings = Symbol('define GTP size mappings (private method)');
 const getGptSizeMapping = Symbol('get GPT size mapping (private method)');
 const defineSlots = Symbol('define slots (private method)');
@@ -15,13 +14,14 @@ const teardownCustomEvents = Symbol('teardown custom events (private method)');
 const withQueue = Symbol('with queue (private method)');
 const queueForGPT = Symbol('queue for GPT (private method)');
 const queueForPrebid = Symbol('queue for Prebid (private method)');
-const removeBackground = Symbol('remove background (private method)');
 const setDefaultConfig = Symbol('set default config (private method)');
+const executePlugins = Symbol('execute plugins (private method)');
 
 export default class Advertising {
-    constructor(config) {
+    constructor(config, plugins = []) {
         this.config = config;
         this.slots = {};
+        this.plugins = plugins;
         this.gptSizeMappings = {};
         this.customEventCallbacks = {};
         this.customEventHandlers = {};
@@ -56,10 +56,7 @@ export default class Advertising {
                 adUnitCodes: divIds,
                 bidsBackHandler() {
                     window.pbjs.setTargetingForGPTAsync(divIds);
-                    Advertising[queueForGPT](() => {
-                        window.googletag.pubads().refresh(selectedSlots);
-                        divIds.forEach(Advertising[removeBackground]);
-                    });
+                    Advertising[queueForGPT](() => window.googletag.pubads().refresh(selectedSlots));
                 }
             })
         );
@@ -93,10 +90,7 @@ export default class Advertising {
                 adUnitCodes: [id],
                 bidsBackHandler() {
                     window.pbjs.setTargetingForGPTAsync([id]);
-                    Advertising[queueForGPT](() => {
-                        window.googletag.pubads().refresh([slots[id]]);
-                        Advertising[removeBackground](id);
-                    });
+                    Advertising[queueForGPT](() => window.googletag.pubads().refresh([slots[id]]));
                 }
             })
         );
@@ -160,7 +154,7 @@ export default class Advertising {
 
     [defineSlots]() {
         this.config.slots.forEach(({ id, targeting = {}, sizes, sizeMappingName, path, collapseEmptyDiv }) => {
-            const slot = window.googletag.defineSlot(path || this.config.metaData.adUnitPath.path, sizes, id);
+            const slot = window.googletag.defineSlot(path || this.config.path, sizes, id);
 
             const sizeMapping = this[getGptSizeMapping](sizeMappingName);
             if (sizeMapping) {
@@ -171,7 +165,9 @@ export default class Advertising {
                 slot.setCollapseEmptyDiv(...collapseEmptyDiv);
             }
 
-            Object.entries(targeting).forEach(([key, value]) => slot.setTargeting(key, value));
+            for (const [key, value] of Object.entries(targeting)) {
+                slot.setTargeting(key, value);
+            }
 
             slot.addService(window.googletag.pubads());
             this.slots[id] = slot;
@@ -183,50 +179,25 @@ export default class Advertising {
     }
 
     [setupPrebid]() {
+        this[executePlugins]('setupPrebid');
         const adUnits = getAdUnits(this.config.slots, this.config.sizeMappings);
         window.pbjs.addAdUnits(adUnits);
         window.pbjs.setConfig(this.config.prebid);
-        if (this.config.metaData.usdToEurRate) {
-            const usdToEurRate = this.config.metaData.usdToEurRate;
-            window.pbjs.bidderSettings = {
-                appnexus: {
-                    bidCpmAdjustment(bidCpm) {
-                        return bidCpm * usdToEurRate;
-                    }
-                },
-                rubicon: {
-                    bidCpmAdjustment(bidCpm) {
-                        return bidCpm * usdToEurRate * GROSS_TO_NET_RATE;
-                    }
-                }
-            };
-        }
     }
 
     [teardownPrebid]() {
+        this[executePlugins]('teardownPrebid');
         getAdUnits(this.config.slots, this.config.sizeMappings).forEach(({ code }) => window.pbjs.removeAdUnit(code));
     }
 
     [setupGpt]() {
+        this[executePlugins]('setupGpt');
         const pubads = window.googletag.pubads();
-        const { metaData, placementTestId } = this.config;
+        const { targeting } = this.config;
         this[defineGptSizeMappings]();
         this[defineSlots]();
-        if (metaData.loggedIn !== undefined) {
-            pubads.setTargeting('mt-u4', metaData.loggedIn);
-        }
-        if (metaData.threadId !== undefined) {
-            pubads.setTargeting('mt-thread', [metaData.threadId]);
-        }
-        pubads.setTargeting('mt-ab', 'test');
-        if (metaData.boardMakeAndModels && metaData.boardMakeAndModels.length > 0) {
-            pubads
-                .setTargeting('mt-ma', [metaData.boardMakeAndModels[0].make])
-                .setTargeting('mt-mo', metaData.boardMakeAndModels[0].models)
-                .setTargeting('mt-u2', ['00']);
-        }
-        if (placementTestId) {
-            pubads.setTargeting('eagt', [placementTestId]); // pmtest
+        for (const [key, value] of Object.entries(targeting)) {
+            pubads.setTargeting(key, value);
         }
         pubads.disableInitialLoad();
         pubads.enableSingleRequest();
@@ -235,6 +206,7 @@ export default class Advertising {
     }
 
     [teardownGpt]() {
+        this[executePlugins]('teardownGpt');
         window.googletag.destroySlots();
     }
 
@@ -244,6 +216,18 @@ export default class Advertising {
         }
         if (!this.config.metaData) {
             this.config.metaData = {};
+        }
+        if (!this.config.targeting) {
+            this.config.targeting = {};
+        }
+    }
+
+    [executePlugins](method) {
+        for (const plugin of this.plugins) {
+            const func = plugin[method];
+            if (func) {
+                func.call(this);
+            }
         }
     }
 
@@ -262,14 +246,5 @@ export default class Advertising {
                 resolve();
             })
         );
-    }
-
-    static [removeBackground](id) {
-        const divEl = document.getElementById(id);
-        if (!divEl) {
-            return;
-        }
-        divEl.style.backgroundColor = 'transparent';
-        divEl.style.backgroundImage = 'none';
     }
 }

@@ -16,14 +16,10 @@ const GPT_SIZES = ['fluid', [320, 240]];
 const GLOBAL_AD_UNIT_PATH = 'global/ad/unit/path';
 const SLOT_AD_UNIT_PATH = 'slot/ad/unit/path';
 const USD_TO_EUR_RATE = 2;
-const MAKE = 'make';
-const MODELS = 'models';
-const LOGGED_IN = false;
-const THREAD_ID = 6666;
-const PLACEMENT_TEST_ID = 100;
 
 export const config = {
     active: true,
+    path: GLOBAL_AD_UNIT_PATH,
     prebid: {
         bidderTimeout: 1500,
         priceGranularity: 'medium',
@@ -91,20 +87,18 @@ export const config = {
         ]
     },
     metaData: {
-        adUnitPath: {
-            path: GLOBAL_AD_UNIT_PATH
-        },
-        boardMakeAndModels: [
-            {
-                make: MAKE,
-                models: MODELS
-            }
-        ],
-        usdToEurRate: USD_TO_EUR_RATE,
-        loggedIn: LOGGED_IN,
-        threadId: THREAD_ID
+        usdToEurRate: USD_TO_EUR_RATE
     },
-    placementTestId: PLACEMENT_TEST_ID,
+
+    targeting: {
+        eagt: [666],
+        'mt-ab': 'test',
+        'mt-ma': ['Poserwagen'],
+        'mt-mo': ['Brummstinko', 'Grand Umweltverpestino'],
+        'mt-thread': [666],
+        'mt-u2': ['00'],
+        'mt-u4': true
+    },
     customEvents: {
         collapse: {
             eventMessagePrefix: 'CloseAdvContainer:',

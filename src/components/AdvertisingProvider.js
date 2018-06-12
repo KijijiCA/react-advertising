@@ -7,7 +7,7 @@ import AdvertisingContext from '../AdvertisingContext';
 export default class AdvertisingProvider extends Component {
     constructor(props) {
         super(props);
-        this.advertising = this.props.active ? new Advertising(props.config) : null;
+        this.advertising = this.props.active ? new Advertising(props.config, props.plugins) : null;
         this.activate = this.props.active ? this.advertising.activate.bind(this.advertising) : () => {};
     }
 
@@ -31,7 +31,15 @@ export default class AdvertisingProvider extends Component {
 AdvertisingProvider.propTypes = {
     active: PropTypes.bool,
     config: AdvertisingConfigPropType,
-    children: PropTypes.node
+    children: PropTypes.node,
+    plugins: PropTypes.arrayOf(
+        PropTypes.shape({
+            setupPrebid: PropTypes.func,
+            setupGpt: PropTypes.func,
+            teardownPrebid: PropTypes.func,
+            teardownGpt: PropTypes.func
+        })
+    )
 };
 
 AdvertisingProvider.defaultProps = {
