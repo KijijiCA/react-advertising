@@ -14,7 +14,6 @@ const teardownCustomEvents = Symbol('teardown custom events (private method)');
 const withQueue = Symbol('with queue (private method)');
 const queueForGPT = Symbol('queue for GPT (private method)');
 const queueForPrebid = Symbol('queue for Prebid (private method)');
-const removeBackground = Symbol('remove background (private method)');
 const setDefaultConfig = Symbol('set default config (private method)');
 const executePlugins = Symbol('execute plugins (private method)');
 
@@ -57,10 +56,7 @@ export default class Advertising {
                 adUnitCodes: divIds,
                 bidsBackHandler() {
                     window.pbjs.setTargetingForGPTAsync(divIds);
-                    Advertising[queueForGPT](() => {
-                        window.googletag.pubads().refresh(selectedSlots);
-                        divIds.forEach(Advertising[removeBackground]);
-                    });
+                    Advertising[queueForGPT](() => window.googletag.pubads().refresh(selectedSlots));
                 }
             })
         );
@@ -94,10 +90,7 @@ export default class Advertising {
                 adUnitCodes: [id],
                 bidsBackHandler() {
                     window.pbjs.setTargetingForGPTAsync([id]);
-                    Advertising[queueForGPT](() => {
-                        window.googletag.pubads().refresh([slots[id]]);
-                        Advertising[removeBackground](id);
-                    });
+                    Advertising[queueForGPT](() => window.googletag.pubads().refresh([slots[id]]));
                 }
             })
         );
@@ -253,14 +246,5 @@ export default class Advertising {
                 resolve();
             })
         );
-    }
-
-    static [removeBackground](id) {
-        const divEl = document.getElementById(id);
-        if (!divEl) {
-            return;
-        }
-        divEl.style.backgroundColor = 'transparent';
-        divEl.style.backgroundImage = 'none';
     }
 }

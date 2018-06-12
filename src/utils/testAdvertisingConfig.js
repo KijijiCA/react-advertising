@@ -16,11 +16,6 @@ const GPT_SIZES = ['fluid', [320, 240]];
 const GLOBAL_AD_UNIT_PATH = 'global/ad/unit/path';
 const SLOT_AD_UNIT_PATH = 'slot/ad/unit/path';
 const USD_TO_EUR_RATE = 2;
-const MAKE = 'make';
-const MODELS = 'models';
-const LOGGED_IN = false;
-const THREAD_ID = 6666;
-const PLACEMENT_TEST_ID = 100;
 
 export const config = {
     active: true,

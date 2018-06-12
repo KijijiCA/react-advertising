@@ -4,19 +4,9 @@ import { config, DIV_ID_BAR, DIV_ID_FOO } from './utils/testAdvertisingConfig';
 
 const GPT_SIZE_MAPPING = [[[0, 0], []], [[320, 700], [[300, 250], [320, 50]]], [[1050, 200], []]];
 
-const plugins = [
-    {
-        setupPrebid: spy(),
-        teardownPrebid: spy(),
-        setupGpt: spy(),
-        teardownGpt: spy()
-    }
-];
-
 describe('When I instantiate an advertising main module', () => {
-    let originalGetElementById, fakeElement, originalPbjs, originalGoogletag, advertising;
+    let originalPbjs, originalGoogletag, advertising;
     beforeEach(() => {
-        ({ originalGetElementById, fakeElement } = setupGetElementById());
         originalPbjs = setupPbjs();
         originalGoogletag = setupGoogletag();
         advertising = new Advertising(config);
@@ -90,10 +80,6 @@ describe('When I instantiate an advertising main module', () => {
             it('are correct', () => void expect(advertising.slots).toMatchSnapshot()));
         describe('the GPT size mappings of the advertising module instance', () =>
             it('are correct', () => void expect(advertising.gptSizeMappings).toMatchSnapshot()));
-        describe("the background color of the ad slot's DOM element", () =>
-            it('is not changed', () => void expect(fakeElement.style.backgroundColor).to.equal('shmackground-color')));
-        describe("the background image of the ad slot's DOM element", () =>
-            it('is not changed', () => void expect(fakeElement.style.backgroundImage).to.equal('shmackground-image')));
         describe('and call the teardown method', () => {
             beforeEach(() => advertising.teardown());
             describe('the Prebid ad units', () =>
@@ -113,11 +99,6 @@ describe('When I instantiate an advertising main module', () => {
                 it('is set correctly', () => void expect(global.pbjs.setTargetingForGPTAsync.args).toMatchSnapshot()));
             describe('the ad slot', () =>
                 it('is refreshed', () => void expect(global.googletag.pubads().refresh.args).toMatchSnapshot()));
-            describe("the background color of the ad slot's DOM element", () =>
-                it('is set to transparent', () =>
-                    void expect(fakeElement.style.backgroundColor).to.equal('transparent')));
-            describe("the background image of the ad slot's DOM element", () =>
-                it('is set to none', () => void expect(fakeElement.style.backgroundImage).to.equal('none')));
         });
         describe('and I activate the “foo” ad with a custom events object to collapse its slot', () => {
             let collapse;
@@ -152,15 +133,13 @@ describe('When I instantiate an advertising main module', () => {
         });
     });
     afterEach(() => {
-        global.document = originalGetElementById;
         global.pbjs = originalPbjs;
         global.googletag = originalGoogletag;
     });
 });
 describe('When I instantiate an advertising main module', () => {
-    let originalGetElementById, fakeElement, originalPbjs, originalGoogletag, advertising;
+    let originalPbjs, originalGoogletag, advertising;
     beforeEach(() => {
-        ({ originalGetElementById, fakeElement } = setupGetElementById());
         originalPbjs = setupPbjs();
         originalGoogletag = setupGoogletag();
         advertising = new Advertising(config);
@@ -173,10 +152,6 @@ describe('When I instantiate an advertising main module', () => {
             it('is not set', () => void expect(global.pbjs.setTargetingForGPTAsync).to.not.have.been.called));
         describe('the ad slot', () =>
             it('is not refreshed', () => void expect(global.googletag.pubads().refresh).to.not.have.been.called));
-        describe("the background color of the ad slot's DOM element", () =>
-            it('is not changed', () => void expect(fakeElement.style.backgroundColor).to.equal('shmackground-color')));
-        describe("the background image of the ad slot's DOM element", () =>
-            it('is not changed', () => void expect(fakeElement.style.backgroundImage).to.equal('shmackground-image')));
         describe('and I call the setup method', () => {
             beforeEach(() => advertising.setup());
             describe('a bid', () =>
@@ -185,15 +160,9 @@ describe('When I instantiate an advertising main module', () => {
                 it('is set', () => void expect(global.pbjs.setTargetingForGPTAsync).to.have.been.calledOnce));
             describe('the ad slot', () =>
                 it('is refreshed', () => void expect(global.googletag.pubads().refresh).to.have.been.calledOnce));
-            describe("the background color of the ad slot's DOM element", () =>
-                it('is set to transparent', () =>
-                    void expect(fakeElement.style.backgroundColor).to.equal('transparent')));
-            describe("the background image of the ad slot's DOM element", () =>
-                it('is set to none', () => void expect(fakeElement.style.backgroundImage).to.equal('none')));
         });
     });
     afterEach(() => {
-        global.document = originalGetElementById;
         global.pbjs = originalPbjs;
         global.googletag = originalGoogletag;
     });
@@ -212,11 +181,18 @@ describe('When I instantiate an advertising main module', () => {
 });
 
 describe('When I instantiate an advertising main module with plugins', () => {
-    let originalGetElementById, originalPbjs, originalGoogletag, advertising;
+    let originalPbjs, originalGoogletag, advertising, plugins;
     beforeEach(() => {
-        ({ originalGetElementById } = setupGetElementById());
         originalPbjs = setupPbjs();
         originalGoogletag = setupGoogletag();
+        plugins = [
+            {
+                setupPrebid: spy(),
+                teardownPrebid: spy(),
+                setupGpt: spy(),
+                teardownGpt: spy()
+            }
+        ];
         advertising = new Advertising(config, plugins);
     });
     describe('and call the setup method', () => {
@@ -242,22 +218,11 @@ describe('When I instantiate an advertising main module with plugins', () => {
             it('is called', () => void plugins[0].teardownGpt.should.have.been.called));
     });
     afterEach(() => {
-        global.document = originalGetElementById;
         global.pbjs = originalPbjs;
         global.googletag = originalGoogletag;
-        plugins[0].setupPrebid.reset();
-        plugins[0].setupGpt.reset();
-        plugins[0].teardownPrebid.reset();
-        plugins[0].teardownGpt.reset();
     });
 });
 
-function setupGetElementById() {
-    const originalGetElementById = global.document.getElementById;
-    const fakeElement = { style: { backgroundColor: 'shmackground-color', backgroundImage: 'shmackground-image' } };
-    global.document.getElementById = () => fakeElement;
-    return { fakeElement, originalGetElementById };
-}
 function setupPbjs() {
     const originalPbjs = global.pbjs;
     global.pbjs = {
