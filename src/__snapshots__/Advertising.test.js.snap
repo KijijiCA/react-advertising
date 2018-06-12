@@ -66,10 +66,6 @@ Array [
 ]
 `;
 
-exports[`When I instantiate an advertising main module and call the setup method and I call the method to adjust the bid CPM for AppNexus the result is correct 1`] = `1332`;
-
-exports[`When I instantiate an advertising main module and call the setup method and I call the method to adjust the bid CPM for Rubicon the result is correct 1`] = `1238.76`;
-
 exports[`When I instantiate an advertising main module and call the setup method and call the teardown method the Prebid ad units are removed 1`] = `
 Array [
   Array [

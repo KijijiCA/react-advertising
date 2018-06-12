@@ -4,6 +4,15 @@ import { config, DIV_ID_BAR, DIV_ID_FOO } from './utils/testAdvertisingConfig';
 
 const GPT_SIZE_MAPPING = [[[0, 0], []], [[320, 700], [[300, 250], [320, 50]]], [[1050, 200], []]];
 
+const plugins = [
+    {
+        setupPrebid: spy(),
+        teardownPrebid: spy(),
+        setupGpt: spy(),
+        teardownGpt: spy()
+    }
+];
+
 describe('When I instantiate an advertising main module', () => {
     let originalGetElementById, fakeElement, originalPbjs, originalGoogletag, advertising;
     beforeEach(() => {
@@ -31,20 +40,6 @@ describe('When I instantiate an advertising main module', () => {
         describe('the bidder timeout for Prebid', () => {
             it('is set', () =>
                 void expect(global.pbjs.setConfig).to.have.been.calledWithMatch({ bidderTimeout: 1500 }));
-        });
-        describe('bidder settings for AppNexus', () =>
-            it('are set', () => void expect(global.pbjs.bidderSettings.appnexus).to.exist));
-        describe('bidder settings for Rubicon', () =>
-            it('are set', () => void expect(global.pbjs.bidderSettings.rubicon).to.exist));
-        describe('and I call the method to adjust the bid CPM for AppNexus', () => {
-            let result;
-            beforeEach(() => (result = global.pbjs.bidderSettings.appnexus.bidCpmAdjustment(666)));
-            describe('the result', () => it('is correct', () => void expect(result).toMatchSnapshot()));
-        });
-        describe('and I call the method to adjust the bid CPM for Rubicon', () => {
-            let result;
-            beforeEach(() => (result = global.pbjs.bidderSettings.rubicon.bidCpmAdjustment(666)));
-            describe('the result', () => it('is correct', () => void expect(result).toMatchSnapshot()));
         });
         describe('initial loading of ad creatives through GPT', () =>
             it('is disabled', () => void expect(global.googletag.pubads().disableInitialLoad).to.have.been.calledOnce));
@@ -213,6 +208,47 @@ describe('When I instantiate an advertising main module', () => {
                 void expect(advertising.config).toMatchSnapshot();
             });
         });
+    });
+});
+
+describe('When I instantiate an advertising main module with plugins', () => {
+    let originalGetElementById, originalPbjs, originalGoogletag, advertising;
+    beforeEach(() => {
+        ({ originalGetElementById } = setupGetElementById());
+        originalPbjs = setupPbjs();
+        originalGoogletag = setupGoogletag();
+        advertising = new Advertising(config, plugins);
+    });
+    describe('and call the setup method', () => {
+        beforeEach(() => advertising.setup());
+        describe("the plugin's hook for Prebid setup", () =>
+            it('is called', () => void plugins[0].setupPrebid.should.have.been.called));
+        describe("the plugin's hook for Prebid teardown", () =>
+            it('is not called', () => void plugins[0].teardownPrebid.should.not.have.been.called));
+        describe("the plugin's hook for GPT setup", () =>
+            it('is called', () => void plugins[0].setupGpt.should.have.been.called));
+        describe("the plugin's hook for GPT teardown", () =>
+            it('is not called', () => void plugins[0].teardownGpt.should.not.have.been.called));
+    });
+    describe('and call the teardown method', () => {
+        beforeEach(() => advertising.teardown());
+        describe("the plugin's hook for Prebid setup", () =>
+            it('is not called', () => void plugins[0].setupPrebid.should.not.have.been.called));
+        describe("the plugin's hook for Prebid teardown", () =>
+            it('is called', () => void plugins[0].teardownPrebid.should.have.been.called));
+        describe("the plugin's hook for GPT setup", () =>
+            it('is not called', () => void plugins[0].setupGpt.should.not.have.been.called));
+        describe("the plugin's hook for GPT teardown", () =>
+            it('is called', () => void plugins[0].teardownGpt.should.have.been.called));
+    });
+    afterEach(() => {
+        global.document = originalGetElementById;
+        global.pbjs = originalPbjs;
+        global.googletag = originalGoogletag;
+        plugins[0].setupPrebid.reset();
+        plugins[0].setupGpt.reset();
+        plugins[0].teardownPrebid.reset();
+        plugins[0].teardownGpt.reset();
     });
 });
 
