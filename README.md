@@ -1,4 +1,4 @@
-![alt text](https://github.com/technology-ebay-de/react-prebid/raw/master/ebay-tech-logo.png "eBay Tech")
+![eBay Tech Logo](https://github.com/technology-ebay-de/react-prebid/raw/master/ebay-tech-logo.png "eBay Tech Logo")
 
 # react-prebid
 
@@ -10,7 +10,7 @@ To use it, you need to have a [Doubleclick for Publishers](https://www.google.co
 
 ## Demo
 
-You can view a demo of this library online on *codesandbox.io*:
+You can view a demo of this library online on *CodeSandbox*:
 
 *   [codesandbox.io/s/k5w8mr9o23](https://codesandbox.io/s/k5w8mr9o23)
 
