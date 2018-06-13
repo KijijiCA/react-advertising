@@ -139,13 +139,13 @@ export default class Advertising {
         if (!this.config.sizeMappings) {
             return;
         }
-        Object.keys(this.config.sizeMappings).forEach(key => {
+        for (const [key, value] of Object.entries(this.config.sizeMappings)) {
             const sizeMapping = window.googletag.sizeMapping();
-            this.config.sizeMappings[key].forEach(({ viewPortSize, sizes }) =>
-                sizeMapping.addSize(viewPortSize, sizes)
-            );
+            for (const { viewPortSize, sizes } of value) {
+                sizeMapping.addSize(viewPortSize, ...sizes);
+            }
             this.gptSizeMappings[key] = sizeMapping.build();
-        });
+        }
     }
 
     [getGptSizeMapping](sizeMappingName) {
@@ -153,7 +153,7 @@ export default class Advertising {
     }
 
     [defineSlots]() {
-        this.config.slots.forEach(({ id, targeting = {}, sizes, sizeMappingName, path, collapseEmptyDiv }) => {
+        this.config.slots.forEach(({ id, path, collapseEmptyDiv, targeting = {}, sizes, sizeMappingName }) => {
             const slot = window.googletag.defineSlot(path || this.config.path, sizes, id);
 
             const sizeMapping = this[getGptSizeMapping](sizeMappingName);

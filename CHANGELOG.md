@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.2 / 13 Jun 2018
+
+* bug fix: GPT sizes are now added correctly 
+
 ## 1.0.1 / 12 Jun 2018
 
 * adjusted advertising config prop type to allow specifying Prebid price granularity as object

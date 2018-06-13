@@ -17,8 +17,11 @@ describe('When I check the prop types for a valid slot config', () => {
             (result = checkPropTypes(MyComponent.propTypes, {
                 config: {
                     id: 'my-precious-div-id',
+                    path: '/my/nice/path666',
+                    collapseEmptyDiv: [true, true],
                     targeting: { a: 666 },
                     sizes: ['fluid', [320, 240]],
+                    sizeMappingName: 'fredbazgrault',
                     prebid: [
                         {
                             mediaTypes: {
