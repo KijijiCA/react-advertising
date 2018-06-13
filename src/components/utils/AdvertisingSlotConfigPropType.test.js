@@ -10,6 +10,22 @@ MyComponent.propTypes = {
     config: AdvertisingSlotConfigPropType
 };
 
+const prebid = [
+    {
+        mediaTypes: {
+            banner: {
+                sizes: [[320, 240]]
+            }
+        },
+        bids: [
+            {
+                bidder: 'my-precious-bidder',
+                params: { bla: 'bla' }
+            }
+        ]
+    }
+];
+
 describe('When I check the prop types for a valid slot config', () => {
     let result;
     beforeEach(
@@ -22,21 +38,7 @@ describe('When I check the prop types for a valid slot config', () => {
                     targeting: { a: 666 },
                     sizes: ['fluid', [320, 240]],
                     sizeMappingName: 'fredbazgrault',
-                    prebid: [
-                        {
-                            mediaTypes: {
-                                banner: {
-                                    sizes: [[320, 240]]
-                                }
-                            },
-                            bids: [
-                                {
-                                    bidder: 'my-precious-bidder',
-                                    params: { bla: 'bla' }
-                                }
-                            ]
-                        }
-                    ]
+                    prebid
                 }
             }))
     );
@@ -46,4 +48,17 @@ describe('When I check the prop types for an invalid slot config', () => {
     let result;
     beforeEach(() => (result = checkPropTypes(MyComponent.propTypes, { config: { crappy: 'much' } })));
     describe('the prop type validation', () => it('fails', () => void expect(result).toBeTruthy()));
+});
+
+describe('When I check the prop types for a valid slot config', () => {
+    const testCases = ['fluid', [320, 50], [[320, 50], [300, 250]], ['fluid', [320, 50], [300, 250]]];
+    for (const sizes of testCases) {
+        describe(`with sizes ${sizes}`, () => {
+            let result;
+            beforeEach(
+                () => (result = checkPropTypes(MyComponent.propTypes, { config: { id: 'bar', sizes, prebid } }))
+            );
+            describe('the prop type validation', () => it('passes', () => void expect(result).toBeUndefined()));
+        });
+    }
 });

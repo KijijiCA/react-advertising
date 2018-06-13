@@ -5,7 +5,10 @@ export default PropTypes.shape({
     path: PropTypes.string,
     collapseEmptyDiv: PropTypes.arrayOf(PropTypes.bool),
     targeting: PropTypes.object,
-    sizes: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.number)])).isRequired,
+    sizes: PropTypes.oneOfType([
+        PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.number)]),
+        PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.number)]))
+    ]),
     sizeMappingName: PropTypes.string,
     prebid: PropTypes.arrayOf(
         PropTypes.shape({
@@ -19,7 +22,7 @@ export default PropTypes.shape({
                     bidder: PropTypes.string.isRequired,
                     params: PropTypes.object
                 })
-            )
+            ).isRequired
         })
     ).isRequired
 });
