@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.3 / 13 Jun 2018
+
+* adjusted prop types for slot config to allow passing just one size
+
 ## 1.0.2 / 13 Jun 2018
 
 * bug fix: GPT sizes are now added correctly 
