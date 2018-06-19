@@ -26,7 +26,6 @@ You can find documentation on how to use this library in the project's wiki:
 * [Configuration](https://github.com/technology-ebay-de/react-prebid/wiki/Configuration)
 * [Custom Events](https://github.com/technology-ebay-de/react-prebid/wiki/Custom-Events)
 * [Plugins](https://github.com/technology-ebay-de/react-prebid/wiki/Custom-Events)
-* [Importing the Library As ESNext Module](https://github.com/technology-ebay-de/react-prebid/wiki/Importing-the-Library-As-ESNext-Module)
 
 ## License
 
