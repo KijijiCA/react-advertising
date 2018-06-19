@@ -2,9 +2,19 @@
 
 # react-prebid
 
-Library for ad placements with [Prebid](http://prebid.org) header bidding in [React](https://reactjs.org) applications.
+A JavaScript library for ad placements with [Prebid](http://prebid.org) header bidding in [React](https://reactjs.org) applications.
 
-To use it, you need to have a [Doubleclick for Publishers](https://www.google.com/intl/en/doubleclick/publishers/welcome/)
+**Integrate ads in your app the “React way”: by adding ad components to your JSX layout!**
+
+* One central configuration file for all your GPT and Prebid placement config
+* One provider component that handles all the “plumbing” with *googletag* and *pbjs*, nicely hidden away
+* Ad slot components that get filled with creatives from the ad server when they mount to the DOM
+* Works well in single page applications with multiple routes
+* Suitable for server-side-rendering
+
+## Prerequisites
+
+To use *react-prebid*, you need to have a [Doubleclick for Publishers](https://www.google.com/intl/en/doubleclick/publishers/welcome/)
 (DFP) ad server set up, along with configuration to use Prebid in place. Please refer to the
 [Prebid documentation](http://prebid.org/overview/intro.html) for details.
 
