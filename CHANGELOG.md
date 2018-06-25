@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.6 / 25 Jun 2018
+
+*   added “displaySlots” to plugin lifecycle phases
+
 ## 1.0.5 / 25 Jun 2018
 
 *   adjusted config prop type for size mapping config, now allowing string for named sizes (i.e. `fluid`)

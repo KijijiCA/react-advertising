@@ -190,7 +190,8 @@ describe('When I instantiate an advertising main module with plugins', () => {
                 setupPrebid: spy(),
                 teardownPrebid: spy(),
                 setupGpt: spy(),
-                teardownGpt: spy()
+                teardownGpt: spy(),
+                displaySlots: spy()
             }
         ];
         advertising = new Advertising(config, plugins);
@@ -205,6 +206,8 @@ describe('When I instantiate an advertising main module with plugins', () => {
             it('is called', () => void plugins[0].setupGpt.should.have.been.called));
         describe("the plugin's hook for GPT teardown", () =>
             it('is not called', () => void plugins[0].teardownGpt.should.not.have.been.called));
+        describe("the plugin's hook for displaying slots", () =>
+            it('is called', () => void plugins[0].displaySlots.should.have.been.called));
     });
     describe('and call the teardown method', () => {
         beforeEach(() => advertising.teardown());
@@ -216,6 +219,8 @@ describe('When I instantiate an advertising main module with plugins', () => {
             it('is not called', () => void plugins[0].setupGpt.should.not.have.been.called));
         describe("the plugin's hook for GPT teardown", () =>
             it('is called', () => void plugins[0].teardownGpt.should.have.been.called));
+        describe("the plugin's hook for displaying slots", () =>
+            it('is not called', () => void plugins[0].displaySlots.should.not.have.been.called));
     });
     afterEach(() => {
         global.pbjs = originalPbjs;

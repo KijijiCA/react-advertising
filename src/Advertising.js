@@ -170,11 +170,13 @@ export default class Advertising {
             }
 
             slot.addService(window.googletag.pubads());
+
             this.slots[id] = slot;
         });
     }
 
     [displaySlots]() {
+        this[executePlugins]('displaySlots');
         this.config.slots.forEach(({ id }) => window.googletag.display(id));
     }
 
@@ -201,6 +203,7 @@ export default class Advertising {
         }
         pubads.disableInitialLoad();
         pubads.enableSingleRequest();
+
         window.googletag.enableServices();
         this[displaySlots]();
     }
