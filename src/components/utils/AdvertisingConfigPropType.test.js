@@ -131,3 +131,102 @@ describe('When I check the prop types with a price granularity', () => {
         });
     }
 });
+
+describe('When I check the prop types with a size mapping', () => {
+    const testCases = [
+        {
+            sizeMappings: {},
+            expectToPass: true
+        },
+        {
+            sizeMappings: 'foo',
+            expectToPass: false
+        },
+        {
+            sizeMappings: null,
+            expectToPass: true
+        },
+        {
+            sizeMappings: undefined,
+            expectToPass: true
+        },
+        {
+            sizeMappings: {
+                foo: []
+            },
+            expectToPass: true
+        },
+        {
+            sizeMappings: {
+                foo: 'bar'
+            },
+            expectToPass: false
+        },
+        {
+            sizeMappings: {
+                foo: [{}]
+            },
+            expectToPass: false
+        },
+        {
+            sizeMappings: {
+                foo: [{ viewPortSize: [], sizes: [] }]
+            },
+            expectToPass: true
+        },
+        {
+            sizeMappings: {
+                foo: [{ viewPortSize: [], sizes: [[]] }]
+            },
+            expectToPass: true
+        },
+        {
+            sizeMappings: {
+                foo: [{ viewPortSize: [0, 0], sizes: [[]] }]
+            },
+            expectToPass: true
+        },
+        {
+            sizeMappings: {
+                foo: [{ viewPortSize: [0, 0], sizes: ['fluid'] }]
+            },
+            expectToPass: true
+        },
+        {
+            sizeMappings: {
+                foo: [{ viewPortSize: [0, 0], sizes: [[0]] }]
+            },
+            expectToPass: true
+        },
+        {
+            sizeMappings: {
+                foo: [{ viewPortSize: [0, 0], sizes: [[320, 50]] }]
+            },
+            expectToPass: true
+        },
+        {
+            sizeMappings: {
+                foo: [{ viewPortSize: [0, 0], sizes: ['fluid', [320, 50]] }]
+            },
+            expectToPass: true
+        }
+    ];
+    for (const { sizeMappings, expectToPass } of testCases) {
+        describe(`${typeof sizeMappings === 'object' ? JSON.stringify(sizeMappings) : sizeMappings}`, () => {
+            let result;
+            beforeEach(
+                () =>
+                    (result = checkPropTypes(MyComponent.propTypes, {
+                        config: {
+                            sizeMappings
+                        }
+                    }))
+            );
+            if (expectToPass) {
+                describe('the prop type validation', () => it('passes', () => void expect(result).toBeUndefined()));
+            } else {
+                describe('the prop type validation', () => it('fails', () => void expect(result).toBeTruthy()));
+            }
+        });
+    }
+});

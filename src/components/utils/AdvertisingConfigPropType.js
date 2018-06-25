@@ -70,7 +70,8 @@ export default PropTypes.shape({
         PropTypes.arrayOf(
             PropTypes.shape({
                 viewPortSize: PropTypes.arrayOf(PropTypes.number).isRequired,
-                sizes: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired
+                sizes: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.number)]))
+                    .isRequired
             })
         )
     ),
