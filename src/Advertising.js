@@ -142,7 +142,7 @@ export default class Advertising {
         for (const [key, value] of Object.entries(this.config.sizeMappings)) {
             const sizeMapping = window.googletag.sizeMapping();
             for (const { viewPortSize, sizes } of value) {
-                sizeMapping.addSize(viewPortSize, ...sizes);
+                sizeMapping.addSize(viewPortSize, sizes);
             }
             this.gptSizeMappings[key] = sizeMapping.build();
         }

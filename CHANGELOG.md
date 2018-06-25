@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.4 / 25 Jun 2018
+
+* fixed critical issue with responsive ads size mappings; it did not work properly with prior versions
+
 ## 1.0.3 / 13 Jun 2018
 
 * adjusted prop types for slot config to allow passing just one size
