@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.8 / 26 Jun 2018
+
+* tests and other superfluous files excluded from npm package
+
 ## 1.0.7 / 26 Jun 2018
 
 * removed obsolete prebid size mapping code that doesn't work with Prebid 1
