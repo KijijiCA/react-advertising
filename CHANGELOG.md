@@ -3,6 +3,8 @@
 ## 1.0.7 / 26 Jun 2018
 
 * removed obsolete prebid size mapping code that doesn't work with Prebid 1
+* added `prebid.sizeConfig` to advertising config prop type
+* added `prebid.bids.labelAny` and `prebid.bids.labelAll` to advertising slot config prop type
 
 ## 1.0.6 / 25 Jun 2018
 

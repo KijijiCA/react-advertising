@@ -64,7 +64,16 @@ export default PropTypes.shape({
                     ).isRequired
                 })
             ])
-        })
+        }),
+        sizeConfig: PropTypes.arrayOf(
+            PropTypes.shape({
+                mediaQuery: PropTypes.string.isRequired,
+                sizesSupported: PropTypes.arrayOf(
+                    PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.number)])
+                ),
+                labels: PropTypes.arrayOf(PropTypes.string)
+            })
+        )
     }),
     sizeMappings: PropTypes.objectOf(
         PropTypes.arrayOf(

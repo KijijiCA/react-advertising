@@ -62,3 +62,111 @@ describe('When I check the prop types for a valid slot config', () => {
         });
     }
 });
+
+describe('When I check the prop types a slot config', () => {
+    const testCases = [
+        {
+            labelAny: 'blub',
+            expectToPass: false
+        },
+        {
+            labelAny: [],
+            expectToPass: true
+        },
+        {
+            labelAny: ['blub'],
+            expectToPass: true
+        },
+        {
+            labelAny: [666],
+            expectToPass: false
+        }
+    ];
+    for (const { labelAny, expectToPass } of testCases) {
+        describe(`with a prebid bids labelAny config ${labelAny}`, () => {
+            let result;
+            beforeEach(
+                () =>
+                    (result = checkPropTypes(MyComponent.propTypes, {
+                        config: {
+                            id: 'thud',
+                            prebid: [
+                                {
+                                    mediaTypes: {
+                                        banner: {
+                                            sizes: [[320, 240]]
+                                        }
+                                    },
+                                    bids: [
+                                        {
+                                            bidder: 'my-precious-bidder',
+                                            labelAny
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }))
+            );
+            if (expectToPass) {
+                describe('the prop type validation', () => it('passes', () => void expect(result).toBeUndefined()));
+            } else {
+                describe('the prop type validation', () => it('fails', () => void expect(result).toBeTruthy()));
+            }
+        });
+    }
+});
+
+describe('When I check the prop types a slot config', () => {
+    const testCases = [
+        {
+            labelAll: 'blub',
+            expectToPass: false
+        },
+        {
+            labelAll: [],
+            expectToPass: true
+        },
+        {
+            labelAll: ['blub'],
+            expectToPass: true
+        },
+        {
+            labelAll: [666],
+            expectToPass: false
+        }
+    ];
+    for (const { labelAll, expectToPass } of testCases) {
+        describe(`with a prebid bids labelAll config ${labelAll}`, () => {
+            let result;
+            beforeEach(
+                () =>
+                    (result = checkPropTypes(MyComponent.propTypes, {
+                        config: {
+                            id: 'thud',
+                            prebid: [
+                                {
+                                    mediaTypes: {
+                                        banner: {
+                                            sizes: [[320, 240]]
+                                        }
+                                    },
+                                    bids: [
+                                        {
+                                            bidder: 'my-precious-bidder',
+                                            labelAll
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }))
+            );
+            if (expectToPass) {
+                describe('the prop type validation', () => it('passes', () => void expect(result).toBeUndefined()));
+            } else {
+                describe('the prop type validation', () => it('fails', () => void expect(result).toBeTruthy()));
+            }
+        });
+    }
+});
