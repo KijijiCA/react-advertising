@@ -1,2 +1,4 @@
 .idea
 *.iml
+**/*.test.js
+**/__snapshots__

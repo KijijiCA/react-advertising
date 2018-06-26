@@ -1,9 +1,14 @@
 {
   "name": "react-prebid",
-  "version": "1.0.7",
+  "version": "1.0.8-beta.0",
   "description": "Library for ad placements with Prebid header bidding in React applications",
   "main": "index.js",
   "esnext": "index-esnext.js",
+  "files": [
+    "src/",
+    "index.js",
+    "index-esnext.js"
+  ],
   "scripts": {
     "test": "jest",
     "build": "NODE_ENV=production webpack",
