@@ -20,7 +20,9 @@ export default PropTypes.shape({
             bids: PropTypes.arrayOf(
                 PropTypes.shape({
                     bidder: PropTypes.string.isRequired,
-                    params: PropTypes.object
+                    params: PropTypes.object,
+                    labelAny: PropTypes.arrayOf(PropTypes.string),
+                    labelAll: PropTypes.arrayOf(PropTypes.string)
                 })
             ).isRequired
         })

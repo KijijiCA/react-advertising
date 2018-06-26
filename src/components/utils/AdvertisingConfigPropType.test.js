@@ -230,3 +230,139 @@ describe('When I check the prop types with a size mapping', () => {
         });
     }
 });
+
+describe('When I check the prop types with a prebid size config', () => {
+    const testCases = [
+        {
+            sizeConfig: {},
+            expectToPass: false
+        },
+        {
+            sizeConfig: 'corge',
+            expectToPass: false
+        },
+        {
+            sizeConfig: [],
+            expectToPass: true
+        },
+        {
+            sizeConfig: [{}],
+            expectToPass: false
+        },
+        {
+            sizeConfig: [
+                {
+                    mediaQuery: false
+                }
+            ],
+            expectToPass: false
+        },
+        {
+            sizeConfig: [
+                {
+                    mediaQuery: 666
+                }
+            ],
+            expectToPass: false
+        },
+        {
+            sizeConfig: [
+                {
+                    mediaQuery: { garply: 'baz' }
+                }
+            ],
+            expectToPass: false
+        },
+        {
+            sizeConfig: [
+                {
+                    mediaQuery: '(min-width: 490px)'
+                }
+            ],
+            expectToPass: true
+        },
+        {
+            sizeConfig: [
+                {
+                    mediaQuery: '(min-width: 490px)',
+                    sizesSupported: 'quux'
+                }
+            ],
+            expectToPass: false
+        },
+        {
+            sizeConfig: [
+                {
+                    mediaQuery: '(min-width: 490px)',
+                    sizesSupported: []
+                }
+            ],
+            expectToPass: true
+        },
+        {
+            sizeConfig: [
+                {
+                    mediaQuery: '(min-width: 490px)',
+                    sizesSupported: ['fluid']
+                }
+            ],
+            expectToPass: true
+        },
+        {
+            sizeConfig: [
+                {
+                    mediaQuery: '(min-width: 490px)',
+                    sizesSupported: [[320, 250]]
+                }
+            ],
+            expectToPass: true
+        },
+        {
+            sizeConfig: [
+                {
+                    mediaQuery: '(min-width: 490px)',
+                    sizesSupported: ['fluid', [320, 250]]
+                }
+            ],
+            expectToPass: true
+        },
+        {
+            sizeConfig: [
+                {
+                    mediaQuery: '(min-width: 490px)',
+                    labels: 'phone'
+                }
+            ],
+            expectToPass: false
+        },
+        {
+            sizeConfig: [
+                {
+                    mediaQuery: '(min-width: 490px)',
+                    labels: ['phone']
+                }
+            ],
+            expectToPass: true
+        }
+    ];
+    for (const { sizeConfig, expectToPass } of testCases) {
+        describe(`${typeof sizeConfig === 'object' ? JSON.stringify(sizeConfig) : sizeConfig}`, () => {
+            let result;
+            beforeEach(
+                () =>
+                    (result = checkPropTypes(MyComponent.propTypes, {
+                        config: {
+                            prebid: {
+                                sizeConfig
+                            }
+                        }
+                    }))
+            );
+            if (expectToPass) {
+                describe('the prop type validation', () => it('passes', () => void expect(result).toBeUndefined()));
+            } else {
+                describe('the prop type validation', () => it('fails', () => void expect(result).toBeTruthy()));
+            }
+        });
+    }
+});

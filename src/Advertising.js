@@ -182,14 +182,14 @@ export default class Advertising {
 
     [setupPrebid]() {
         this[executePlugins]('setupPrebid');
-        const adUnits = getAdUnits(this.config.slots, this.config.sizeMappings);
+        const adUnits = getAdUnits(this.config.slots);
         window.pbjs.addAdUnits(adUnits);
         window.pbjs.setConfig(this.config.prebid);
     }
 
     [teardownPrebid]() {
         this[executePlugins]('teardownPrebid');
-        getAdUnits(this.config.slots, this.config.sizeMappings).forEach(({ code }) => window.pbjs.removeAdUnit(code));
+        getAdUnits(this.config.slots).forEach(({ code }) => window.pbjs.removeAdUnit(code));
     }
 
     [setupGpt]() {

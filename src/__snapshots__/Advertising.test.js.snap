@@ -305,29 +305,6 @@ Array [
         ],
       },
     },
-    "sizeMapping": Array [
-      Object {
-        "minWidth": 1050,
-        "sizes": Array [],
-      },
-      Object {
-        "minWidth": 320,
-        "sizes": Array [
-          Array [
-            300,
-            250,
-          ],
-          Array [
-            320,
-            50,
-          ],
-        ],
-      },
-      Object {
-        "minWidth": 0,
-        "sizes": Array [],
-      },
-    ],
   },
 ]
 `;
