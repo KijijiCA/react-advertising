@@ -12,6 +12,8 @@ A JavaScript library for ad placements with [Prebid](http://prebid.org) header b
 * Works well in single page applications with multiple routes
 * Suitable for server-side-rendering
 
+[![Build Status](https://travis-ci.com/technology-ebay-de/react-prebid.svg?branch=master)](https://travis-ci.com/technology-ebay-de/react-prebid)
+
 ## Prerequisites
 
 To use *react-prebid*, you need to have a [Doubleclick for Publishers](https://www.google.com/intl/en/doubleclick/publishers/welcome/)
