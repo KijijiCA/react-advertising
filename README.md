@@ -12,7 +12,7 @@ A JavaScript library for ad placements with [Prebid](http://prebid.org) header b
 * Works well in single page applications with multiple routes
 * Suitable for server-side-rendering
 
-[![Build Status](https://travis-ci.com/technology-ebay-de/react-prebid.svg?branch=master)](https://travis-ci.com/technology-ebay-de/react-prebid)
+[![npm version](https://img.shields.io/npm/v/react-prebid.svg)](https://www.npmjs.com/package/react-prebid) [![Build Status](https://travis-ci.com/technology-ebay-de/react-prebid.svg?branch=master)](https://travis-ci.com/technology-ebay-de/react-prebid)
 
 ## Prerequisites
 
