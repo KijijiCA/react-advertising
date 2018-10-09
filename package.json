@@ -1,6 +1,6 @@
 {
   "name": "react-prebid",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Library for ad placements with Prebid header bidding in React applications",
   "main": "index.js",
   "esnext": "index-esnext.js",
@@ -33,7 +33,10 @@
     "setupTestFrameworkScriptFile": "<rootDir>/src/utils/setupTests.js",
     "transformIgnorePatterns": [
       "node_modules/(?!(@mt-testutils)/)"
-    ]
+    ],
+    "testEnvironmentOptions": {
+      "url": "http://www.motor-talk.de/"
+    }
   },
   "repository": {
     "type": "git",
@@ -75,7 +78,7 @@
     "regenerator-runtime": "^0.11.1",
     "sinon": "^4.5.0",
     "sinon-chai": "^3.0.0",
-    "webpack": "^4.1.1",
-    "webpack-cli": "^2.0.10"
+    "webpack": "^4.20.0",
+    "webpack-cli": "^3.1.2"
   }
 }
