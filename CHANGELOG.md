@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.9 / 9 Oct 2018
+
+* dependency update to fix security issues found by npm audit
+
 ## 1.0.8 / 26 Jun 2018
 
 * tests and other superfluous files excluded from npm package
