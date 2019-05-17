@@ -26,7 +26,10 @@ export default class Advertising {
         this.customEventCallbacks = {};
         this.customEventHandlers = {};
         this.queue = [];
-        this[setDefaultConfig]();
+
+        if (config) {
+            this[setDefaultConfig]();
+        }
     }
 
     // ---------- PUBLIC METHODS ----------
@@ -94,6 +97,15 @@ export default class Advertising {
                 }
             })
         );
+    }
+
+    isConfigReady() {
+        return Boolean(this.config);
+    }
+
+    setConfig(config) {
+        this.config = config;
+        this[setDefaultConfig]();
     }
 
     // ---------- PRIVATE METHODS ----------

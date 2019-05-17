@@ -1,84 +1,72 @@
 {
-  "name": "react-prebid",
-  "version": "1.0.9",
-  "description": "Library for ad placements with Prebid header bidding in React applications",
-  "main": "index.js",
-  "esnext": "index-esnext.js",
-  "files": [
-    "src/",
-    "index.js",
-    "index-esnext.js"
-  ],
-  "scripts": {
-    "test": "jest",
-    "build": "NODE_ENV=production webpack",
-    "eslint": "eslint '**/*.js'",
-    "prettier": "prettier '**/*.js' --write",
-    "precommit": "lint-staged"
-  },
-  "lint-staged": {
-    "linters": {
-      "*.js": [
-        "prettier --write",
-        "eslint --fix",
-        "git add",
-        "jest --bail --findRelatedTests"
-      ]
+    "name": "react-prebid",
+    "version": "1.0.9",
+    "description": "Library for ad placements with Prebid header bidding in React applications",
+    "main": "index.js",
+    "esnext": "index-esnext.js",
+    "files": ["src/", "index.js", "index-esnext.js"],
+    "scripts": {
+        "test": "jest",
+        "watch": "webpack --watch",
+        "build": "NODE_ENV=production webpack",
+        "eslint": "eslint '**/*.js'",
+        "prettier": "prettier '**/*.js' --write",
+        "precommit": "lint-staged"
     },
-    "ignore": [
-      "index.js"
-    ]
-  },
-  "jest": {
-    "setupTestFrameworkScriptFile": "<rootDir>/src/utils/setupTests.js",
-    "transformIgnorePatterns": [
-      "node_modules/(?!(@mt-testutils)/)"
-    ],
-    "testEnvironmentOptions": {
-      "url": "http://www.motor-talk.de/"
+    "lint-staged": {
+        "linters": {
+            "*.js": ["prettier --write", "eslint --fix", "git add", "jest --bail --findRelatedTests"]
+        },
+        "ignore": ["index.js"]
+    },
+    "jest": {
+        "setupTestFrameworkScriptFile": "<rootDir>/src/utils/setupTests.js",
+        "transformIgnorePatterns": ["node_modules/(?!(@mt-testutils)/)"],
+        "testEnvironmentOptions": {
+            "url": "http://www.motor-talk.de/"
+        }
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/technology-ebay-de/react-prebid.git"
+    },
+    "author": "Patrick Hund <pahund@team.mobile.de>",
+    "license": "MIT",
+    "peerDependencies": {
+        "react": ">=16.3.0 <17.0.0"
+    },
+    "devDependencies": {
+        "@mt-testutils/expect-snapshot": "^1.0.5",
+        "babel-eslint": "^8.2.2",
+        "babel-jest": "^23.0.0-alpha.0",
+        "babel-loader": "^7.1.4",
+        "babel-plugin-transform-object-rest-spread": "^6.26.0",
+        "babel-plugin-transform-react-remove-prop-types": "^0.4.13",
+        "babel-preset-env": "^1.6.1",
+        "babel-preset-react": "^6.24.1",
+        "chai": "^4.1.2",
+        "chai-enzyme": "^1.0.0-beta.0",
+        "check-prop-types": "^1.1.2",
+        "coveralls": "^3.0.2",
+        "enzyme": "^3.3.0",
+        "enzyme-adapter-react-16": "^1.1.1",
+        "eslint": "^4.19.0",
+        "eslint-config-motor-talk": "^5.0.0",
+        "eslint-config-prettier": "^2.9.0",
+        "eslint-plugin-prettier": "^2.6.0",
+        "eslint-plugin-react": "^7.7.0",
+        "husky": "^0.14.3",
+        "jest": "^22.4.2",
+        "lint-staged": "^7.0.0",
+        "prettier": "^1.11.1",
+        "prop-types": "^15.6.0",
+        "react": "^16.3.2",
+        "react-dom": "^16.3.2",
+        "react-test-renderer": "^16.3.2",
+        "regenerator-runtime": "^0.11.1",
+        "sinon": "^4.5.0",
+        "sinon-chai": "^3.0.0",
+        "webpack": "^4.20.0",
+        "webpack-cli": "^3.1.2"
     }
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/technology-ebay-de/react-prebid.git"
-  },
-  "author": "Patrick Hund <pahund@team.mobile.de>",
-  "license": "MIT",
-  "peerDependencies": {
-    "react": ">=16.3.0 <17.0.0"
-  },
-  "devDependencies": {
-    "@mt-testutils/expect-snapshot": "^1.0.5",
-    "babel-eslint": "^8.2.2",
-    "babel-jest": "^23.0.0-alpha.0",
-    "babel-loader": "^7.1.4",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-plugin-transform-react-remove-prop-types": "^0.4.13",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-react": "^6.24.1",
-    "chai": "^4.1.2",
-    "chai-enzyme": "^1.0.0-beta.0",
-    "check-prop-types": "^1.1.2",
-    "coveralls": "^3.0.2",
-    "enzyme": "^3.3.0",
-    "enzyme-adapter-react-16": "^1.1.1",
-    "eslint": "^4.19.0",
-    "eslint-config-motor-talk": "^5.0.0",
-    "eslint-config-prettier": "^2.9.0",
-    "eslint-plugin-prettier": "^2.6.0",
-    "eslint-plugin-react": "^7.7.0",
-    "husky": "^0.14.3",
-    "jest": "^22.4.2",
-    "lint-staged": "^7.0.0",
-    "prettier": "^1.11.1",
-    "prop-types": "^15.6.0",
-    "react": "^16.3.2",
-    "react-dom": "^16.3.2",
-    "react-test-renderer": "^16.3.2",
-    "regenerator-runtime": "^0.11.1",
-    "sinon": "^4.5.0",
-    "sinon-chai": "^3.0.0",
-    "webpack": "^4.20.0",
-    "webpack-cli": "^3.1.2"
-  }
 }
