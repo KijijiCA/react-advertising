@@ -1,7 +1,7 @@
 import React from 'react';
 import expectSnapshot from '@mt-testutils/expect-snapshot';
 import AdvertisingProvider from './AdvertisingProvider';
-import { spy } from 'sinon';
+import { stub, spy } from 'sinon';
 import { mount } from 'enzyme';
 import config from '../utils/testAdvertisingConfig';
 
@@ -10,6 +10,7 @@ const mockSetup = spy();
 const mockTeardown = spy();
 const mockConstructor = spy();
 const mockValueSpy = spy();
+const mockIsConfigReady = stub().returns(true);
 
 jest.mock('../AdvertisingContext', () => ({
     // eslint-disable-next-line react/prop-types
@@ -35,6 +36,9 @@ jest.mock(
             teardown(...args) {
                 mockTeardown(...args);
             }
+            isConfigReady() {
+                return mockIsConfigReady();
+            }
         }
 );
 
@@ -45,6 +49,7 @@ describe('The AdvertisingProvider component', () => {
                 <h1>hello</h1>
             </AdvertisingProvider>
         ));
+
     describe('when mounted', () => {
         beforeEach(() => mount(<AdvertisingProvider config={config} />));
         it('constructs an Advertising module with the provided configuration', () =>
@@ -54,10 +59,11 @@ describe('The AdvertisingProvider component', () => {
             expect(mockValueSpy.firstCall.args[0]).toMatchSnapshot());
         afterEach(resetMocks);
     });
+
     describe('when mounted with active = false', () => {
         beforeEach(() => mount(<AdvertisingProvider config={config} active={false} />));
         it('constructs an Advertising module with the provided configuration', () =>
-            void mockConstructor.should.not.have.been.called);
+            void mockConstructor.should.have.been.called);
         it('does not set up an Advertising module', () => void mockSetup.should.not.have.been.called);
         afterEach(resetMocks);
     });
