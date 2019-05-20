@@ -6,7 +6,7 @@ import { mount } from 'enzyme';
 import { config } from '../utils/testAdvertisingConfig';
 
 const mockActivate = spy();
-const mockSetup = spy();
+const mockSetup = stub().returns(Promise.resolve());
 const mockTeardown = spy();
 const mockConstructor = spy();
 const mockValueSpy = spy();
@@ -32,7 +32,7 @@ jest.mock(
                 mockActivate(...args);
             }
             setup(...args) {
-                mockSetup(...args);
+                return mockSetup(...args);
             }
             teardown(...args) {
                 mockTeardown(...args);
@@ -70,14 +70,21 @@ describe('The AdvertisingProvider component', () => {
             mockSetup.should.have.been.called;
         });
 
-        it('sets up only once', () => {
+        it('sets up only once even if config property is changed', () => {
             provider.setProps({ config: { ...config } });
 
             mockSetup.should.have.been.calledOnce;
         });
 
-        it('uses an AdvertisingContext.Provider to pass the activate method of the advertising module', () =>
-            expect(mockValueSpy.firstCall.args[0]).toMatchSnapshot());
+        it('uses an AdvertisingContext.Provider to pass the activate method of the advertising module', () => {
+            expect(mockValueSpy.firstCall.args[0]).toMatchSnapshot();
+        });
+
+        it('tears down the Advertising module', () => {
+            provider.unmount();
+
+            mockTeardown.should.have.been.calledOnce;
+        });
 
         afterEach(resetMocks);
     });
@@ -85,9 +92,10 @@ describe('The AdvertisingProvider component', () => {
     describe('when config is loaded asynchronously', () => {
         let provider;
         beforeEach(() => {
-            provider = mount(<AdvertisingProvider />);
             mockIsConfigReady.resetBehavior();
             mockIsConfigReady.returns(false);
+
+            provider = mount(<AdvertisingProvider />);
         });
 
         it('constructs an Advertising module', () => {
@@ -99,6 +107,16 @@ describe('The AdvertisingProvider component', () => {
 
             mockSetConfig.should.have.been.calledWith(config);
             mockSetup.should.have.been.calledOnce;
+        });
+
+        it('tears down the Advertising module', () => {
+            provider.setProps({ config });
+            provider.unmount();
+
+            // setProps is a async operation
+            setTimeout(() => {
+                mockTeardown.should.have.been.calledOnce;
+            }, 0);
         });
 
         afterEach(resetMocks);
