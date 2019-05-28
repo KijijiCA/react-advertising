@@ -3,6 +3,7 @@ import sinonChai from 'sinon-chai';
 import chaiEnzyme from 'chai-enzyme';
 import { configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
+import 'regenerator-runtime/runtime';
 
 configure({ adapter: new Adapter() });
 
@@ -30,4 +31,13 @@ global.expect = actual => {
     const originalMatchers = jestExpect(actual);
     const chaiMatchers = chai.expect(actual);
     return Object.assign(chaiMatchers, originalMatchers);
+};
+
+// Fix error message “A "describe" callback must not return a value.”
+// https://stackoverflow.com/a/55211488/1253156
+const realDescribe = global.describe;
+global.describe = (name, fn) => {
+    realDescribe(name, () => {
+        fn();
+    });
 };

@@ -7,18 +7,37 @@ import AdvertisingContext from '../AdvertisingContext';
 export default class AdvertisingProvider extends Component {
     constructor(props) {
         super(props);
-        this.advertising = this.props.active ? new Advertising(props.config, props.plugins) : null;
-        this.activate = this.props.active ? this.advertising.activate.bind(this.advertising) : () => {};
+
+        const { config, plugins } = this.props;
+        this.advertising = new Advertising(config, plugins);
+        this.activate = this.advertising.activate.bind(this.advertising);
+        this.needTearDown = false;
+    }
+
+    async setupAdvertising() {
+        await this.advertising.setup();
+        // teardown and setup should run in pair
+        this.needTearDown = true;
+    }
+
+    componentDidUpdate() {
+        const { config, active } = this.props;
+
+        // activate advertising when the config changes from `undefined`
+        if (!this.advertising.isConfigReady() && config && active) {
+            this.advertising.setConfig(config);
+            this.setupAdvertising();
+        }
     }
 
     componentDidMount() {
-        if (this.advertising) {
-            this.advertising.setup();
+        if (this.advertising.isConfigReady() && this.props.active) {
+            this.setupAdvertising();
         }
     }
 
     componentWillUnmount() {
-        if (this.advertising) {
+        if (this.needTearDown) {
             this.advertising.teardown();
         }
     }

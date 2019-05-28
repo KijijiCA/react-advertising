@@ -180,6 +180,36 @@ describe('When I instantiate an advertising main module', () => {
     });
 });
 
+describe('When I instantiate an advertising main module', () => {
+    describe('without prebid config', () => {
+        let advertising;
+        beforeEach(() => (advertising = new Advertising()));
+
+        describe('config ready', () => {
+            it('is false', () => {
+                const result = advertising.isConfigReady();
+
+                expect(result).toBe(false);
+            });
+        });
+
+        describe('and set config later', () => {
+            it('is set to proper config', () => {
+                advertising.setConfig(config);
+
+                expect(advertising.config).toMatchSnapshot();
+            });
+
+            it('is set to proper config', () => {
+                advertising.setConfig(config);
+                const result = advertising.isConfigReady();
+
+                expect(result).toBe(true);
+            });
+        });
+    });
+});
+
 describe('When I instantiate an advertising main module with plugins', () => {
     let originalPbjs, originalGoogletag, advertising, plugins;
     beforeEach(() => {
