@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.1.0 / 28 May 2019
+
+You can now render the `AdvertisingProvider` without a config prop. This is useful when you
+load the ad config asynchronously and don't want to block initial page render.
+
+* See [documentation](https://github.com/technology-ebay-de/react-prebid/wiki/API#advanced-usage-passing-the-config-prop-later)
+* See [issue #10](https://github.com/technology-ebay-de/react-prebid/issues/10)
+
+Thanks [Jason Li](https://github.com/sundy001) for implementing this!
+
 ## 1.0.9 / 9 Oct 2018
 
 * dependency update to fix security issues found by npm audit
