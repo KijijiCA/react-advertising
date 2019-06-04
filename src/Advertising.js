@@ -3,7 +3,9 @@ import getAdUnits from './utils/getAdUnits';
 const defineGptSizeMappings = Symbol('define GTP size mappings (private method)');
 const getGptSizeMapping = Symbol('get GPT size mapping (private method)');
 const defineSlots = Symbol('define slots (private method)');
+const defineOutOfPageSlot = Symbol('define out of page slots (private method)');
 const displaySlots = Symbol('display slots (private method)');
+const displayOutOfPageSlot = Symbol('display slots (private method)');
 const setupPrebid = Symbol('setup Prebid (private method)');
 const teardownPrebid = Symbol('teardown Prebid (private method)');
 const setupGpt = Symbol('setup GPT (private method)');
@@ -21,6 +23,7 @@ export default class Advertising {
     constructor(config, plugins = []) {
         this.config = config;
         this.slots = {};
+        this.outOfPageSlot = {};
         this.plugins = plugins;
         this.gptSizeMappings = {};
         this.customEventCallbacks = {};
@@ -184,12 +187,34 @@ export default class Advertising {
             slot.addService(window.googletag.pubads());
 
             this.slots[id] = slot;
+            console.log('defineSlots', id, path, this.config.path, slot);
         });
+    }
+
+    [defineOutOfPageSlot]() {
+        if (this.config.outOfPage) {
+            const id = this.config.outOfPage.id;
+            const slot = window.googletag.defineOutOfPageSlot(this.config.path, id);
+            slot.addService(window.googletag.pubads());
+            this.outOfPageSlot[id] = slot;
+            console.log('defineOutOfPageSlot', id, this.config.path, slot);
+        }
     }
 
     [displaySlots]() {
         this[executePlugins]('displaySlots');
-        this.config.slots.forEach(({ id }) => window.googletag.display(id));
+        this.config.slots.forEach(({ id }) => {
+            window.googletag.display(id);
+            console.log('displaySlots', id);
+        });
+    }
+
+    [displayOutOfPageSlot]() {
+        if (this.config.outOfPage) {
+            this[executePlugins]('displaySlots');
+            window.googletag.display(this.config.outOfPage.id);
+            console.log('displayOutOfPageSlot', this.config.outOfPage.id);
+        }
     }
 
     [setupPrebid]() {
@@ -210,6 +235,7 @@ export default class Advertising {
         const { targeting } = this.config;
         this[defineGptSizeMappings]();
         this[defineSlots]();
+        this[defineOutOfPageSlot]();
         for (const [key, value] of Object.entries(targeting)) {
             pubads.setTargeting(key, value);
         }
@@ -218,6 +244,7 @@ export default class Advertising {
 
         window.googletag.enableServices();
         this[displaySlots]();
+        this[displayOutOfPageSlot]();
     }
 
     [teardownGpt]() {

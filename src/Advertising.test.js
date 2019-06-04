@@ -288,6 +288,12 @@ function setupGoogletag() {
         global.googletag.fakeSlots.push(fakeSlot);
         return fakeSlot;
     });
+    global.googletag.defineOutOfPageSlot = stub().callsFake(() => {
+        const fakeSlot = {};
+        fakeSlot.addService = stub().returns(fakeSlot);
+        global.googletag.fakeSlots.push(fakeSlot);
+        return fakeSlot;
+    });
     global.googletag.setTargeting = stub().returns(global.googletag);
     global.googletag.addService = stub().returns(global.googletag);
     global.googletag.pubads = stub().returns(global.googletag);
