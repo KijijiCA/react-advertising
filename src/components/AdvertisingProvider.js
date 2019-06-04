@@ -14,10 +14,10 @@ export default class AdvertisingProvider extends Component {
         this.needTearDown = false;
     }
 
-    async setupAdvertising() {
-        await this.advertising.setup();
-        // teardown and setup should run in pair
-        this.needTearDown = true;
+    componentDidMount() {
+        if (this.advertising.isConfigReady() && this.props.active) {
+            this.setupAdvertising();
+        }
     }
 
     componentDidUpdate() {
@@ -30,16 +30,16 @@ export default class AdvertisingProvider extends Component {
         }
     }
 
-    componentDidMount() {
-        if (this.advertising.isConfigReady() && this.props.active) {
-            this.setupAdvertising();
-        }
-    }
-
     componentWillUnmount() {
         if (this.needTearDown) {
             this.advertising.teardown();
         }
+    }
+
+    async setupAdvertising() {
+        await this.advertising.setup();
+        // teardown and setup should run in pair
+        this.needTearDown = true;
     }
 
     render() {
