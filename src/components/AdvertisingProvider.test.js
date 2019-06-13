@@ -70,12 +70,6 @@ describe('The AdvertisingProvider component', () => {
             mockSetup.should.have.been.called;
         });
 
-        it('sets up only once even if config property is changed', () => {
-            provider.setProps({ config: { ...config } });
-
-            mockSetup.should.have.been.calledOnce;
-        });
-
         it('uses an AdvertisingContext.Provider to pass the activate method of the advertising module', () => {
             expect(mockValueSpy.firstCall.args[0]).toMatchSnapshot();
         });
