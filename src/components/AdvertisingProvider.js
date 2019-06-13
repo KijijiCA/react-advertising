@@ -3,6 +3,7 @@ import Advertising from '../Advertising';
 import PropTypes from 'prop-types';
 import AdvertisingConfigPropType from './utils/AdvertisingConfigPropType';
 import AdvertisingContext from '../AdvertisingContext';
+import equal from 'fast-deep-equal';
 
 export default class AdvertisingProvider extends Component {
     constructor(props) {
@@ -21,7 +22,7 @@ export default class AdvertisingProvider extends Component {
         }
     }
 
-    componentDidUpdate(prevProps) {
+    async componentDidUpdate(prevProps) {
         const { config, active } = this.props;
         const isConfigReady = this.advertising.isConfigReady();
 
@@ -29,12 +30,13 @@ export default class AdvertisingProvider extends Component {
         if (!isConfigReady && config && active) {
             this.advertising.setConfig(config);
             this.setupAdvertising();
-        } else if (isConfigReady && prevProps.config !== config) {
+        } else if (isConfigReady && !equal(prevProps.config, config)) {
             // teardown the old configuration
-            this.teardownIfNeeded();
+            // to make sure the teardown and initialization are in a right sequence, need `await`
+            await this.teardownIfNeeded();
 
             // re-initialize advertising, if it is active
-            if (this.props.active) {
+            if (active) {
                 this.initialize();
                 const activate = this.advertising.activate.bind(this.advertising);
                 // eslint-disable-next-line react/no-did-update-set-state
@@ -51,18 +53,14 @@ export default class AdvertisingProvider extends Component {
         this.teardownIfNeeded();
     }
 
-    async setupAdvertising() {
-        await this.advertising.setup();
-        // teardown and setup should run in pair
-        this.needTearDown = true;
+    setupAdvertising() {
+        this.advertising.setup();
     }
 
-    teardownIfNeeded() {
-        if (this.needTearDown) {
-            this.advertising.teardown();
-            this.advertising = null;
-            this.activate = null;
-        }
+    async teardownIfNeeded() {
+        await this.advertising.teardown();
+        this.advertising = null;
+        this.activate = null;
     }
 
     initialize() {

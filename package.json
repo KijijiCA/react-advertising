@@ -84,5 +84,8 @@
         "sinon-chai": "^3.3.0",
         "webpack": "^4.32.1",
         "webpack-cli": "^3.3.2"
+    },
+    "dependencies": {
+        "fast-deep-equal": "^2.0.1"
     }
 }
