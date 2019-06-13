@@ -66,7 +66,6 @@ export default class AdvertisingProvider extends Component {
     initialize() {
         const { config, plugins } = this.props;
         this.advertising = new Advertising(config, plugins);
-        this.needTearDown = false;
     }
 
     render() {
