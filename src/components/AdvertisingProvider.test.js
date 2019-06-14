@@ -167,9 +167,8 @@ describe('The AdvertisingProvider component', () => {
     });
 
     describe('when mounted with active = false', () => {
-        let provider;
         beforeEach(() => {
-            provider = mount(<AdvertisingProvider config={config} active={false} />);
+            mount(<AdvertisingProvider config={config} active={false} />);
         });
 
         it('constructs an Advertising module with the provided configuration', () => {
