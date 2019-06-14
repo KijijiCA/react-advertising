@@ -76,60 +76,52 @@ describe('The AdvertisingProvider component', () => {
             mockSetup.should.have.been.calledOnce;
         });
 
-        it('sets up should be called if the config content is changed', () => {
+        it('sets up should be called if the config content is changed', done => {
             provider.setProps({ config: { ...config, path: 'global/ad/unit/path2' } });
 
             // setProps is a async operation
-            return new Promise(resolve => {
-                setTimeout(() => {
-                    mockTeardown.should.have.been.calledOnce;
-                    mockSetup.should.have.been.calledTwice;
-                    resolve();
-                }, 0);
-            });
+            setTimeout(() => {
+                mockTeardown.should.have.been.calledOnce;
+                mockSetup.should.have.been.calledTwice;
+                done();
+            }, 0);
         });
 
-        it('create a new Advertising instance with a new config if the config is changed', () => {
+        it('create a new Advertising instance with a new config if the config is changed', done => {
             provider.setProps({ config: undefined });
 
             // setProps is a async operation
-            return new Promise(resolve => {
-                setTimeout(() => {
-                    mockTeardown.should.have.been.calledOnce;
-                    mockConstructor.should.have.been.calledWith(undefined, undefined);
-                    resolve();
-                }, 0);
-            });
+            setTimeout(() => {
+                mockTeardown.should.have.been.calledOnce;
+                mockConstructor.should.have.been.calledWith(undefined, undefined);
+                done();
+            }, 0);
         });
 
-        it('sets up should not be called if the config content is changed but active is `false`', () => {
+        it('sets up should not be called if the config content is changed but active is `false`', done => {
             provider.setProps({
                 config: { ...config, path: 'global/ad/unit/path2' },
                 active: false
             });
 
             // setProps is a async operation
-            return new Promise(resolve => {
-                setTimeout(() => {
-                    mockSetup.should.have.been.calledOnce;
-                    resolve();
-                }, 0);
-            });
+            setTimeout(() => {
+                mockSetup.should.have.been.calledOnce;
+                done();
+            }, 0);
         });
 
-        it('does not setup if the config change to `undefined`', () => {
+        it('does not setup if the config change to `undefined`', done => {
             provider.setProps({ config: undefined });
             mockIsConfigReady.resetBehavior();
             mockIsConfigReady.returns(false);
 
             // setProps is a async operation
-            return new Promise(resolve => {
-                setTimeout(() => {
-                    mockTeardown.should.have.been.calledOnce;
-                    mockSetup.should.have.been.calledOnce;
-                    resolve();
-                }, 0);
-            });
+            setTimeout(() => {
+                mockTeardown.should.have.been.calledOnce;
+                mockSetup.should.have.been.calledOnce;
+                done();
+            }, 0);
         });
 
         it('uses an AdvertisingContext.Provider to pass the activate method of the advertising module', () => {
@@ -165,17 +157,15 @@ describe('The AdvertisingProvider component', () => {
             mockSetup.should.have.been.calledOnce;
         });
 
-        it('tears down the Advertising module', () => {
+        it('tears down the Advertising module', done => {
             provider.setProps({ config });
             provider.unmount();
 
             // setProps is a async operation
-            return new Promise(resolve => {
-                setTimeout(() => {
-                    mockTeardown.should.have.been.calledOnce;
-                    resolve();
-                }, 0);
-            });
+            setTimeout(() => {
+                mockTeardown.should.have.been.calledOnce;
+                done();
+            }, 0);
         });
 
         afterEach(resetMocks);

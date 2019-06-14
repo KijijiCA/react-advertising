@@ -35,31 +35,27 @@ describe('The advertising slot component', () => {
             mockActivate.should.have.been.calledWith(match.any, match.object);
         });
 
-        it('calls the new activate function if the new activate function changes', () => {
+        it('calls the new activate function if the new activate function changes', done => {
             const newMockActivate = spy();
             slot.setProps({ activate: newMockActivate });
 
             // setProps is a async operation
-            return new Promise(resolve => {
-                setTimeout(() => {
-                    // eslint-disable-next-line no-unused-expressions
-                    newMockActivate.should.has.been.calledOnce;
-                    resolve();
-                }, 0);
-            });
+            setTimeout(() => {
+                // eslint-disable-next-line no-unused-expressions
+                newMockActivate.should.has.been.calledOnce;
+                done();
+            }, 0);
         });
 
-        it('does not call the new activate function if the activate function does not change', () => {
+        it('does not call the new activate function if the activate function does not change', done => {
             slot.setProps({ activate: mockActivate });
 
             // setProps is a async operation
-            return new Promise(resolve => {
-                setTimeout(() => {
-                    // eslint-disable-next-line no-unused-expressions
-                    mockActivate.should.has.been.calledOnce;
-                    resolve();
-                }, 0);
-            });
+            setTimeout(() => {
+                // eslint-disable-next-line no-unused-expressions
+                mockActivate.should.has.been.calledOnce;
+                done();
+            }, 0);
         });
     });
 
