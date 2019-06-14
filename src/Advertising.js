@@ -100,7 +100,6 @@ export default class Advertising {
     }
 
     isConfigReady() {
-        console.log('>>>>', this.config);
         return Boolean(this.config);
     }
 
