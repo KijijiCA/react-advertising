@@ -70,6 +70,38 @@ describe('The AdvertisingProvider component', () => {
             mockSetup.should.have.been.called;
         });
 
+        it('sets up only once even if config reference is changed but the content does not changed', () => {
+            provider.setProps({ config: { ...config } });
+
+            mockSetup.should.have.been.calledOnce;
+        });
+
+        it('sets up should be called if the config content is changed', () => {
+            provider.setProps({ config: { ...config, path: 'global/ad/unit/path2' } });
+
+            // setProps is a async operation
+            return new Promise(resolve => {
+                setTimeout(() => {
+                    mockTeardown.should.have.been.calledOnce;
+                    mockSetup.should.have.been.calledTwice;
+                    resolve();
+                }, 0);
+            });
+        });
+
+        it('create a new Advertising instance with a new config if the config is changed', () => {
+            provider.setProps({ config: undefined });
+
+            // setProps is a async operation
+            return new Promise(resolve => {
+                setTimeout(() => {
+                    mockTeardown.should.have.been.calledOnce;
+                    mockConstructor.should.have.been.calledWith(undefined, undefined);
+                    resolve();
+                }, 0);
+            });
+        });
+
         it('uses an AdvertisingContext.Provider to pass the activate method of the advertising module', () => {
             expect(mockValueSpy.firstCall.args[0]).toMatchSnapshot();
         });
@@ -108,9 +140,12 @@ describe('The AdvertisingProvider component', () => {
             provider.unmount();
 
             // setProps is a async operation
-            setTimeout(() => {
-                mockTeardown.should.have.been.calledOnce;
-            }, 0);
+            return new Promise(resolve => {
+                setTimeout(() => {
+                    mockTeardown.should.have.been.calledOnce;
+                    resolve();
+                }, 0);
+            });
         });
 
         afterEach(resetMocks);
