@@ -117,6 +117,21 @@ describe('The AdvertisingProvider component', () => {
             });
         });
 
+        it('does not setup if the config change to `undefined`', () => {
+            provider.setProps({ config: undefined });
+            mockIsConfigReady.resetBehavior();
+            mockIsConfigReady.returns(false);
+
+            // setProps is a async operation
+            return new Promise(resolve => {
+                setTimeout(() => {
+                    mockTeardown.should.have.been.calledOnce;
+                    mockSetup.should.have.been.calledOnce;
+                    resolve();
+                }, 0);
+            });
+        });
+
         it('uses an AdvertisingContext.Provider to pass the activate method of the advertising module', () => {
             expect(mockValueSpy.firstCall.args[0]).toMatchSnapshot();
         });

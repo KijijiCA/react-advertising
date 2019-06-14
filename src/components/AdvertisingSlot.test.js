@@ -43,7 +43,20 @@ describe('The advertising slot component', () => {
             return new Promise(resolve => {
                 setTimeout(() => {
                     // eslint-disable-next-line no-unused-expressions
-                    void newMockActivate.should.has.been.calledOnce;
+                    newMockActivate.should.has.been.calledOnce;
+                    resolve();
+                }, 0);
+            });
+        });
+
+        it('does not call the new activate function if the activate function does not change', () => {
+            slot.setProps({ activate: mockActivate });
+
+            // setProps is a async operation
+            return new Promise(resolve => {
+                setTimeout(() => {
+                    // eslint-disable-next-line no-unused-expressions
+                    mockActivate.should.has.been.calledOnce;
                     resolve();
                 }, 0);
             });
