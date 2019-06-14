@@ -102,6 +102,21 @@ describe('The AdvertisingProvider component', () => {
             });
         });
 
+        it('sets up should not be called if the config content is changed but active is `false`', () => {
+            provider.setProps({
+                config: { ...config, path: 'global/ad/unit/path2' },
+                active: false
+            });
+
+            // setProps is a async operation
+            return new Promise(resolve => {
+                setTimeout(() => {
+                    mockSetup.should.have.been.calledOnce;
+                    resolve();
+                }, 0);
+            });
+        });
+
         it('uses an AdvertisingContext.Provider to pass the activate method of the advertising module', () => {
             expect(mockValueSpy.firstCall.args[0]).toMatchSnapshot();
         });
@@ -152,8 +167,9 @@ describe('The AdvertisingProvider component', () => {
     });
 
     describe('when mounted with active = false', () => {
+        let provider;
         beforeEach(() => {
-            mount(<AdvertisingProvider config={config} active={false} />);
+            provider = mount(<AdvertisingProvider config={config} active={false} />);
         });
 
         it('constructs an Advertising module with the provided configuration', () => {
