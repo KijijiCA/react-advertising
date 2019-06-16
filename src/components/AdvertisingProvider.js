@@ -3,47 +3,70 @@ import Advertising from '../Advertising';
 import PropTypes from 'prop-types';
 import AdvertisingConfigPropType from './utils/AdvertisingConfigPropType';
 import AdvertisingContext from '../AdvertisingContext';
+import equal from 'fast-deep-equal';
 
 export default class AdvertisingProvider extends Component {
     constructor(props) {
         super(props);
+        this.initialize();
 
-        const { config, plugins } = this.props;
-        this.advertising = new Advertising(config, plugins);
-        this.activate = this.advertising.activate.bind(this.advertising);
-        this.needTearDown = false;
-    }
-
-    async setupAdvertising() {
-        await this.advertising.setup();
-        // teardown and setup should run in pair
-        this.needTearDown = true;
-    }
-
-    componentDidUpdate() {
-        const { config, active } = this.props;
-
-        // activate advertising when the config changes from `undefined`
-        if (!this.advertising.isConfigReady() && config && active) {
-            this.advertising.setConfig(config);
-            this.setupAdvertising();
-        }
+        this.state = {
+            activate: this.advertising.activate.bind(this.advertising)
+        };
     }
 
     componentDidMount() {
         if (this.advertising.isConfigReady() && this.props.active) {
-            this.setupAdvertising();
+            this.advertising.setup();
+        }
+    }
+
+    async componentDidUpdate(prevProps) {
+        const { config, active } = this.props;
+        const isConfigReady = this.advertising.isConfigReady();
+
+        // activate advertising when the config changes from `undefined`
+        if (!isConfigReady && config && active) {
+            this.advertising.setConfig(config);
+            this.advertising.setup();
+        } else if (isConfigReady && !equal(prevProps.config, config)) {
+            // teardown the old configuration
+            // to make sure the teardown and initialization are in a right sequence, need `await`
+            await this.teardown();
+
+            // re-initialize advertising, if it is active
+            if (active) {
+                this.initialize();
+                // eslint-disable-next-line react/no-did-update-set-state
+                this.setState({
+                    activate: this.advertising.activate.bind(this.advertising)
+                });
+
+                if (this.advertising.isConfigReady()) {
+                    this.advertising.setup();
+                }
+            }
         }
     }
 
     componentWillUnmount() {
-        if (this.needTearDown) {
-            this.advertising.teardown();
-        }
+        this.teardown();
+    }
+
+    async teardown() {
+        await this.advertising.teardown();
+        this.advertising = null;
+        this.activate = null;
+    }
+
+    initialize() {
+        const { config, plugins } = this.props;
+        this.advertising = new Advertising(config, plugins);
     }
 
     render() {
-        return <AdvertisingContext.Provider value={this.activate}>{this.props.children}</AdvertisingContext.Provider>;
+        const { activate } = this.state;
+        return <AdvertisingContext.Provider value={activate}>{this.props.children}</AdvertisingContext.Provider>;
     }
 }
 
