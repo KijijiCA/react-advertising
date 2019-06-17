@@ -1,5 +1,23 @@
 # Changelog
 
+## 2.0.0 / 16 June 2019
+
+You can now update the `AdvertisingProvider` by re-rendering it with a different configuration prop than before.
+
+When the AdvertisingProvider receives a new config prop, it will automatically tear down GPT and Prebid and set them up again with the updated configuration, causing all the ad slots in the container to get refreshed with new ads according to the new config.
+
+* See [documentation](https://github.com/technology-ebay-de/react-prebid/wiki/Advanced-Usage#updating-the-configuration-after-initial-rendering)
+
+Thanks [Jason Li](https://github.com/sundy001) for implementing this!
+
+**Breaking Change**
+
+In previous versions, if the `config` prop for the `AdvertisingProvider` changed, this was ignored,
+now it causes GPT and Prebid to be re-initialized and ad slots to be refreshed with the updated config.
+
+While we believe this to be the desired effect, some users may depend on the old “ignorant” behavior,
+hence we decided to roll out this change as a major release.
+
 ## 1.1.0 / 28 May 2019
 
 You can now render the `AdvertisingProvider` without a config prop. This is useful when you

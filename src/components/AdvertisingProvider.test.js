@@ -70,10 +70,58 @@ describe('The AdvertisingProvider component', () => {
             mockSetup.should.have.been.called;
         });
 
-        it('sets up only once even if config property is changed', () => {
+        it('sets up only once even if config reference is changed but the content does not changed', () => {
             provider.setProps({ config: { ...config } });
 
             mockSetup.should.have.been.calledOnce;
+        });
+
+        it('sets up should be called if the config content is changed', done => {
+            provider.setProps({ config: { ...config, path: 'global/ad/unit/path2' } });
+
+            // setProps is a async operation
+            setTimeout(() => {
+                mockTeardown.should.have.been.calledOnce;
+                mockSetup.should.have.been.calledTwice;
+                done();
+            }, 0);
+        });
+
+        it('create a new Advertising instance with a new config if the config is changed', done => {
+            provider.setProps({ config: undefined });
+
+            // setProps is a async operation
+            setTimeout(() => {
+                mockTeardown.should.have.been.calledOnce;
+                mockConstructor.should.have.been.calledWith(undefined, undefined);
+                done();
+            }, 0);
+        });
+
+        it('sets up should not be called if the config content is changed but active is `false`', done => {
+            provider.setProps({
+                config: { ...config, path: 'global/ad/unit/path2' },
+                active: false
+            });
+
+            // setProps is a async operation
+            setTimeout(() => {
+                mockSetup.should.have.been.calledOnce;
+                done();
+            }, 0);
+        });
+
+        it('does not setup if the config change to `undefined`', done => {
+            provider.setProps({ config: undefined });
+            mockIsConfigReady.resetBehavior();
+            mockIsConfigReady.returns(false);
+
+            // setProps is a async operation
+            setTimeout(() => {
+                mockTeardown.should.have.been.calledOnce;
+                mockSetup.should.have.been.calledOnce;
+                done();
+            }, 0);
         });
 
         it('uses an AdvertisingContext.Provider to pass the activate method of the advertising module', () => {
@@ -109,13 +157,14 @@ describe('The AdvertisingProvider component', () => {
             mockSetup.should.have.been.calledOnce;
         });
 
-        it('tears down the Advertising module', () => {
+        it('tears down the Advertising module', done => {
             provider.setProps({ config });
             provider.unmount();
 
             // setProps is a async operation
             setTimeout(() => {
                 mockTeardown.should.have.been.calledOnce;
+                done();
             }, 0);
         });
 

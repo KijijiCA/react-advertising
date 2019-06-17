@@ -7,6 +7,14 @@ class AdvertisingSlot extends Component {
         const { activate, id, customEventHandlers } = this.props;
         activate(id, customEventHandlers);
     }
+
+    componentDidUpdate(prevProps) {
+        const { activate, id, customEventHandlers } = this.props;
+        if (prevProps.activate !== activate) {
+            activate(id, customEventHandlers);
+        }
+    }
+
     render() {
         const { id, style, className, children } = this.props;
         return <div id={id} style={style} className={className} children={children} />;
