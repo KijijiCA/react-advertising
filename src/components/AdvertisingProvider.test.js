@@ -168,6 +168,12 @@ describe('The AdvertisingProvider component', () => {
             }, 0);
         });
 
+        it('does not tear down the Advertising module if the config is undefined', () => {
+            provider.unmount();
+
+            mockTeardown.should.not.have.been.calledOnce;
+        });
+
         afterEach(resetMocks);
     });
 
