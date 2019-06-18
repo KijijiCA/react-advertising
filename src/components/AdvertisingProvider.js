@@ -50,7 +50,9 @@ export default class AdvertisingProvider extends Component {
     }
 
     componentWillUnmount() {
-        this.teardown();
+        if (this.props.config) {
+            this.teardown();
+        }
     }
 
     async teardown() {
