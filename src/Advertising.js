@@ -38,7 +38,7 @@ export default class Advertising {
     // ---------- PUBLIC METHODS ----------
 
     async setup() {
-        const { slots, queue } = this;
+        const { slots, outOfPageSlot, queue } = this;
         this[setupCustomEvents]();
         await Promise.all([
             Advertising[queueForPrebid](this[setupPrebid].bind(this)),
@@ -56,7 +56,7 @@ export default class Advertising {
             });
         }
         const divIds = queue.map(({ id }) => id);
-        const selectedSlots = queue.map(({ id }) => slots[id]);
+        const selectedSlots = queue.map(({ id }) => slots[id] || outOfPageSlot[id]);
         Advertising[queueForPrebid](() =>
             window.pbjs.requestBids({
                 adUnitCodes: divIds,
@@ -114,6 +114,7 @@ export default class Advertising {
     // ---------- PRIVATE METHODS ----------
 
     [setupCustomEvents]() {
+        this[executePlugins]('setupCustomEvents');
         if (!this.config.customEvents) {
             return;
         }
@@ -187,7 +188,6 @@ export default class Advertising {
             slot.addService(window.googletag.pubads());
 
             this.slots[id] = slot;
-            console.log('defineSlots', id, path, this.config.path, slot);
         });
     }
 
@@ -197,7 +197,6 @@ export default class Advertising {
             const slot = window.googletag.defineOutOfPageSlot(this.config.path, id);
             slot.addService(window.googletag.pubads());
             this.outOfPageSlot[id] = slot;
-            console.log('defineOutOfPageSlot', id, this.config.path, slot);
         }
     }
 
@@ -205,15 +204,13 @@ export default class Advertising {
         this[executePlugins]('displaySlots');
         this.config.slots.forEach(({ id }) => {
             window.googletag.display(id);
-            console.log('displaySlots', id);
         });
     }
 
     [displayOutOfPageSlot]() {
+        this[executePlugins]('displayOutOfPageSlot');
         if (this.config.outOfPage) {
-            this[executePlugins]('displaySlots');
             window.googletag.display(this.config.outOfPage.id);
-            console.log('displayOutOfPageSlot', this.config.outOfPage.id);
         }
     }
 
