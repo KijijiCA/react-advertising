@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.0.1 / 18 June 2019
+
+When the `AdvertisingProvider` unmounted when it didn't have a config, a null pointer execption
+ocurred. This was fixed.
+
+* See [PR 13](https://github.com/technology-ebay-de/react-prebid/pull/13)
+
 ## 2.0.0 / 16 June 2019
 
 You can now update the `AdvertisingProvider` by re-rendering it with a different configuration prop than before.
