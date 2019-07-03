@@ -75,7 +75,7 @@
         "jest": "^24.8.0",
         "lint-staged": "^8.1.7",
         "prettier": "^1.17.1",
-        "prop-types": "^15.6.0",
+        "prop-types": "^15.7.2",
         "react": "^16.8.6",
         "react-dom": "^16.8.6",
         "react-test-renderer": "^16.8.6",

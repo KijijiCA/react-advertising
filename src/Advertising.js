@@ -38,6 +38,7 @@ export default class Advertising {
     // ---------- PUBLIC METHODS ----------
 
     async setup() {
+        this[executePlugins]('setup');
         const { slots, outOfPageSlot, queue } = this;
         this[setupCustomEvents]();
         await Promise.all([
