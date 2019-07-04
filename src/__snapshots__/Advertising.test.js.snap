@@ -326,6 +326,20 @@ Object {
 }
 `;
 
+exports[`When I instantiate an advertising main module with outOfPageSlots a GPT outOfPage slot is defined for the “outOfPageSlot1” ad with the correct parameters 1`] = `
+Array [
+  "global/ad/unit/path",
+  "outOfPageSlot1",
+]
+`;
+
+exports[`When I instantiate an advertising main module with outOfPageSlots a GPT outOfPage slot is defined for the “outOfPageSlot2” ad with the correct parameters 1`] = `
+Array [
+  "global/ad/unit/path",
+  "outOfPageSlot2",
+]
+`;
+
 exports[`When I instantiate an advertising main module without prebid config and set config later is set to proper config 1`] = `
 Object {
   "active": true,
@@ -338,6 +352,7 @@ Object {
   "metaData": Object {
     "usdToEurRate": 2,
   },
+  "outOfPageSlots": Array [],
   "path": "global/ad/unit/path",
   "prebid": Object {
     "bidderSequence": "random",

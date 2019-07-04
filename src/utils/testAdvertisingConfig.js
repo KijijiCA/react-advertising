@@ -1,3 +1,5 @@
+export const DIV_ID_OOP = 'div-gpt-ad-oop';
+
 export const DIV_ID_FOO = 'div-gpt-ad-foo';
 const SLOT_ID_FOO = 666;
 const PREBID_SIZES_FOO = [[320, 240]];
@@ -25,6 +27,7 @@ export const config = {
         priceGranularity: 'medium',
         bidderSequence: 'random'
     },
+    outOfPageSlots: [],
     slots: [
         {
             id: DIV_ID_FOO,

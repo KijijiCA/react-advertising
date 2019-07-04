@@ -43,6 +43,9 @@ describe('When I instantiate an advertising main module', () => {
             it('is defined for the “bar” ad with the correct parameters', () =>
                 void expect(global.googletag.defineSlot.secondCall.args).toMatchSnapshot());
         });
+        describe('a GPT outOfPage slot', () => {
+            it('is not called once', () => void expect(global.googletag.defineOutOfPageSlot).to.not.have.been.called);
+        });
         describe('the GPT slot that is defined for the “foo” ad', () => {
             let foo;
             beforeEach(() => (foo = global.googletag.fakeSlots[0]));
@@ -217,17 +220,21 @@ describe('When I instantiate an advertising main module with plugins', () => {
         originalGoogletag = setupGoogletag();
         plugins = [
             {
+                setup: spy(),
                 setupPrebid: spy(),
                 teardownPrebid: spy(),
                 setupGpt: spy(),
                 teardownGpt: spy(),
-                displaySlots: spy()
+                displaySlots: spy(),
+                displayOutOfPageSlot: spy()
             }
         ];
         advertising = new Advertising(config, plugins);
     });
     describe('and call the setup method', () => {
         beforeEach(() => advertising.setup());
+        describe("the plugin's hook for Advertising setup", () =>
+            it('is called', () => void plugins[0].setup.should.have.been.called));
         describe("the plugin's hook for Prebid setup", () =>
             it('is called', () => void plugins[0].setupPrebid.should.have.been.called));
         describe("the plugin's hook for Prebid teardown", () =>
@@ -238,6 +245,8 @@ describe('When I instantiate an advertising main module with plugins', () => {
             it('is not called', () => void plugins[0].teardownGpt.should.not.have.been.called));
         describe("the plugin's hook for displaying slots", () =>
             it('is called', () => void plugins[0].displaySlots.should.have.been.called));
+        describe("the plugin's hook for displaying outOfPage slots", () =>
+            it('is called', () => void plugins[0].displayOutOfPageSlot.should.have.been.called));
     });
     describe('and call the teardown method', () => {
         beforeEach(() => advertising.teardown());
@@ -251,6 +260,34 @@ describe('When I instantiate an advertising main module with plugins', () => {
             it('is called', () => void plugins[0].teardownGpt.should.have.been.called));
         describe("the plugin's hook for displaying slots", () =>
             it('is not called', () => void plugins[0].displaySlots.should.not.have.been.called));
+        describe("the plugin's hook for displaying outOfPage slots", () =>
+            it('is not called', () => void plugins[0].displayOutOfPageSlot.should.not.have.been.called));
+    });
+    afterEach(() => {
+        global.pbjs = originalPbjs;
+        global.googletag = originalGoogletag;
+    });
+});
+
+describe('When I instantiate an advertising main module with outOfPageSlots', () => {
+    let originalPbjs, originalGoogletag, advertising, outOfPageSlotsConfig;
+    beforeEach(() => {
+        originalPbjs = setupPbjs();
+        originalGoogletag = setupGoogletag();
+
+        outOfPageSlotsConfig = { ...config };
+        outOfPageSlotsConfig.outOfPageSlots = [{ id: 'outOfPageSlot1' }, { id: 'outOfPageSlot2' }];
+
+        advertising = new Advertising(outOfPageSlotsConfig);
+    });
+    describe('a GPT outOfPage slot', () => {
+        beforeEach(() => advertising.setup());
+        it('is defined for each slot', () =>
+            void expect(global.googletag.defineOutOfPageSlot).to.have.been.calledTwice);
+        it('is defined for the “outOfPageSlot1” ad with the correct parameters', () =>
+            void expect(global.googletag.defineOutOfPageSlot.firstCall.args).toMatchSnapshot());
+        it('is defined for the “outOfPageSlot2” ad with the correct parameters', () =>
+            void expect(global.googletag.defineOutOfPageSlot.secondCall.args).toMatchSnapshot());
     });
     afterEach(() => {
         global.pbjs = originalPbjs;

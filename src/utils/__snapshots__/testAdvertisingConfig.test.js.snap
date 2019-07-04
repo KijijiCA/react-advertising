@@ -12,6 +12,7 @@ Object {
   "metaData": Object {
     "usdToEurRate": 2,
   },
+  "outOfPageSlots": Array [],
   "path": "global/ad/unit/path",
   "prebid": Object {
     "bidderSequence": "random",
