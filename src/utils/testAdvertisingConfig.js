@@ -27,7 +27,6 @@ export const config = {
         priceGranularity: 'medium',
         bidderSequence: 'random'
     },
-    outOfPageSlots: [],
     slots: [
         {
             id: DIV_ID_FOO,
