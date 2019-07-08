@@ -115,7 +115,6 @@ export default class Advertising {
     // ---------- PRIVATE METHODS ----------
 
     [setupCustomEvents]() {
-        this[executePlugins]('setupCustomEvents');
         if (!this.config.customEvents) {
             return;
         }
