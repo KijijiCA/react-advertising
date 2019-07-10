@@ -85,6 +85,11 @@ export default PropTypes.shape({
         )
     ),
     slots: PropTypes.arrayOf(AdvertisingSlotConfigPropType),
+    outOfPageSlots: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.string
+        })
+    ),
     customEvents: PropTypes.objectOf(
         PropTypes.shape({
             eventMessagePrefix: PropTypes.string.isRequired,
