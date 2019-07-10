@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.1.0 / 10 July 2019
+
+* Add outOfPageSlot functionality - see [Google documentation](https://support.google.com/admanager/answer/6088046?hl=en)
+* Add new plugin hook "setup"
+* See [PR 14](https://github.com/technology-ebay-de/react-prebid/pull/14)
+
 ## 2.0.1 / 18 June 2019
 
 When the `AdvertisingProvider` unmounted when it didn't have a config, a null pointer execption
