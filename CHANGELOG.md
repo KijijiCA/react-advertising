@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.1 / 6 August 2019
+
+* Chore, updated dependencies to lodash to fix vulnerability issue
+
 ## 2.1.0 / 10 July 2019
 
 * Add outOfPageSlot functionality - see [Google documentation](https://support.google.com/admanager/answer/6088046?hl=en)
