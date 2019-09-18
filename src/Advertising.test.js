@@ -11,6 +11,88 @@ describe('When I instantiate an advertising main module', () => {
         originalGoogletag = setupGoogletag();
         advertising = new Advertising(config);
     });
+    describe('call the setup method', () => {
+        let onErrorSpy;
+        beforeEach(() => {
+            onErrorSpy = spy();
+            advertising = new Advertising(config, [], onErrorSpy);
+        });
+
+        describe('and pbjs.addAdUnits throw error', () => {
+            it('calls onError callback', () => {
+                const error = new Error();
+                global.pbjs.addAdUnits = stub().throws(error);
+
+                advertising.setup();
+
+                expect(onErrorSpy).to.have.been.calledWithMatch(error);
+            });
+        });
+
+        describe('and pbjs.requestBids throw error', () => {
+            it('calls onError callback', () => {
+                const error = new Error();
+                global.pbjs.requestBids = stub().throws(error);
+
+                advertising.setup();
+                advertising.activate(DIV_ID_FOO);
+
+                expect(onErrorSpy).to.have.been.calledWithMatch(error);
+            });
+        });
+
+        describe('and pbjs.setTargetingForGPTAsync throw error', () => {
+            it('calls onError callback', () => {
+                const error = new Error();
+                global.pbjs.setTargetingForGPTAsync = stub().throws(error);
+
+                advertising.setup();
+                advertising.activate(DIV_ID_FOO);
+
+                expect(onErrorSpy).to.have.been.calledWithMatch(error);
+            });
+        });
+
+        describe('and pbjs.teardown throw error', () => {
+            it('calls onError callback', () => {
+                const error = new Error();
+                global.pbjs.removeAdUnit = stub().throws(error);
+
+                advertising.setup();
+                advertising.teardown();
+
+                expect(onErrorSpy).to.have.been.calledWithMatch(error);
+            });
+        });
+
+        describe('and googletag.pubads throw error', () => {
+            it('calls onError callback', () => {
+                const error = new Error();
+                global.googletag.pubads = stub().throws(error);
+
+                advertising.setup();
+
+                expect(onErrorSpy).to.have.been.calledWithMatch(error);
+            });
+        });
+
+        describe('and googletag.destroySlots throw error', () => {
+            it('calls onError callback', () => {
+                const error = new Error();
+                global.googletag.destroySlots = stub().throws(error);
+
+                advertising.setup();
+                advertising.teardown();
+
+                expect(onErrorSpy).to.have.been.calledWithMatch(error);
+            });
+        });
+
+        afterEach(() => {
+            global.pbjs = originalPbjs;
+            global.googletag = originalGoogletag;
+        });
+    });
     describe('and call the setup method', () => {
         beforeEach(() => {
             advertising.setup();

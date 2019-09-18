@@ -62,8 +62,8 @@ export default class AdvertisingProvider extends Component {
     }
 
     initialize() {
-        const { config, plugins } = this.props;
-        this.advertising = new Advertising(config, plugins);
+        const { config, plugins, onError } = this.props;
+        this.advertising = new Advertising(config, plugins, onError);
     }
 
     render() {
@@ -76,6 +76,7 @@ AdvertisingProvider.propTypes = {
     active: PropTypes.bool,
     config: AdvertisingConfigPropType,
     children: PropTypes.node,
+    onError: PropTypes.func,
     plugins: PropTypes.arrayOf(
         PropTypes.shape({
             setupPrebid: PropTypes.func,
