@@ -19,7 +19,6 @@
         "build:dist": "webpack",
         "eslint": "eslint 'src/**/*.js'",
         "prettier": "prettier 'src/**/*.js' --write",
-        "precommit": "lint-staged"
     },
     "lint-staged": {
         "linters": {
@@ -93,5 +92,10 @@
     },
     "dependencies": {
         "fast-deep-equal": "^2.0.1"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged"
+        }
     }
 }
