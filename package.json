@@ -14,8 +14,7 @@
         "watch": "webpack --watch",
         "build": "NODE_ENV=production webpack",
         "eslint": "eslint '**/*.js'",
-        "prettier": "prettier '**/*.js' --write",
-        "precommit": "lint-staged"
+        "prettier": "prettier '**/*.js' --write"
     },
     "lint-staged": {
         "linters": {
@@ -87,5 +86,10 @@
     },
     "dependencies": {
         "fast-deep-equal": "^2.0.1"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged"
+        }
     }
 }
