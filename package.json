@@ -18,7 +18,7 @@
         "build:lib": "cross-env BABEL_ENV=cjs babel --out-dir lib src --ignore src/*.test.js,src/**/*.test.js",
         "build:dist": "webpack",
         "eslint": "eslint 'src/**/*.js'",
-        "prettier": "prettier 'src/**/*.js' --write",
+        "prettier": "prettier 'src/**/*.js' --write"
     },
     "lint-staged": {
         "linters": {
