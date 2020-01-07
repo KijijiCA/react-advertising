@@ -1,8 +1,8 @@
 module.exports = {
-    entry: ['regenerator-runtime/runtime', './index-esnext.js'],
+    entry: ['regenerator-runtime/runtime', './index.js'],
     output: {
         path: __dirname,
-        filename: 'index.js',
+        filename: 'dist/index.min.js',
         libraryTarget: 'commonjs2'
     },
     externals: {
@@ -21,5 +21,6 @@ module.exports = {
             }
         ]
     },
-    mode: 'production'
+    mode: 'production',
+    devtool: 'source-map'
 };
