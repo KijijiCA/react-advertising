@@ -1,5 +1,5 @@
 module.exports = {
-    entry: ['regenerator-runtime/runtime', './index.js'],
+    entry: ['regenerator-runtime/runtime', './src/index.js'],
     output: {
         path: __dirname,
         filename: 'dist/index.min.js',
