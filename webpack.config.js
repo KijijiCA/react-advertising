@@ -1,16 +1,24 @@
+const path = require('path');
+
 module.exports = {
     entry: ['regenerator-runtime/runtime', './src/index.js'],
     output: {
-        path: __dirname,
-        filename: 'dist/index.min.js',
-        libraryTarget: 'commonjs2'
+        path: path.resolve(__dirname, 'dist'),
+        filename: 'react-prebid.min.js',
+        library: {
+            root: 'ReactPrebid',
+            amd: 'react-prebid',
+            commonjs: 'react-prebid'
+        },
+        libraryTarget: 'umd',
+        globalObject: 'this'
     },
     externals: {
         react: {
-            commonjs2: 'react'
-        },
-        'prop-types': {
-            commonjs2: 'prop-types'
+            commonjs: 'react',
+            commonjs2: 'react',
+            amd: 'react',
+            root: 'React'
         }
     },
     module: {
