@@ -2,19 +2,22 @@
     "name": "react-prebid",
     "version": "2.1.1",
     "description": "Library for ad placements with Prebid header bidding in React applications",
-    "main": "index.js",
-    "esnext": "index-esnext.js",
+    "main": "lib/index.js",
+    "unpkg": "dist/index.min.js",
+    "esnext": "src/index.js",
     "files": [
         "src/",
-        "index.js",
-        "index-esnext.js"
+        "lib/",
+        "dist/"
     ],
     "scripts": {
         "test": "jest",
         "watch": "webpack --watch",
-        "build": "NODE_ENV=production webpack",
-        "eslint": "eslint '**/*.js'",
-        "prettier": "prettier '**/*.js' --write"
+        "build": "npm run build:lib && npm run build:dist",
+        "build:lib": "cross-env BABEL_ENV=cjs babel --out-dir lib src --ignore src/*.test.js,src/**/*.test.js",
+        "build:dist": "webpack",
+        "eslint": "eslint 'src/**/*.js'",
+        "prettier": "prettier 'src/**/*.js' --write"
     },
     "lint-staged": {
         "linters": {
@@ -50,6 +53,7 @@
         "react": ">=16.3.0 <17.0.0"
     },
     "devDependencies": {
+        "@babel/cli": "^7.7.7",
         "@babel/core": "^7.4.5",
         "@babel/plugin-proposal-object-rest-spread": "^7.4.4",
         "@babel/preset-env": "^7.4.5",
@@ -63,6 +67,7 @@
         "chai-enzyme": "^1.0.0-beta.1",
         "check-prop-types": "^1.1.2",
         "coveralls": "^3.0.3",
+        "cross-env": "^6.0.3",
         "enzyme": "^3.9.0",
         "enzyme-adapter-react-16": "^1.13.1",
         "eslint": "^5.16.0",
