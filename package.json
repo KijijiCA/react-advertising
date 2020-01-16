@@ -18,7 +18,7 @@
         "build:dist": "webpack",
         "eslint": "eslint 'src/**/*.js'",
         "prettier": "prettier 'src/**/*.js' --write",
-        "postinstall": "scripts/fix-package-lock.sh"
+        "fixPackageLock": "scripts/fix-package-lock.sh"
     },
     "lint-staged": {
         "linters": {

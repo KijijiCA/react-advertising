@@ -18,7 +18,7 @@ declare -a FILES_TO_FIX=(
 declare -a INCORRECT_PATHS=(
     "https:\/\/nexus\.corp\.mobile\.de\/repository\/npm-all"
     "https:\/\/nexus\.corp\.mobile\.de\/nexus\/repository\/npm-all"
-    "https:\/\/registry\.npmjs\.org"
+    "https:\/\/nexus.es.ecg.tools\/repository\/npm-all"
 )
 
 for CURRENT_FILE in "${FILES_TO_FIX[@]}"
@@ -26,7 +26,7 @@ do
     echo "Fixing ${CURRENT_FILE}"
     for SEARCH_EXP in "${INCORRECT_PATHS[@]}"
     do
-        sed -i.bak -e "s/${SEARCH_EXP}/https:\/\/nexus.es.ecg.tools\/repository\/npm-all/g" ${CURRENT_FILE}
+        sed -i.bak -e "s/${SEARCH_EXP}/https:\/\/registry\.npmjs\.org/g" ${CURRENT_FILE}
     done
     rm ${CURRENT_FILE}.bak
 done
