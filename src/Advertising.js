@@ -293,7 +293,6 @@ export default class Advertising {
                     func();
                     resolve();
                 } catch (error) {
-                    // console.log(error);
                     onError(error);
                 }
             })

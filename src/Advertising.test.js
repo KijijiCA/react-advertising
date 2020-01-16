@@ -2,7 +2,17 @@ import Advertising from './Advertising';
 import { stub, spy } from 'sinon';
 import { config, DIV_ID_BAR, DIV_ID_FOO } from './utils/testAdvertisingConfig';
 
-const GPT_SIZE_MAPPING = [[[0, 0], []], [[320, 700], [[300, 250], [320, 50]]], [[1050, 200], []]];
+const GPT_SIZE_MAPPING = [
+    [[0, 0], []],
+    [
+        [320, 700],
+        [
+            [300, 250],
+            [320, 50]
+        ]
+    ],
+    [[1050, 200], []]
+];
 
 describe('When I instantiate an advertising main module', () => {
     let originalPbjs, originalGoogletag, advertising;
@@ -18,7 +28,7 @@ describe('When I instantiate an advertising main module', () => {
             advertising = new Advertising(config, [], onErrorSpy);
         });
 
-        describe('and pbjs.addAdUnits throw error', () => {
+        describe('and pbjs.addAdUnits throws an error', () => {
             it('calls onError callback', () => {
                 const error = new Error();
                 global.pbjs.addAdUnits = stub().throws(error);
@@ -29,7 +39,7 @@ describe('When I instantiate an advertising main module', () => {
             });
         });
 
-        describe('and pbjs.requestBids throw error', () => {
+        describe('and pbjs.requestBids throws an error', () => {
             it('calls onError callback', () => {
                 const error = new Error();
                 global.pbjs.requestBids = stub().throws(error);
@@ -41,7 +51,7 @@ describe('When I instantiate an advertising main module', () => {
             });
         });
 
-        describe('and pbjs.setTargetingForGPTAsync throw error', () => {
+        describe('and pbjs.setTargetingForGPTAsync throws an error', () => {
             it('calls onError callback', () => {
                 const error = new Error();
                 global.pbjs.setTargetingForGPTAsync = stub().throws(error);
@@ -53,7 +63,7 @@ describe('When I instantiate an advertising main module', () => {
             });
         });
 
-        describe('and pbjs.teardown throw error', () => {
+        describe('and pbjs.teardown throws an error', () => {
             it('calls onError callback', () => {
                 const error = new Error();
                 global.pbjs.removeAdUnit = stub().throws(error);
@@ -65,7 +75,7 @@ describe('When I instantiate an advertising main module', () => {
             });
         });
 
-        describe('and googletag.pubads throw error', () => {
+        describe('and googletag.pubads throws an error', () => {
             it('calls onError callback', () => {
                 const error = new Error();
                 global.googletag.pubads = stub().throws(error);
@@ -76,7 +86,7 @@ describe('When I instantiate an advertising main module', () => {
             });
         });
 
-        describe('and googletag.destroySlots throw error', () => {
+        describe('and googletag.destroySlots throws an error', () => {
             it('calls onError callback', () => {
                 const error = new Error();
                 global.googletag.destroySlots = stub().throws(error);
