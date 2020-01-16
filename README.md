@@ -43,4 +43,4 @@ You can find documentation on how to use this library in the project's wiki:
 
 [MIT licensed](LICENSE)
 
-Copyright © 2018-2019 mobile.de GmbH
+Copyright © 2018-2020 mobile.de GmbH

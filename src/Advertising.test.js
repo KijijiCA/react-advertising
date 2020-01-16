@@ -2,7 +2,17 @@ import Advertising from './Advertising';
 import { stub, spy } from 'sinon';
 import { config, DIV_ID_BAR, DIV_ID_FOO } from './utils/testAdvertisingConfig';
 
-const GPT_SIZE_MAPPING = [[[0, 0], []], [[320, 700], [[300, 250], [320, 50]]], [[1050, 200], []]];
+const GPT_SIZE_MAPPING = [
+    [[0, 0], []],
+    [
+        [320, 700],
+        [
+            [300, 250],
+            [320, 50]
+        ]
+    ],
+    [[1050, 200], []]
+];
 
 describe('When I instantiate an advertising main module', () => {
     let originalPbjs, originalGoogletag, advertising;
@@ -10,6 +20,88 @@ describe('When I instantiate an advertising main module', () => {
         originalPbjs = setupPbjs();
         originalGoogletag = setupGoogletag();
         advertising = new Advertising(config);
+    });
+    describe('call the setup method', () => {
+        let onErrorSpy;
+        beforeEach(() => {
+            onErrorSpy = spy();
+            advertising = new Advertising(config, [], onErrorSpy);
+        });
+
+        describe('and pbjs.addAdUnits throws an error', () => {
+            it('calls onError callback', () => {
+                const error = new Error();
+                global.pbjs.addAdUnits = stub().throws(error);
+
+                advertising.setup();
+
+                expect(onErrorSpy).to.have.been.calledWithMatch(error);
+            });
+        });
+
+        describe('and pbjs.requestBids throws an error', () => {
+            it('calls onError callback', () => {
+                const error = new Error();
+                global.pbjs.requestBids = stub().throws(error);
+
+                advertising.setup();
+                advertising.activate(DIV_ID_FOO);
+
+                expect(onErrorSpy).to.have.been.calledWithMatch(error);
+            });
+        });
+
+        describe('and pbjs.setTargetingForGPTAsync throws an error', () => {
+            it('calls onError callback', () => {
+                const error = new Error();
+                global.pbjs.setTargetingForGPTAsync = stub().throws(error);
+
+                advertising.setup();
+                advertising.activate(DIV_ID_FOO);
+
+                expect(onErrorSpy).to.have.been.calledWithMatch(error);
+            });
+        });
+
+        describe('and pbjs.teardown throws an error', () => {
+            it('calls onError callback', () => {
+                const error = new Error();
+                global.pbjs.removeAdUnit = stub().throws(error);
+
+                advertising.setup();
+                advertising.teardown();
+
+                expect(onErrorSpy).to.have.been.calledWithMatch(error);
+            });
+        });
+
+        describe('and googletag.pubads throws an error', () => {
+            it('calls onError callback', () => {
+                const error = new Error();
+                global.googletag.pubads = stub().throws(error);
+
+                advertising.setup();
+
+                expect(onErrorSpy).to.have.been.calledWithMatch(error);
+            });
+        });
+
+        describe('and googletag.destroySlots throws an error', () => {
+            it('calls onError callback', () => {
+                const error = new Error();
+                global.googletag.destroySlots = stub().throws(error);
+
+                advertising.setup();
+                advertising.teardown();
+
+                expect(onErrorSpy).to.have.been.calledWithMatch(error);
+            });
+        });
+
+        afterEach(() => {
+            global.pbjs = originalPbjs;
+            global.googletag = originalGoogletag;
+        });
     });
     describe('and call the setup method', () => {
         beforeEach(() => {

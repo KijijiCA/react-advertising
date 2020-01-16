@@ -1,5 +1,3 @@
-export const DIV_ID_OOP = 'div-gpt-ad-oop';
-
 export const DIV_ID_FOO = 'div-gpt-ad-foo';
 const SLOT_ID_FOO = 666;
 const PREBID_SIZES_FOO = [[320, 240]];
@@ -80,7 +78,10 @@ export const config = {
             },
             {
                 viewPortSize: [320, 700],
-                sizes: [[300, 250], [320, 50]]
+                sizes: [
+                    [300, 250],
+                    [320, 50]
+                ]
             },
             {
                 viewPortSize: [1050, 200],
