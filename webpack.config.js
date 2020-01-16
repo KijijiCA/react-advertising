@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-    entry: ['regenerator-runtime/runtime', './src/index.js'],
+    entry: './src/index.js',
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'react-prebid.min.js',
