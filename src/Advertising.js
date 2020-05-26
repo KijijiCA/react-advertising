@@ -63,7 +63,7 @@ export default class Advertising {
             () =>
                 window.pbjs.requestBids({
                     adUnitCodes: divIds,
-                    bidsBackHandler() {
+                    bidsBackHandler: () => {
                         window.pbjs.setTargetingForGPTAsync(divIds);
                         Advertising[queueForGPT](() => window.googletag.pubads().refresh(selectedSlots), this.onError);
                     }
@@ -99,7 +99,7 @@ export default class Advertising {
             () =>
                 window.pbjs.requestBids({
                     adUnitCodes: [id],
-                    bidsBackHandler() {
+                    bidsBackHandler: () => {
                         window.pbjs.setTargetingForGPTAsync([id]);
                         Advertising[queueForGPT](() => window.googletag.pubads().refresh([slots[id]]), this.onError);
                     }
