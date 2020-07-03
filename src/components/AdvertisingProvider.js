@@ -11,7 +11,7 @@ export default class AdvertisingProvider extends Component {
         this.initialize();
 
         this.state = {
-            activate: this.advertising.activate.bind(this.advertising)
+            activate: this.advertising.activate.bind(this.advertising),
         };
     }
 
@@ -39,7 +39,7 @@ export default class AdvertisingProvider extends Component {
                 this.initialize();
                 // eslint-disable-next-line react/no-did-update-set-state
                 this.setState({
-                    activate: this.advertising.activate.bind(this.advertising)
+                    activate: this.advertising.activate.bind(this.advertising),
                 });
 
                 if (this.advertising.isConfigReady()) {
@@ -82,11 +82,11 @@ AdvertisingProvider.propTypes = {
             setupPrebid: PropTypes.func,
             setupGpt: PropTypes.func,
             teardownPrebid: PropTypes.func,
-            teardownGpt: PropTypes.func
+            teardownGpt: PropTypes.func,
         })
-    )
+    ),
 };
 
 AdvertisingProvider.defaultProps = {
-    active: true
+    active: true,
 };

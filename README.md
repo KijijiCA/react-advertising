@@ -1,8 +1,8 @@
 ![eBay Tech Logo](ebay-tech-logo.png "eBay Tech Logo")
 
-# react-prebid
+# react-advertising
 
-A JavaScript library for ad placements with [Prebid](http://prebid.org) header bidding in [React](https://reactjs.org) applications.
+A JavaScript library for display ads in [React](https://reactjs.org) applications.
 
 **Integrate ads in your app the “React way”: by adding ad components to your JSX layout!**
 
@@ -12,11 +12,11 @@ A JavaScript library for ad placements with [Prebid](http://prebid.org) header b
 * Works well in single page applications with multiple routes
 * Suitable for server-side-rendering
 
-[![Build Status](https://travis-ci.com/technology-ebay-de/react-prebid.svg?branch=master)](https://travis-ci.com/technology-ebay-de/react-prebid) [![Coverage Status](https://coveralls.io/repos/github/technology-ebay-de/react-prebid/badge.svg?branch=master)](https://coveralls.io/github/technology-ebay-de/react-prebid?branch=master)
+[![Build Status](https://travis-ci.com/technology-ebay-de/react-advertising.svg?branch=master)](https://travis-ci.com/technology-ebay-de/react-advertising) [![Coverage Status](https://coveralls.io/repos/github/technology-ebay-de/react-advertising/badge.svg?branch=master)](https://coveralls.io/github/technology-ebay-de/react-advertising?branch=master)
 
 ## Prerequisites
 
-To use *react-prebid*, you need to have a [Doubleclick for Publishers](https://www.google.com/intl/en/doubleclick/publishers/welcome/)
+To use *react-advertising*, you need to have a [Doubleclick for Publishers](https://www.google.com/intl/en/doubleclick/publishers/welcome/)
 (DFP) ad server set up, along with configuration to use Prebid in place. Please refer to the
 [Prebid documentation](http://prebid.org/overview/intro.html) for details.
 
@@ -33,11 +33,11 @@ The demo uses the same test Prebid configuration as the
 
 You can find documentation on how to use this library in the project's wiki:
 
-* [Usage](https://github.com/technology-ebay-de/react-prebid/wiki/Usage)
-* [API](https://github.com/technology-ebay-de/react-prebid/wiki/API)
-* [Configuration](https://github.com/technology-ebay-de/react-prebid/wiki/Configuration)
-* [Custom Events](https://github.com/technology-ebay-de/react-prebid/wiki/Custom-Events)
-* [Plugins](https://github.com/technology-ebay-de/react-prebid/wiki/Custom-Events)
+* [Usage](https://github.com/technology-ebay-de/react-advertising/wiki/Usage)
+* [API](https://github.com/technology-ebay-de/react-advertising/wiki/API)
+* [Configuration](https://github.com/technology-ebay-de/react-advertising/wiki/Configuration)
+* [Custom Events](https://github.com/technology-ebay-de/react-advertising/wiki/Custom-Events)
+* [Plugins](https://github.com/technology-ebay-de/react-advertising/wiki/Custom-Events)
 
 ## License
 

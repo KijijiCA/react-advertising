@@ -7,23 +7,23 @@ function MyComponent() {
 }
 
 MyComponent.propTypes = {
-    config: AdvertisingSlotConfigPropType
+    config: AdvertisingSlotConfigPropType,
 };
 
 const prebid = [
     {
         mediaTypes: {
             banner: {
-                sizes: [[320, 240]]
-            }
+                sizes: [[320, 240]],
+            },
         },
         bids: [
             {
                 bidder: 'my-precious-bidder',
-                params: { bla: 'bla' }
-            }
-        ]
-    }
+                params: { bla: 'bla' },
+            },
+        ],
+    },
 ];
 
 describe('When I check the prop types for a valid slot config', () => {
@@ -38,8 +38,8 @@ describe('When I check the prop types for a valid slot config', () => {
                     targeting: { a: 666 },
                     sizes: ['fluid', [320, 240]],
                     sizeMappingName: 'fredbazgrault',
-                    prebid
-                }
+                    prebid,
+                },
             }))
     );
     describe('the prop type validation', () => it('passes', () => void expect(result).toBeUndefined()));
@@ -51,7 +51,15 @@ describe('When I check the prop types for an invalid slot config', () => {
 });
 
 describe('When I check the prop types for a valid slot config', () => {
-    const testCases = ['fluid', [320, 50], [[320, 50], [300, 250]], ['fluid', [320, 50], [300, 250]]];
+    const testCases = [
+        'fluid',
+        [320, 50],
+        [
+            [320, 50],
+            [300, 250],
+        ],
+        ['fluid', [320, 50], [300, 250]],
+    ];
     for (const sizes of testCases) {
         describe(`with sizes ${sizes}`, () => {
             let result;
@@ -67,20 +75,20 @@ describe('When I check the prop types a slot config', () => {
     const testCases = [
         {
             labelAny: 'blub',
-            expectToPass: false
+            expectToPass: false,
         },
         {
             labelAny: [],
-            expectToPass: true
+            expectToPass: true,
         },
         {
             labelAny: ['blub'],
-            expectToPass: true
+            expectToPass: true,
         },
         {
             labelAny: [666],
-            expectToPass: false
-        }
+            expectToPass: false,
+        },
     ];
     for (const { labelAny, expectToPass } of testCases) {
         describe(`with a prebid bids labelAny config ${labelAny}`, () => {
@@ -94,18 +102,18 @@ describe('When I check the prop types a slot config', () => {
                                 {
                                     mediaTypes: {
                                         banner: {
-                                            sizes: [[320, 240]]
-                                        }
+                                            sizes: [[320, 240]],
+                                        },
                                     },
                                     bids: [
                                         {
                                             bidder: 'my-precious-bidder',
-                                            labelAny
-                                        }
-                                    ]
-                                }
-                            ]
-                        }
+                                            labelAny,
+                                        },
+                                    ],
+                                },
+                            ],
+                        },
                     }))
             );
             if (expectToPass) {
@@ -121,20 +129,20 @@ describe('When I check the prop types a slot config', () => {
     const testCases = [
         {
             labelAll: 'blub',
-            expectToPass: false
+            expectToPass: false,
         },
         {
             labelAll: [],
-            expectToPass: true
+            expectToPass: true,
         },
         {
             labelAll: ['blub'],
-            expectToPass: true
+            expectToPass: true,
         },
         {
             labelAll: [666],
-            expectToPass: false
-        }
+            expectToPass: false,
+        },
     ];
     for (const { labelAll, expectToPass } of testCases) {
         describe(`with a prebid bids labelAll config ${labelAll}`, () => {
@@ -148,18 +156,18 @@ describe('When I check the prop types a slot config', () => {
                                 {
                                     mediaTypes: {
                                         banner: {
-                                            sizes: [[320, 240]]
-                                        }
+                                            sizes: [[320, 240]],
+                                        },
                                     },
                                     bids: [
                                         {
                                             bidder: 'my-precious-bidder',
-                                            labelAll
-                                        }
-                                    ]
-                                }
-                            ]
-                        }
+                                            labelAll,
+                                        },
+                                    ],
+                                },
+                            ],
+                        },
                     }))
             );
             if (expectToPass) {

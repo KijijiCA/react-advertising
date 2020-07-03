@@ -23,7 +23,7 @@ export const config = {
     prebid: {
         bidderTimeout: 1500,
         priceGranularity: 'medium',
-        bidderSequence: 'random'
+        bidderSequence: 'random',
     },
     slots: [
         {
@@ -34,17 +34,17 @@ export const config = {
                 {
                     mediaTypes: {
                         banner: {
-                            sizes: PREBID_SIZES_FOO
-                        }
+                            sizes: PREBID_SIZES_FOO,
+                        },
                     },
                     bids: [
                         {
                             bidder: BIDDER_FOO,
-                            params: PARAMS_FOO
-                        }
-                    ]
-                }
-            ]
+                            params: PARAMS_FOO,
+                        },
+                    ],
+                },
+            ],
         },
         {
             id: DIV_ID_BAR,
@@ -57,40 +57,40 @@ export const config = {
                 {
                     mediaTypes: {
                         banner: {
-                            sizes: PREBID_SIZES_BAR
-                        }
+                            sizes: PREBID_SIZES_BAR,
+                        },
                     },
                     bids: [
                         {
                             bidder: BIDDER_BAR,
-                            params: PARAMS_BAR
-                        }
-                    ]
-                }
-            ]
-        }
+                            params: PARAMS_BAR,
+                        },
+                    ],
+                },
+            ],
+        },
     ],
     sizeMappings: {
         mobailAndTablet: [
             {
                 viewPortSize: [0, 0],
-                sizes: []
+                sizes: [],
             },
             {
                 viewPortSize: [320, 700],
                 sizes: [
                     [300, 250],
-                    [320, 50]
-                ]
+                    [320, 50],
+                ],
             },
             {
                 viewPortSize: [1050, 200],
-                sizes: []
-            }
-        ]
+                sizes: [],
+            },
+        ],
     },
     metaData: {
-        usdToEurRate: USD_TO_EUR_RATE
+        usdToEurRate: USD_TO_EUR_RATE,
     },
 
     targeting: {
@@ -100,12 +100,12 @@ export const config = {
         'mt-mo': ['Brummstinko', 'Grand Umweltverpestino'],
         'mt-thread': [666],
         'mt-u2': ['00'],
-        'mt-u4': true
+        'mt-u4': true,
     },
     customEvents: {
         collapse: {
             eventMessagePrefix: 'CloseAdvContainer:',
-            divIdPrefix: 'div-gpt-ad-'
-        }
-    }
+            divIdPrefix: 'div-gpt-ad-',
+        },
+    },
 };

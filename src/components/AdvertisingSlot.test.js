@@ -4,7 +4,7 @@ import expectSnapshot from '@mt-testutils/expect-snapshot';
 import { mount } from 'enzyme';
 import AdvertisingSlot from './AdvertisingSlot';
 
-jest.mock('./utils/connectToAdServer', () => Component => Component);
+jest.mock('./utils/connectToAdServer', () => (Component) => Component);
 
 describe('The advertising slot component', () => {
     const ID = 'my-id';
@@ -35,7 +35,7 @@ describe('The advertising slot component', () => {
             mockActivate.should.have.been.calledWith(match.any, match.object);
         });
 
-        it('calls the new activate function if the new activate function changes', done => {
+        it('calls the new activate function if the new activate function changes', (done) => {
             const newMockActivate = spy();
             slot.setProps({ activate: newMockActivate });
 
@@ -47,7 +47,7 @@ describe('The advertising slot component', () => {
             }, 0);
         });
 
-        it('does not call the new activate function if the activate function does not change', done => {
+        it('does not call the new activate function if the activate function does not change', (done) => {
             slot.setProps({ activate: mockActivate });
 
             // setProps is a async operation

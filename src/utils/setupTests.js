@@ -21,13 +21,13 @@ Object.defineProperty(chai.Assertion.prototype, 'not', {
     set(newNot) {
         this.assignedNot = newNot;
         return newNot;
-    }
+    },
 });
 
 // Combine both jest and chai matchers on expect
 const jestExpect = global.expect;
 
-global.expect = actual => {
+global.expect = (actual) => {
     const originalMatchers = jestExpect(actual);
     const chaiMatchers = chai.expect(actual);
     return Object.assign(chaiMatchers, originalMatchers);

@@ -1,26 +1,34 @@
+const path = require('path');
+
 module.exports = {
-    entry: ['regenerator-runtime/runtime', './src/index.js'],
+    entry: './src/index.js',
     output: {
-        path: __dirname,
-        filename: 'dist/index.min.js',
-        libraryTarget: 'commonjs2'
+        path: path.resolve(__dirname, 'dist'),
+        filename: 'react-advertising.min.js',
+        library: {
+            root: 'ReactAdvertising',
+            amd: 'react-advertising',
+            commonjs: 'react-advertising',
+        },
+        libraryTarget: 'umd',
+        globalObject: 'this',
     },
     externals: {
         react: {
-            commonjs2: 'react'
+            commonjs: 'react',
+            commonjs2: 'react',
+            amd: 'react',
+            root: 'React',
         },
-        'prop-types': {
-            commonjs2: 'prop-types'
-        }
     },
     module: {
         rules: [
             {
                 test: /\.js$/,
-                use: ['babel-loader']
-            }
-        ]
+                use: ['babel-loader'],
+            },
+        ],
     },
     mode: 'production',
-    devtool: 'source-map'
+    devtool: 'source-map',
 };

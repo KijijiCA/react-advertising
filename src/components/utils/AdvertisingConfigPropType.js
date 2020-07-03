@@ -19,10 +19,10 @@ export default PropTypes.shape({
                         precision: PropTypes.number,
                         min: PropTypes.number.isRequired,
                         max: PropTypes.number.isRequired,
-                        increment: PropTypes.number.isRequired
+                        increment: PropTypes.number.isRequired,
                     })
-                ).isRequired
-            })
+                ).isRequired,
+            }),
         ]),
         mediaTypePriceGranularity: PropTypes.shape({
             video: PropTypes.oneOfType([
@@ -33,10 +33,10 @@ export default PropTypes.shape({
                             precision: PropTypes.number,
                             min: PropTypes.number.isRequired,
                             max: PropTypes.number.isRequired,
-                            increment: PropTypes.number.isRequired
+                            increment: PropTypes.number.isRequired,
                         })
-                    ).isRequired
-                })
+                    ).isRequired,
+                }),
             ]),
             banner: PropTypes.oneOfType([
                 PropTypes.oneOf(['low', 'medium', 'high', 'auto', 'dense']),
@@ -46,10 +46,10 @@ export default PropTypes.shape({
                             precision: PropTypes.number,
                             min: PropTypes.number.isRequired,
                             max: PropTypes.number.isRequired,
-                            increment: PropTypes.number.isRequired
+                            increment: PropTypes.number.isRequired,
                         })
-                    ).isRequired
-                })
+                    ).isRequired,
+                }),
             ]),
             native: PropTypes.oneOfType([
                 PropTypes.oneOf(['low', 'medium', 'high', 'auto', 'dense']),
@@ -59,11 +59,11 @@ export default PropTypes.shape({
                             precision: PropTypes.number,
                             min: PropTypes.number.isRequired,
                             max: PropTypes.number.isRequired,
-                            increment: PropTypes.number.isRequired
+                            increment: PropTypes.number.isRequired,
                         })
-                    ).isRequired
-                })
-            ])
+                    ).isRequired,
+                }),
+            ]),
         }),
         sizeConfig: PropTypes.arrayOf(
             PropTypes.shape({
@@ -71,29 +71,29 @@ export default PropTypes.shape({
                 sizesSupported: PropTypes.arrayOf(
                     PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.number)])
                 ),
-                labels: PropTypes.arrayOf(PropTypes.string)
+                labels: PropTypes.arrayOf(PropTypes.string),
             })
-        )
+        ),
     }),
     sizeMappings: PropTypes.objectOf(
         PropTypes.arrayOf(
             PropTypes.shape({
                 viewPortSize: PropTypes.arrayOf(PropTypes.number).isRequired,
                 sizes: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.number)]))
-                    .isRequired
+                    .isRequired,
             })
         )
     ),
     slots: PropTypes.arrayOf(AdvertisingSlotConfigPropType),
     outOfPageSlots: PropTypes.arrayOf(
         PropTypes.shape({
-            id: PropTypes.string
+            id: PropTypes.string,
         })
     ),
     customEvents: PropTypes.objectOf(
         PropTypes.shape({
             eventMessagePrefix: PropTypes.string.isRequired,
-            divIdPrefix: PropTypes.string
+            divIdPrefix: PropTypes.string,
         })
-    )
+    ),
 });

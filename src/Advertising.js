@@ -44,13 +44,13 @@ export default class Advertising {
         this[setupCustomEvents]();
         await Promise.all([
             Advertising[queueForPrebid](this[setupPrebid].bind(this), this.onError),
-            Advertising[queueForGPT](this[setupGpt].bind(this), this.onError)
+            Advertising[queueForGPT](this[setupGpt].bind(this), this.onError),
         ]);
         if (queue.length === 0) {
             return;
         }
         for (const { id, customEventHandlers } of queue) {
-            Object.keys(customEventHandlers).forEach(customEventId => {
+            Object.keys(customEventHandlers).forEach((customEventId) => {
                 if (!this.customEventCallbacks[customEventId]) {
                     this.customEventCallbacks[customEventId] = {};
                 }
@@ -66,7 +66,7 @@ export default class Advertising {
                     bidsBackHandler: () => {
                         window.pbjs.setTargetingForGPTAsync(divIds);
                         Advertising[queueForGPT](() => window.googletag.pubads().refresh(selectedSlots), this.onError);
-                    }
+                    },
                 }),
             this.onError
         );
@@ -76,7 +76,7 @@ export default class Advertising {
         this[teardownCustomEvents]();
         await Promise.all([
             Advertising[queueForPrebid](this[teardownPrebid].bind(this), this.onError),
-            Advertising[queueForGPT](this[teardownGpt].bind(this), this.onError)
+            Advertising[queueForGPT](this[teardownGpt].bind(this), this.onError),
         ]);
         this.slots = {};
         this.gptSizeMappings = {};
@@ -89,7 +89,7 @@ export default class Advertising {
             this.queue.push({ id, customEventHandlers });
             return;
         }
-        Object.keys(customEventHandlers).forEach(customEventId => {
+        Object.keys(customEventHandlers).forEach((customEventId) => {
             if (!this.customEventCallbacks[customEventId]) {
                 this.customEventCallbacks[customEventId] = {};
             }
@@ -102,7 +102,7 @@ export default class Advertising {
                     bidsBackHandler: () => {
                         window.pbjs.setTargetingForGPTAsync([id]);
                         Advertising[queueForGPT](() => window.googletag.pubads().refresh([slots[id]]), this.onError);
-                    }
+                    },
                 }),
             this.onError
         );
@@ -123,7 +123,7 @@ export default class Advertising {
         if (!this.config.customEvents) {
             return;
         }
-        Object.keys(this.config.customEvents).forEach(customEventId =>
+        Object.keys(this.config.customEvents).forEach((customEventId) =>
             this[setupCustomEvent](customEventId, this.config.customEvents[customEventId])
         );
     }
@@ -151,7 +151,7 @@ export default class Advertising {
         if (!this.config.customEvents) {
             return;
         }
-        Object.keys(this.config.customEvents).forEach(customEventId =>
+        Object.keys(this.config.customEvents).forEach((customEventId) =>
             window.removeEventListener('message', this.customEventHandlers[customEventId])
         );
     }
@@ -287,7 +287,7 @@ export default class Advertising {
     }
 
     static [withQueue](queue, func, onError) {
-        return new Promise(resolve =>
+        return new Promise((resolve) =>
             queue.push(() => {
                 try {
                     func();

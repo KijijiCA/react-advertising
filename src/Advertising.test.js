@@ -8,10 +8,10 @@ const GPT_SIZE_MAPPING = [
         [320, 700],
         [
             [300, 250],
-            [320, 50]
-        ]
+            [320, 50],
+        ],
     ],
-    [[1050, 200], []]
+    [[1050, 200], []],
 ];
 
 describe('When I instantiate an advertising main module', () => {
@@ -202,7 +202,7 @@ describe('When I instantiate an advertising main module', () => {
                 advertising.activate(DIV_ID_FOO, { collapse });
             });
             describe('and I send a message event to collapse the ad slot', () => {
-                beforeEach(done => {
+                beforeEach((done) => {
                     window.postMessage('CloseAdvContainer:foo', '*');
                     setTimeout(() => done());
                 });
@@ -210,7 +210,7 @@ describe('When I instantiate an advertising main module', () => {
                     it('is called', () => void expect(collapse).to.have.been.calledOnce));
             });
             describe('and I send some message event', () => {
-                beforeEach(done => {
+                beforeEach((done) => {
                     window.postMessage({ foo: 'thud' }, '*');
                     setTimeout(() => done());
                 });
@@ -218,7 +218,7 @@ describe('When I instantiate an advertising main module', () => {
                     it('is not called', () => void expect(collapse).to.not.have.been.called));
             });
             describe('and I send a message event to collapse another ad slot', () => {
-                beforeEach(done => {
+                beforeEach((done) => {
                     window.postMessage('CloseAdvContainer:waldo', '*');
                     setTimeout(() => done());
                 });
@@ -318,8 +318,8 @@ describe('When I instantiate an advertising main module with plugins', () => {
                 setupGpt: spy(),
                 teardownGpt: spy(),
                 displaySlots: spy(),
-                displayOutOfPageSlot: spy()
-            }
+                displayOutOfPageSlot: spy(),
+            },
         ];
         advertising = new Advertising(config, plugins);
     });
@@ -390,11 +390,11 @@ describe('When I instantiate an advertising main module with outOfPageSlots', ()
 function setupPbjs() {
     const originalPbjs = global.pbjs;
     global.pbjs = {
-        que: { push: stub().callsFake(func => func()) }
+        que: { push: stub().callsFake((func) => func()) },
     };
     global.pbjs.addAdUnits = spy();
     global.pbjs.removeAdUnit = spy();
-    global.pbjs.requestBids = stub().callsFake(requestBidsConfig => requestBidsConfig.bidsBackHandler());
+    global.pbjs.requestBids = stub().callsFake((requestBidsConfig) => requestBidsConfig.bidsBackHandler());
     global.pbjs.getAdserverTargeting = spy();
     global.pbjs.setConfig = spy();
     global.pbjs.setTargetingForGPTAsync = spy();
@@ -405,7 +405,7 @@ function setupPbjs() {
 function setupGoogletag() {
     const originalGoogletag = global.googletag;
     global.googletag = {
-        cmd: { push: stub().callsFake(func => func()) }
+        cmd: { push: stub().callsFake((func) => func()) },
     };
     global.googletag.fakeSlots = [];
     global.googletag.defineSlot = stub().callsFake(() => {
@@ -428,7 +428,7 @@ function setupGoogletag() {
     global.googletag.pubads = stub().returns(global.googletag);
     global.googletag.fakeSizeMapping = {
         addSize: stub().returns(global.googletag.fakeSizeMapping),
-        build: stub().returns(GPT_SIZE_MAPPING)
+        build: stub().returns(GPT_SIZE_MAPPING),
     };
     global.googletag.sizeMapping = stub().returns(global.googletag.fakeSizeMapping);
     global.googletag.enableSingleRequest = spy();
