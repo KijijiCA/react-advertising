@@ -60,7 +60,8 @@ describe('When I check the prop types for a valid slot config', () => {
         ],
         ['fluid', [320, 50], [300, 250]],
     ];
-    for (const sizes of testCases) {
+    for (let i = 0; i < testCases.length; i++) {
+        const sizes = testCases[i];
         describe(`with sizes ${sizes}`, () => {
             let result;
             beforeEach(
@@ -90,7 +91,8 @@ describe('When I check the prop types a slot config', () => {
             expectToPass: false,
         },
     ];
-    for (const { labelAny, expectToPass } of testCases) {
+    for (let i = 0; i < testCases.length; i++) {
+        const { labelAny, expectToPass } = testCases[i];
         describe(`with a prebid bids labelAny config ${labelAny}`, () => {
             let result;
             beforeEach(
@@ -144,7 +146,8 @@ describe('When I check the prop types a slot config', () => {
             expectToPass: false,
         },
     ];
-    for (const { labelAll, expectToPass } of testCases) {
+    for (let i = 0; i < testCases.length; i++) {
+        const { labelAll, expectToPass } = testCases[i];
         describe(`with a prebid bids labelAll config ${labelAll}`, () => {
             let result;
             beforeEach(

@@ -108,7 +108,8 @@ describe('When I check the prop types with a price granularity', () => {
         { priceGranularity: { buckets: [{ min: 2, increment: 4 }] }, expectToPass: false },
         { priceGranularity: { buckets: [{ min: 2, max: 3 }] }, expectToPass: false },
     ];
-    for (const { priceGranularity, expectToPass } of testCases) {
+    for (let i = 0; i < testCases.length; i++) {
+        const { priceGranularity, expectToPass } = testCases[i];
         describe(`${
             typeof priceGranularity === 'object' ? JSON.stringify(priceGranularity) : priceGranularity
         }`, () => {
@@ -211,7 +212,8 @@ describe('When I check the prop types with a size mapping', () => {
             expectToPass: true,
         },
     ];
-    for (const { sizeMappings, expectToPass } of testCases) {
+    for (let i = 0; i < testCases.length; i++) {
+        const { sizeMappings, expectToPass } = testCases[i];
         describe(`${typeof sizeMappings === 'object' ? JSON.stringify(sizeMappings) : sizeMappings}`, () => {
             let result;
             beforeEach(
@@ -345,7 +347,8 @@ describe('When I check the prop types with a prebid size config', () => {
             expectToPass: true,
         },
     ];
-    for (const { sizeConfig, expectToPass } of testCases) {
+    for (let i = 0; i < testCases.length; i++) {
+        const { sizeConfig, expectToPass } = testCases[i];
         describe(`${typeof sizeConfig === 'object' ? JSON.stringify(sizeConfig) : sizeConfig}`, () => {
             let result;
             beforeEach(

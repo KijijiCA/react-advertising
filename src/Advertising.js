@@ -49,7 +49,8 @@ export default class Advertising {
         if (queue.length === 0) {
             return;
         }
-        for (const { id, customEventHandlers } of queue) {
+        for (let i = 0; i < queue.length; i++) {
+            const { id, customEventHandlers } = queue[i];
             Object.keys(customEventHandlers).forEach((customEventId) => {
                 if (!this.customEventCallbacks[customEventId]) {
                     this.customEventCallbacks[customEventId] = {};
@@ -160,9 +161,12 @@ export default class Advertising {
         if (!this.config.sizeMappings) {
             return;
         }
-        for (const [key, value] of Object.entries(this.config.sizeMappings)) {
+        const entries = Object.entries(this.config.sizeMappings);
+        for (let i = 0; i < entries.length; i++) {
+            const [key, value] = entries[i];
             const sizeMapping = window.googletag.sizeMapping();
-            for (const { viewPortSize, sizes } of value) {
+            for (let q = 0; q < value.length; q++) {
+                const { viewPortSize, sizes } = value[q];
                 sizeMapping.addSize(viewPortSize, sizes);
             }
             this.gptSizeMappings[key] = sizeMapping.build();
@@ -186,7 +190,9 @@ export default class Advertising {
                 slot.setCollapseEmptyDiv(...collapseEmptyDiv);
             }
 
-            for (const [key, value] of Object.entries(targeting)) {
+            const entries = Object.entries(targeting);
+            for (let i = 0; i < entries.length; i++) {
+                const [key, value] = entries[i];
                 slot.setTargeting(key, value);
             }
 
@@ -241,7 +247,9 @@ export default class Advertising {
         this[defineGptSizeMappings]();
         this[defineSlots]();
         this[defineOutOfPageSlots]();
-        for (const [key, value] of Object.entries(targeting)) {
+        const entries = Object.entries(targeting);
+        for (let i = 0; i < entries.length; i++) {
+            const [key, value] = entries[i];
             pubads.setTargeting(key, value);
         }
         pubads.disableInitialLoad();
@@ -270,8 +278,8 @@ export default class Advertising {
     }
 
     [executePlugins](method) {
-        for (const plugin of this.plugins) {
-            const func = plugin[method];
+        for (let i = 0; i < this.plugins.length; i++) {
+            const func = this.plugins[i][method];
             if (func) {
                 func.call(this);
             }
