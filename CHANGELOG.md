@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.0.0 / 3 July 2020
+
+* Renamed library to `react-advertising`
+* Improved code packaging and CDN delivery
+* Added error handler
+
 ## 2.1.1 / 6 August 2019
 
 * Chore, updated dependencies to lodash to fix vulnerability issue
