@@ -1,9 +1,9 @@
 {
     "name": "react-advertising",
-    "version": "3.0.0-beta.5",
-    "description": "Library for ad placements with Prebid header bidding in React applications",
+    "version": "3.0.0-beta.6",
+    "description": "Library for display ads in React applications",
     "main": "lib/index.js",
-    "unpkg": "dist/react-prebid.min.js",
+    "unpkg": "dist/react-advertising.min.js",
     "esnext": "src/index.js",
     "files": [
         "src/",
@@ -21,16 +21,10 @@
         "fixPackageLock": "scripts/fix-package-lock.sh"
     },
     "lint-staged": {
-        "linters": {
-            "*.js": [
-                "prettier --write",
-                "eslint --fix",
-                "git add",
-                "jest --bail --findRelatedTests"
-            ]
-        },
-        "ignore": [
-            "index.js"
+        "*.js": [
+            "prettier --write",
+            "eslint --fix",
+            "jest --bail --findRelatedTests"
         ]
     },
     "jest": {
@@ -46,54 +40,54 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/technology-ebay-de/react-prebid.git"
+        "url": "https://github.com/technology-ebay-de/react-advertising.git"
     },
-    "author": "Patrick Hund <pahund@team.mobile.de>",
+    "author": "Patrick Hund <pahund@ebay.com>",
     "license": "MIT",
     "peerDependencies": {
         "react": ">=16.3.0 <17.0.0"
     },
     "devDependencies": {
-        "@babel/cli": "^7.8.3",
-        "@babel/core": "^7.8.3",
-        "@babel/plugin-proposal-object-rest-spread": "^7.8.3",
-        "@babel/plugin-transform-modules-commonjs": "^7.8.3",
-        "@babel/plugin-transform-runtime": "^7.8.3",
-        "@babel/preset-env": "^7.8.3",
-        "@babel/preset-react": "^7.8.3",
+        "@babel/cli": "^7.10.4",
+        "@babel/core": "^7.10.4",
+        "@babel/plugin-proposal-object-rest-spread": "^7.10.4",
+        "@babel/plugin-transform-modules-commonjs": "^7.10.4",
+        "@babel/plugin-transform-runtime": "^7.10.4",
+        "@babel/preset-env": "^7.10.4",
+        "@babel/preset-react": "^7.10.4",
         "@mt-testutils/expect-snapshot": "^1.0.5",
-        "babel-eslint": "^10.0.3",
-        "babel-jest": "^24.9.0",
-        "babel-loader": "^8.0.6",
+        "babel-eslint": "^10.1.0",
+        "babel-jest": "^26.1.0",
+        "babel-loader": "^8.1.0",
         "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
         "chai": "^4.2.0",
         "chai-enzyme": "^1.0.0-beta.1",
         "check-prop-types": "^1.1.2",
-        "coveralls": "^3.0.9",
-        "cross-env": "^6.0.3",
+        "coveralls": "^3.1.0",
+        "cross-env": "^7.0.2",
         "enzyme": "^3.11.0",
         "enzyme-adapter-react-16": "^1.15.2",
-        "eslint": "^5.16.0",
+        "eslint": "^7.3.1",
         "eslint-config-motor-talk": "^5.0.1",
-        "eslint-config-prettier": "^4.3.0",
-        "eslint-plugin-prettier": "^3.1.2",
-        "eslint-plugin-react": "^7.18.0",
-        "husky": "^2.7.0",
-        "jest": "^24.9.0",
-        "lint-staged": "^8.2.1",
-        "prettier": "^1.19.1",
+        "eslint-config-prettier": "^6.11.0",
+        "eslint-plugin-prettier": "^3.1.4",
+        "eslint-plugin-react": "^7.20.3",
+        "husky": "^4.2.5",
+        "jest": "^26.1.0",
+        "lint-staged": "^10.2.11",
+        "prettier": "^2.0.5",
         "prop-types": "^15.7.2",
-        "react": "^16.12.0",
-        "react-dom": "^16.12.0",
-        "react-test-renderer": "^16.12.0",
-        "sinon": "^7.5.0",
-        "sinon-chai": "^3.4.0",
-        "webpack": "^4.41.5",
-        "webpack-cli": "^3.3.10"
+        "react": "^16.13.1",
+        "react-dom": "^16.13.1",
+        "react-test-renderer": "^16.13.1",
+        "sinon": "^9.0.2",
+        "sinon-chai": "^3.5.0",
+        "webpack": "^4.43.0",
+        "webpack-cli": "^3.3.12"
     },
     "dependencies": {
-        "@babel/runtime": "^7.8.3",
-        "fast-deep-equal": "^2.0.1"
+        "@babel/runtime": "^7.10.4",
+        "fast-deep-equal": "^3.1.3"
     },
     "husky": {
         "hooks": {

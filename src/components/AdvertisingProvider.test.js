@@ -18,7 +18,7 @@ jest.mock('../AdvertisingContext', () => ({
     Provider({ value, children }) {
         mockValueSpy(value);
         return <div id="advertising-context-provider">{children}</div>;
-    }
+    },
 }));
 
 jest.mock(
@@ -76,7 +76,7 @@ describe('The AdvertisingProvider component', () => {
             mockSetup.should.have.been.calledOnce;
         });
 
-        it('sets up should be called if the config content is changed', done => {
+        it('sets up should be called if the config content is changed', (done) => {
             provider.setProps({ config: { ...config, path: 'global/ad/unit/path2' } });
 
             // setProps is a async operation
@@ -87,7 +87,7 @@ describe('The AdvertisingProvider component', () => {
             }, 0);
         });
 
-        it('create a new Advertising instance with a new config if the config is changed', done => {
+        it('create a new Advertising instance with a new config if the config is changed', (done) => {
             provider.setProps({ config: undefined });
 
             // setProps is a async operation
@@ -98,10 +98,10 @@ describe('The AdvertisingProvider component', () => {
             }, 0);
         });
 
-        it('sets up should not be called if the config content is changed but active is `false`', done => {
+        it('sets up should not be called if the config content is changed but active is `false`', (done) => {
             provider.setProps({
                 config: { ...config, path: 'global/ad/unit/path2' },
-                active: false
+                active: false,
             });
 
             // setProps is a async operation
@@ -111,7 +111,7 @@ describe('The AdvertisingProvider component', () => {
             }, 0);
         });
 
-        it('does not setup if the config change to `undefined`', done => {
+        it('does not setup if the config change to `undefined`', (done) => {
             provider.setProps({ config: undefined });
             mockIsConfigReady.resetBehavior();
             mockIsConfigReady.returns(false);
@@ -157,7 +157,7 @@ describe('The AdvertisingProvider component', () => {
             mockSetup.should.have.been.calledOnce;
         });
 
-        it('tears down the Advertising module', done => {
+        it('tears down the Advertising module', (done) => {
             provider.setProps({ config });
             provider.unmount();
 

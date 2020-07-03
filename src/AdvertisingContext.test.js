@@ -10,7 +10,7 @@ describe('When the AdvertisingContext module is loaded', () => {
             createContext(...args) {
                 mockCreateContext(...args);
                 return mockContext;
-            }
+            },
         }));
         AdvertisingContext = require('./AdvertisingContext').default;
     });

@@ -3,11 +3,11 @@ module.exports = {
     plugins: [
         '@babel/plugin-proposal-object-rest-spread',
         '@babel/transform-runtime',
-        '@babel/plugin-transform-modules-commonjs'
+        '@babel/plugin-transform-modules-commonjs',
     ],
     env: {
         production: {
-            plugins: ['transform-react-remove-prop-types']
-        }
-    }
+            plugins: ['transform-react-remove-prop-types'],
+        },
+    },
 };

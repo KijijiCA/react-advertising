@@ -27,11 +27,11 @@ AdvertisingSlot.propTypes = {
     className: PropTypes.string,
     children: PropTypes.node,
     activate: PropTypes.func.isRequired,
-    customEventHandlers: PropTypes.objectOf(PropTypes.func).isRequired
+    customEventHandlers: PropTypes.objectOf(PropTypes.func).isRequired,
 };
 
 AdvertisingSlot.defaultProps = {
-    customEventHandlers: {}
+    customEventHandlers: {},
 };
 
 export default connectToAdServer(AdvertisingSlot);

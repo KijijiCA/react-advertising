@@ -4,31 +4,31 @@ module.exports = {
     entry: './src/index.js',
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: 'react-prebid.min.js',
+        filename: 'react-advertising.min.js',
         library: {
-            root: 'ReactPrebid',
-            amd: 'react-prebid',
-            commonjs: 'react-prebid'
+            root: 'ReactAdvertising',
+            amd: 'react-advertising',
+            commonjs: 'react-advertising',
         },
         libraryTarget: 'umd',
-        globalObject: 'this'
+        globalObject: 'this',
     },
     externals: {
         react: {
             commonjs: 'react',
             commonjs2: 'react',
             amd: 'react',
-            root: 'React'
-        }
+            root: 'React',
+        },
     },
     module: {
         rules: [
             {
                 test: /\.js$/,
-                use: ['babel-loader']
-            }
-        ]
+                use: ['babel-loader'],
+            },
+        ],
     },
     mode: 'production',
-    devtool: 'source-map'
+    devtool: 'source-map',
 };
