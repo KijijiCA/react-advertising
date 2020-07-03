@@ -1,6 +1,6 @@
 {
     "name": "react-advertising",
-    "version": "3.0.0",
+    "version": "3.0.0-beta.6",
     "description": "Library for display ads in React applications",
     "main": "lib/index.js",
     "unpkg": "dist/react-advertising.min.js",
@@ -41,9 +41,6 @@
     "repository": {
         "type": "git",
         "url": "https://github.com/technology-ebay-de/react-advertising.git"
-    },
-    "publishConfig": {
-        "registry": "https://npm.pkg.github.com/"
     },
     "author": "Patrick Hund <pahund@ebay.com>",
     "license": "MIT",
