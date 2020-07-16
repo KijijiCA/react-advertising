@@ -5,8 +5,8 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'react-advertising.min.js',
-        library: 'reactad',
-        libraryTarget: 'window',
+        library: 'ReactAdvertising',
+        libraryTarget: 'umd',
     },
     externals: {
         react: {
