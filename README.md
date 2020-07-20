@@ -24,7 +24,7 @@ To use *react-advertising*, you need to have a [Doubleclick for Publishers](http
 
 You can view a demo of this library online on *CodeSandbox*:
 
-*   [codesandbox.io/s/k5w8mr9o23](https://codesandbox.io/s/k5w8mr9o23)
+*   [https://codesandbox.io/s/react-advertising-demo-p5xdm](https://codesandbox.io/s/react-advertising-demo-p5xdm)
 
 The demo uses the same test Prebid configuration as the
 [code examples from the official documentation](http://prebid.org/dev-docs/examples/basic-example.html).
