@@ -1,16 +1,16 @@
-import React, { useEffect, useRef } from 'react';
-import connectToAdServer from './utils/connectToAdServer';
 import PropTypes from 'prop-types';
+import React, { useEffect, useRef, useContext } from 'react';
+import AdvertisingContext from '../AdvertisingContext';
 
 function AdvertisingSlot({
   id,
   style,
   className,
   children,
-  activate,
   customEventHandlers,
 }) {
   const containerDivRef = useRef();
+  const activate = useContext(AdvertisingContext);
   useEffect(() => {
     const observer = new IntersectionObserver(() => {
       console.log('[PH_LOG] activating', id); // PH_TODO
@@ -42,4 +42,4 @@ AdvertisingSlot.defaultProps = {
   customEventHandlers: {},
 };
 
-export default connectToAdServer(AdvertisingSlot);
+export default AdvertisingSlot;
