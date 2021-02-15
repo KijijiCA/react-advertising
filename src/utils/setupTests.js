@@ -12,32 +12,35 @@ chai.use(sinonChai);
 chai.use(chaiEnzyme());
 
 // Make sure chai and jasmine ".not" play nice together
-const originalNot = Object.getOwnPropertyDescriptor(chai.Assertion.prototype, 'not').get;
+const originalNot = Object.getOwnPropertyDescriptor(
+  chai.Assertion.prototype,
+  'not'
+).get;
 Object.defineProperty(chai.Assertion.prototype, 'not', {
-    get() {
-        Object.assign(this, this.assignedNot);
-        return originalNot.apply(this);
-    },
-    set(newNot) {
-        this.assignedNot = newNot;
-        return newNot;
-    },
+  get() {
+    Object.assign(this, this.assignedNot);
+    return originalNot.apply(this);
+  },
+  set(newNot) {
+    this.assignedNot = newNot;
+    return newNot;
+  },
 });
 
 // Combine both jest and chai matchers on expect
 const jestExpect = global.expect;
 
 global.expect = (actual) => {
-    const originalMatchers = jestExpect(actual);
-    const chaiMatchers = chai.expect(actual);
-    return Object.assign(chaiMatchers, originalMatchers);
+  const originalMatchers = jestExpect(actual);
+  const chaiMatchers = chai.expect(actual);
+  return Object.assign(chaiMatchers, originalMatchers);
 };
 
 // Fix error message “A "describe" callback must not return a value.”
 // https://stackoverflow.com/a/55211488/1253156
 const realDescribe = global.describe;
 global.describe = (name, fn) => {
-    realDescribe(name, () => {
-        fn();
-    });
+  realDescribe(name, () => {
+    fn();
+  });
 };
