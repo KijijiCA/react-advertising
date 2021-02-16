@@ -12,9 +12,20 @@ function AdvertisingSlot({
   const containerDivRef = useRef();
   const activate = useContext(AdvertisingContext);
   useEffect(() => {
-    const observer = new IntersectionObserver(() => {
-      console.log('[PH_LOG] activating', id); // PH_TODO
-      return activate(id, customEventHandlers);
+    const observer = new IntersectionObserver(([{ isIntersecting }]) => {
+      if (isIntersecting) {
+        /* eslint-disable no-console */
+        console.log(
+          '%c🦄 [PH_LOG]',
+          'font-size: 12px; color: white; background-color: purple; ' +
+            'border-radius: 8px; padding: 2px 8px 2px 4px',
+          'activating',
+          id
+        ); // PH_TODO
+        /* eslint-enable no-console */
+        activate(id, customEventHandlers);
+        observer.unobserve(containerDivRef.current);
+      }
     });
     observer.observe(containerDivRef.current);
   });
