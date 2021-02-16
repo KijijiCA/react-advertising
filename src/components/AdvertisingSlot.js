@@ -9,10 +9,14 @@ function AdvertisingSlot({
   children,
   customEventHandlers,
 }) {
+  const observerRef = useRef(null);
   const containerDivRef = useRef();
   const activate = useContext(AdvertisingContext);
   useEffect(() => {
-    const observer = new IntersectionObserver(([{ isIntersecting }]) => {
+    if (observerRef.current) {
+      return;
+    }
+    observerRef.current = new IntersectionObserver(([{ isIntersecting }]) => {
       if (isIntersecting) {
         /* eslint-disable no-console */
         console.log(
@@ -24,10 +28,10 @@ function AdvertisingSlot({
         ); // PH_TODO
         /* eslint-enable no-console */
         activate(id, customEventHandlers);
-        observer.unobserve(containerDivRef.current);
+        observerRef.current.unobserve(containerDivRef.current);
       }
     });
-    observer.observe(containerDivRef.current);
+    observerRef.current.observe(containerDivRef.current);
   });
   return (
     <div
