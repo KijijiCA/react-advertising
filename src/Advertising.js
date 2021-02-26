@@ -1,6 +1,6 @@
 import getAdUnits from './utils/getAdUnits';
 
-const preventDoubleActivationInterval = 10;
+const preventDoubleActivationInterval = 100;
 
 export default class Advertising {
   constructor(config, plugins = [], onError = () => {}) {
