@@ -1,6 +1,6 @@
 import getAdUnits from './utils/getAdUnits';
 
-const preventDoubleActivationInterval = 500;
+const preventDoubleActivationInterval = 1000;
 
 export default class Advertising {
   constructor(config, plugins = [], onError = () => {}) {
@@ -75,29 +75,38 @@ export default class Advertising {
   }
 
   activate(id, customEventHandlers = {}) {
-    if (
-      this.activations[id] &&
-      this.activations[id] >= Date.now() - preventDoubleActivationInterval
-    ) {
+    const lastActivation = this.activations[id];
+    if (lastActivation) {
+      if (lastActivation >= Date.now() - preventDoubleActivationInterval) {
+        /* eslint-disable no-console */
+        console.log(
+          '%c🦄 [PH_LOG]',
+          'font-size: 12px; color: white; background-color: red; ' +
+            'border-radius: 8px; padding: 2px 8px 2px 4px',
+          `${id} already activated in last ${preventDoubleActivationInterval} ms, activation prevented`
+        );
+        /* eslint-enable no-console */
+        return;
+      }
       /* eslint-disable no-console */
       console.log(
         '%c🦄 [PH_LOG]',
-        'font-size: 12px; color: white; background-color: green; ' +
+        'font-size: 12px; color: white; background-color: purple; ' +
           'border-radius: 8px; padding: 2px 8px 2px 4px',
-        `${id} was already activated in the last ${preventDoubleActivationInterval} ms, prevented multiple activations`,
-        id
-      ); // PH_TODO
+        `activating ${id} again after ${Date.now() - lastActivation} ms`
+      );
       /* eslint-enable no-console */
-      return;
+    } else {
+      /* eslint-disable no-console */
+      console.log(
+        '%c🦄 [PH_LOG]',
+        'font-size: 12px; color: white; background-color: purple; ' +
+          'border-radius: 8px; padding: 2px 8px 2px 4px',
+        `activating ${id} for the first time`
+      );
+      /* eslint-enable no-console */
     }
-    /* eslint-disable no-console */
-    console.log(
-      '%c🦄 [PH_LOG]',
-      'font-size: 12px; color: white; background-color: purple; ' +
-        'border-radius: 8px; padding: 2px 8px 2px 4px',
-      `activating ${id}`
-    ); // PH_TODO
-    /* eslint-enable no-console */
+    this.activations[id] = Date.now();
     const { slots } = this;
     if (Object.values(slots).length === 0) {
       this.queue.push({ id, customEventHandlers });
