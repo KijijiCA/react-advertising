@@ -32,7 +32,7 @@ function AdvertisingSlot({
       }
     });
     observerRef.current.observe(containerDivRef.current);
-  });
+  }, []);
   return (
     <div
       id={id}
