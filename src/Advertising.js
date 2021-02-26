@@ -1,9 +1,11 @@
 import getAdUnits from './utils/getAdUnits';
 
+const preventDoubleActivationInterval = 10;
+
 export default class Advertising {
   constructor(config, plugins = [], onError = () => {}) {
     this.config = config;
-    this.activated = []; // PH_TODO: experimental, remove!
+    this.activations = {};
     this.slots = {};
     this.outOfPageSlots = {};
     this.plugins = plugins;
@@ -73,19 +75,29 @@ export default class Advertising {
   }
 
   activate(id, customEventHandlers = {}) {
-    // PH_TODO: experimental, remove!
-    if (this.activated.includes(id)) {
+    if (
+      this.activations[id] &&
+      this.activations[id] >= Date.now() - preventDoubleActivationInterval
+    ) {
       /* eslint-disable no-console */
       console.log(
         '%c🦄 [PH_LOG]',
         'font-size: 12px; color: white; background-color: green; ' +
           'border-radius: 8px; padding: 2px 8px 2px 4px',
-        'already activated, prevented multiple activations',
+        `${id} was already activated in the last ${preventDoubleActivationInterval} ms, prevented multiple activations`,
         id
       ); // PH_TODO
       /* eslint-enable no-console */
       return;
     }
+    /* eslint-disable no-console */
+    console.log(
+      '%c🦄 [PH_LOG]',
+      'font-size: 12px; color: white; background-color: purple; ' +
+        'border-radius: 8px; padding: 2px 8px 2px 4px',
+      `activating ${id}`
+    ); // PH_TODO
+    /* eslint-enable no-console */
     const { slots } = this;
     if (Object.values(slots).length === 0) {
       this.queue.push({ id, customEventHandlers });
@@ -112,7 +124,7 @@ export default class Advertising {
         }),
       this.onError
     );
-    this.activated.push(id); // PH_TODO: experimental, remove!
+    this.activations[id] = Date.now();
   }
 
   isConfigReady() {
