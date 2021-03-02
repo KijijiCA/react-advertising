@@ -3,35 +3,37 @@ import connectToAdServer from './utils/connectToAdServer';
 import PropTypes from 'prop-types';
 
 class AdvertisingSlot extends Component {
-    componentDidMount() {
-        const { activate, id, customEventHandlers } = this.props;
-        activate(id, customEventHandlers);
-    }
+  componentDidMount() {
+    const { activate, id, customEventHandlers } = this.props;
+    activate(id, customEventHandlers);
+  }
 
-    componentDidUpdate(prevProps) {
-        const { activate, id, customEventHandlers } = this.props;
-        if (prevProps.activate !== activate) {
-            activate(id, customEventHandlers);
-        }
+  componentDidUpdate(prevProps) {
+    const { activate, id, customEventHandlers } = this.props;
+    if (prevProps.activate !== activate) {
+      activate(id, customEventHandlers);
     }
+  }
 
-    render() {
-        const { id, style, className, children } = this.props;
-        return <div id={id} style={style} className={className} children={children} />;
-    }
+  render() {
+    const { id, style, className, children } = this.props;
+    return (
+      <div id={id} style={style} className={className} children={children} />
+    );
+  }
 }
 
 AdvertisingSlot.propTypes = {
-    id: PropTypes.string.isRequired,
-    style: PropTypes.object,
-    className: PropTypes.string,
-    children: PropTypes.node,
-    activate: PropTypes.func.isRequired,
-    customEventHandlers: PropTypes.objectOf(PropTypes.func).isRequired,
+  id: PropTypes.string.isRequired,
+  style: PropTypes.object,
+  className: PropTypes.string,
+  children: PropTypes.node,
+  activate: PropTypes.func.isRequired,
+  customEventHandlers: PropTypes.objectOf(PropTypes.func).isRequired,
 };
 
 AdvertisingSlot.defaultProps = {
-    customEventHandlers: {},
+  customEventHandlers: {},
 };
 
 export default connectToAdServer(AdvertisingSlot);
