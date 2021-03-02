@@ -22,6 +22,11 @@ export default class AdvertisingProvider extends Component {
   }
 
   async componentDidUpdate(prevProps) {
+    // this means teardown method has been invoked already
+    if (!this.advertising) {
+      return;
+    }
+
     const { config, active } = this.props;
     const isConfigReady = this.advertising.isConfigReady();
 
