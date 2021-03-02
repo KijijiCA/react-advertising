@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.1 / 2 March 2021
+
+* Bugfix for null pointer error that ocurred in some edge cases (issue #31 / PR #32)
+
 ## 3.0.0 / 3 July 2020
 
 * Renamed library to `react-advertising`

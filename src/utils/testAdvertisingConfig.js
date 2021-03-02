@@ -18,94 +18,94 @@ const SLOT_AD_UNIT_PATH = 'slot/ad/unit/path';
 const USD_TO_EUR_RATE = 2;
 
 export const config = {
-    active: true,
-    path: GLOBAL_AD_UNIT_PATH,
-    prebid: {
-        bidderTimeout: 1500,
-        priceGranularity: 'medium',
-        bidderSequence: 'random',
+  active: true,
+  path: GLOBAL_AD_UNIT_PATH,
+  prebid: {
+    bidderTimeout: 1500,
+    priceGranularity: 'medium',
+    bidderSequence: 'random',
+  },
+  slots: [
+    {
+      id: DIV_ID_FOO,
+      targeting: { a: SLOT_ID_FOO },
+      sizes: GPT_SIZES,
+      prebid: [
+        {
+          mediaTypes: {
+            banner: {
+              sizes: PREBID_SIZES_FOO,
+            },
+          },
+          bids: [
+            {
+              bidder: BIDDER_FOO,
+              params: PARAMS_FOO,
+            },
+          ],
+        },
+      ],
     },
-    slots: [
+    {
+      id: DIV_ID_BAR,
+      path: SLOT_AD_UNIT_PATH,
+      targeting: { a: SLOT_ID_BAR },
+      sizes: GPT_SIZES,
+      sizeMappingName: 'mobailAndTablet',
+      collapseEmptyDiv: COLLAPSE_EMPTY_DIV,
+      prebid: [
         {
-            id: DIV_ID_FOO,
-            targeting: { a: SLOT_ID_FOO },
-            sizes: GPT_SIZES,
-            prebid: [
-                {
-                    mediaTypes: {
-                        banner: {
-                            sizes: PREBID_SIZES_FOO,
-                        },
-                    },
-                    bids: [
-                        {
-                            bidder: BIDDER_FOO,
-                            params: PARAMS_FOO,
-                        },
-                    ],
-                },
-            ],
+          mediaTypes: {
+            banner: {
+              sizes: PREBID_SIZES_BAR,
+            },
+          },
+          bids: [
+            {
+              bidder: BIDDER_BAR,
+              params: PARAMS_BAR,
+            },
+          ],
         },
-        {
-            id: DIV_ID_BAR,
-            path: SLOT_AD_UNIT_PATH,
-            targeting: { a: SLOT_ID_BAR },
-            sizes: GPT_SIZES,
-            sizeMappingName: 'mobailAndTablet',
-            collapseEmptyDiv: COLLAPSE_EMPTY_DIV,
-            prebid: [
-                {
-                    mediaTypes: {
-                        banner: {
-                            sizes: PREBID_SIZES_BAR,
-                        },
-                    },
-                    bids: [
-                        {
-                            bidder: BIDDER_BAR,
-                            params: PARAMS_BAR,
-                        },
-                    ],
-                },
-            ],
-        },
-    ],
-    sizeMappings: {
-        mobailAndTablet: [
-            {
-                viewPortSize: [0, 0],
-                sizes: [],
-            },
-            {
-                viewPortSize: [320, 700],
-                sizes: [
-                    [300, 250],
-                    [320, 50],
-                ],
-            },
-            {
-                viewPortSize: [1050, 200],
-                sizes: [],
-            },
+      ],
+    },
+  ],
+  sizeMappings: {
+    mobailAndTablet: [
+      {
+        viewPortSize: [0, 0],
+        sizes: [],
+      },
+      {
+        viewPortSize: [320, 700],
+        sizes: [
+          [300, 250],
+          [320, 50],
         ],
-    },
-    metaData: {
-        usdToEurRate: USD_TO_EUR_RATE,
-    },
+      },
+      {
+        viewPortSize: [1050, 200],
+        sizes: [],
+      },
+    ],
+  },
+  metaData: {
+    usdToEurRate: USD_TO_EUR_RATE,
+  },
 
-    targeting: {
-        eagt: [666],
-        'mt-ab': 'test',
-        'mt-ma': ['Poserwagen'],
-        'mt-mo': ['Brummstinko', 'Grand Umweltverpestino'],
-        'mt-thread': [666],
-        'mt-u2': ['00'],
-        'mt-u4': true,
+  targeting: {
+    eagt: [666],
+    'mt-ab': 'test',
+    'mt-ma': ['Poserwagen'],
+    'mt-mo': ['Brummstinko', 'Grand Umweltverpestino'],
+    'mt-thread': [666],
+    'mt-u2': ['00'],
+    'mt-u4': true,
+  },
+  customEvents: {
+    collapse: {
+      eventMessagePrefix: 'CloseAdvContainer:',
+      divIdPrefix: 'div-gpt-ad-',
     },
-    customEvents: {
-        collapse: {
-            eventMessagePrefix: 'CloseAdvContainer:',
-            divIdPrefix: 'div-gpt-ad-',
-        },
-    },
+  },
 };
