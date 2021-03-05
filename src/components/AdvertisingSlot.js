@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useEffect, useRef, useContext } from 'react';
+import React, { useEffect, useRef, useContext, memo } from 'react';
 import AdvertisingContext from '../AdvertisingContext';
 
 function AdvertisingSlot({
@@ -47,4 +47,4 @@ AdvertisingSlot.defaultProps = {
   customEventHandlers: {},
 };
 
-export default AdvertisingSlot;
+export default memo(AdvertisingSlot);
