@@ -16,7 +16,7 @@
         "test": "jest",
         "clean": "rimraf lib dist es",
         "watch": "webpack --watch",
-        "build": "npm run build:es && npm run build:commonjs && npm run build:umd && scripts/setVersionInfo.js",
+        "build": "yarn build:es && yarn build:commonjs && yarn build:umd && scripts/setVersionInfo.js",
         "build:es": "babel --out-dir es src --ignore src/*.test.js,src/**/*.test.js",
         "build:commonjs": "cross-env BABEL_ENV=commonjs babel --out-dir lib src --ignore src/*.test.js,src/**/*.test.js",
         "build:umd": "cross-env BABEL_ENV=commonjs webpack",
