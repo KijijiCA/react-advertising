@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.0.2 / 31 March 2021
+
+* add option to passthrough path information in defineOutOfPageSlots method from outOfPage slots in the config
+
+
 ## 3.0.1 / 2 March 2021
 
 * Bugfix for null pointer error that ocurred in some edge cases (issue #31 / PR #32)
