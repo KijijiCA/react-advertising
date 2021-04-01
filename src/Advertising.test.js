@@ -338,12 +338,21 @@ describe('When I instantiate an advertising main module', () => {
 
 describe('When I instantiate an advertising main module', () => {
   describe('without prebid config', () => {
-    let advertising;
+    let originalPbjs, originalGoogletag, advertising;
+    beforeEach(() => {
+      originalPbjs = setupPbjs();
+      originalGoogletag = setupGoogletag();
+      advertising = new Advertising({});
+    });
     beforeEach(() => (advertising = new Advertising({})));
     describe('the prebid config', () =>
       void it('is set to sensible defaults', () => {
         expect(advertising.config).toMatchSnapshot();
       }));
+    afterEach(() => {
+      global.pbjs = originalPbjs;
+      global.googletag = originalGoogletag;
+    });
   });
 });
 
