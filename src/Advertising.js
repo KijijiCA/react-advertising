@@ -225,8 +225,11 @@ export default class Advertising {
 
   defineOutOfPageSlots() {
     if (this.config.outOfPageSlots) {
-      this.config.outOfPageSlots.forEach(({ id }) => {
-        const slot = window.googletag.defineOutOfPageSlot(this.config.path, id);
+      this.config.outOfPageSlots.forEach(({ id, path }) => {
+        const slot = window.googletag.defineOutOfPageSlot(
+          path || this.config.path,
+          id
+        );
         slot.addService(window.googletag.pubads());
         this.outOfPageSlots[id] = slot;
       });
