@@ -43,7 +43,7 @@ describe('When I check the prop types for a valid slot config', () => {
       }))
   );
   describe('the prop type validation', () =>
-    it('passes', () => void expect(result).toBeUndefined()));
+    void it('passes', () => expect(result).toBeUndefined()));
 });
 describe('When I check the prop types for an invalid slot config', () => {
   let result;
@@ -54,7 +54,7 @@ describe('When I check the prop types for an invalid slot config', () => {
       }))
   );
   describe('the prop type validation', () =>
-    it('fails', () => void expect(result).toBeTruthy()));
+    void it('fails', () => expect(result).toBeTruthy()));
 });
 
 describe('When I check the prop types for a valid slot config', () => {
@@ -78,7 +78,7 @@ describe('When I check the prop types for a valid slot config', () => {
           }))
       );
       describe('the prop type validation', () =>
-        it('passes', () => void expect(result).toBeUndefined()));
+        void it('passes', () => expect(result).toBeUndefined()));
     });
   }
 });
@@ -131,10 +131,10 @@ describe('When I check the prop types a slot config', () => {
       );
       if (expectToPass) {
         describe('the prop type validation', () =>
-          it('passes', () => void expect(result).toBeUndefined()));
+          void it('passes', () => expect(result).toBeUndefined()));
       } else {
         describe('the prop type validation', () =>
-          it('fails', () => void expect(result).toBeTruthy()));
+          void it('fails', () => expect(result).toBeTruthy()));
       }
     });
   }
@@ -188,10 +188,10 @@ describe('When I check the prop types a slot config', () => {
       );
       if (expectToPass) {
         describe('the prop type validation', () =>
-          it('passes', () => void expect(result).toBeUndefined()));
+          void it('passes', () => expect(result).toBeUndefined()));
       } else {
         describe('the prop type validation', () =>
-          it('fails', () => void expect(result).toBeTruthy()));
+          void it('fails', () => expect(result).toBeTruthy()));
       }
     });
   }

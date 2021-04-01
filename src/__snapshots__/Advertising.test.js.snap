@@ -46,10 +46,640 @@ Array [
   Array [
     Array [
       Object {
-        "addService": [Function],
-        "defineSizeMapping": [Function],
-        "setCollapseEmptyDiv": [Function],
-        "setTargeting": [Function],
+        "addService": [MockFunction] {
+          "calls": Array [
+            Array [
+              Object {
+                "addService": [MockFunction],
+                "cmd": Object {
+                  "push": [MockFunction] {
+                    "calls": Array [
+                      Array [
+                        [Function],
+                      ],
+                      Array [
+                        [Function],
+                      ],
+                    ],
+                    "results": Array [
+                      Object {
+                        "type": "return",
+                        "value": undefined,
+                      },
+                      Object {
+                        "type": "return",
+                        "value": undefined,
+                      },
+                    ],
+                  },
+                },
+                "collapseEmptyDivs": [MockFunction],
+                "defineOutOfPageSlot": [MockFunction],
+                "defineSlot": [MockFunction] {
+                  "calls": Array [
+                    Array [
+                      "global/ad/unit/path",
+                      Array [
+                        "fluid",
+                        Array [
+                          320,
+                          240,
+                        ],
+                      ],
+                      "div-gpt-ad-foo",
+                    ],
+                    Array [
+                      "slot/ad/unit/path",
+                      Array [
+                        "fluid",
+                        Array [
+                          320,
+                          240,
+                        ],
+                      ],
+                      "div-gpt-ad-bar",
+                    ],
+                  ],
+                  "results": Array [
+                    Object {
+                      "type": "return",
+                      "value": [Circular],
+                    },
+                    Object {
+                      "type": "return",
+                      "value": Object {
+                        "addService": [MockFunction] {
+                          "calls": Array [
+                            Array [
+                              [Circular],
+                            ],
+                          ],
+                          "results": Array [
+                            Object {
+                              "type": "return",
+                              "value": [Circular],
+                            },
+                          ],
+                        },
+                        "defineSizeMapping": [MockFunction] {
+                          "calls": Array [
+                            Array [
+                              Array [
+                                Array [
+                                  Array [
+                                    0,
+                                    0,
+                                  ],
+                                  Array [],
+                                ],
+                                Array [
+                                  Array [
+                                    320,
+                                    700,
+                                  ],
+                                  Array [
+                                    Array [
+                                      300,
+                                      250,
+                                    ],
+                                    Array [
+                                      320,
+                                      50,
+                                    ],
+                                  ],
+                                ],
+                                Array [
+                                  Array [
+                                    1050,
+                                    200,
+                                  ],
+                                  Array [],
+                                ],
+                              ],
+                            ],
+                          ],
+                          "results": Array [
+                            Object {
+                              "type": "return",
+                              "value": [Circular],
+                            },
+                          ],
+                        },
+                        "setCollapseEmptyDiv": [MockFunction] {
+                          "calls": Array [
+                            Array [
+                              true,
+                              true,
+                            ],
+                          ],
+                          "results": Array [
+                            Object {
+                              "type": "return",
+                              "value": [Circular],
+                            },
+                          ],
+                        },
+                        "setTargeting": [MockFunction] {
+                          "calls": Array [
+                            Array [
+                              "a",
+                              Array [
+                                11,
+                                666,
+                              ],
+                            ],
+                          ],
+                          "results": Array [
+                            Object {
+                              "type": "return",
+                              "value": [Circular],
+                            },
+                          ],
+                        },
+                      },
+                    },
+                  ],
+                },
+                "destroySlots": [MockFunction],
+                "disableInitialLoad": [MockFunction] {
+                  "calls": Array [
+                    Array [],
+                  ],
+                  "results": Array [
+                    Object {
+                      "type": "return",
+                      "value": undefined,
+                    },
+                  ],
+                },
+                "display": [MockFunction] {
+                  "calls": Array [
+                    Array [
+                      "div-gpt-ad-foo",
+                    ],
+                    Array [
+                      "div-gpt-ad-bar",
+                    ],
+                  ],
+                  "results": Array [
+                    Object {
+                      "type": "return",
+                      "value": undefined,
+                    },
+                    Object {
+                      "type": "return",
+                      "value": undefined,
+                    },
+                  ],
+                },
+                "enableServices": [MockFunction] {
+                  "calls": Array [
+                    Array [],
+                  ],
+                  "results": Array [
+                    Object {
+                      "type": "return",
+                      "value": undefined,
+                    },
+                  ],
+                },
+                "enableSingleRequest": [MockFunction] {
+                  "calls": Array [
+                    Array [],
+                  ],
+                  "results": Array [
+                    Object {
+                      "type": "return",
+                      "value": undefined,
+                    },
+                  ],
+                },
+                "fakeSizeMapping": Object {
+                  "addSize": [MockFunction] {
+                    "calls": Array [
+                      Array [
+                        Array [
+                          0,
+                          0,
+                        ],
+                        Array [],
+                      ],
+                      Array [
+                        Array [
+                          320,
+                          700,
+                        ],
+                        Array [
+                          Array [
+                            300,
+                            250,
+                          ],
+                          Array [
+                            320,
+                            50,
+                          ],
+                        ],
+                      ],
+                      Array [
+                        Array [
+                          1050,
+                          200,
+                        ],
+                        Array [],
+                      ],
+                    ],
+                    "results": Array [
+                      Object {
+                        "type": "return",
+                        "value": undefined,
+                      },
+                      Object {
+                        "type": "return",
+                        "value": undefined,
+                      },
+                      Object {
+                        "type": "return",
+                        "value": undefined,
+                      },
+                    ],
+                  },
+                  "build": [MockFunction] {
+                    "calls": Array [
+                      Array [],
+                    ],
+                    "results": Array [
+                      Object {
+                        "type": "return",
+                        "value": Array [
+                          Array [
+                            Array [
+                              0,
+                              0,
+                            ],
+                            Array [],
+                          ],
+                          Array [
+                            Array [
+                              320,
+                              700,
+                            ],
+                            Array [
+                              Array [
+                                300,
+                                250,
+                              ],
+                              Array [
+                                320,
+                                50,
+                              ],
+                            ],
+                          ],
+                          Array [
+                            Array [
+                              1050,
+                              200,
+                            ],
+                            Array [],
+                          ],
+                        ],
+                      },
+                    ],
+                  },
+                },
+                "fakeSlots": Array [
+                  [Circular],
+                  Object {
+                    "addService": [MockFunction] {
+                      "calls": Array [
+                        Array [
+                          [Circular],
+                        ],
+                      ],
+                      "results": Array [
+                        Object {
+                          "type": "return",
+                          "value": [Circular],
+                        },
+                      ],
+                    },
+                    "defineSizeMapping": [MockFunction] {
+                      "calls": Array [
+                        Array [
+                          Array [
+                            Array [
+                              Array [
+                                0,
+                                0,
+                              ],
+                              Array [],
+                            ],
+                            Array [
+                              Array [
+                                320,
+                                700,
+                              ],
+                              Array [
+                                Array [
+                                  300,
+                                  250,
+                                ],
+                                Array [
+                                  320,
+                                  50,
+                                ],
+                              ],
+                            ],
+                            Array [
+                              Array [
+                                1050,
+                                200,
+                              ],
+                              Array [],
+                            ],
+                          ],
+                        ],
+                      ],
+                      "results": Array [
+                        Object {
+                          "type": "return",
+                          "value": [Circular],
+                        },
+                      ],
+                    },
+                    "setCollapseEmptyDiv": [MockFunction] {
+                      "calls": Array [
+                        Array [
+                          true,
+                          true,
+                        ],
+                      ],
+                      "results": Array [
+                        Object {
+                          "type": "return",
+                          "value": [Circular],
+                        },
+                      ],
+                    },
+                    "setTargeting": [MockFunction] {
+                      "calls": Array [
+                        Array [
+                          "a",
+                          Array [
+                            11,
+                            666,
+                          ],
+                        ],
+                      ],
+                      "results": Array [
+                        Object {
+                          "type": "return",
+                          "value": [Circular],
+                        },
+                      ],
+                    },
+                  },
+                ],
+                "pubads": [MockFunction] {
+                  "calls": Array [
+                    Array [],
+                    Array [],
+                    Array [],
+                    Array [],
+                    Array [],
+                  ],
+                  "results": Array [
+                    Object {
+                      "type": "return",
+                      "value": [Circular],
+                    },
+                    Object {
+                      "type": "return",
+                      "value": [Circular],
+                    },
+                    Object {
+                      "type": "return",
+                      "value": [Circular],
+                    },
+                    Object {
+                      "type": "return",
+                      "value": [Circular],
+                    },
+                    Object {
+                      "type": "return",
+                      "value": [Circular],
+                    },
+                  ],
+                },
+                "refresh": [MockFunction] {
+                  "calls": [Circular],
+                  "results": Array [
+                    Object {
+                      "type": "return",
+                      "value": undefined,
+                    },
+                  ],
+                },
+                "setTargeting": [MockFunction] {
+                  "calls": Array [
+                    Array [
+                      "eagt",
+                      Array [
+                        666,
+                      ],
+                    ],
+                    Array [
+                      "mt-ab",
+                      "test",
+                    ],
+                    Array [
+                      "mt-ma",
+                      Array [
+                        "Poserwagen",
+                      ],
+                    ],
+                    Array [
+                      "mt-mo",
+                      Array [
+                        "Brummstinko",
+                        "Grand Umweltverpestino",
+                      ],
+                    ],
+                    Array [
+                      "mt-thread",
+                      Array [
+                        666,
+                      ],
+                    ],
+                    Array [
+                      "mt-u2",
+                      Array [
+                        "00",
+                      ],
+                    ],
+                    Array [
+                      "mt-u4",
+                      true,
+                    ],
+                  ],
+                  "results": Array [
+                    Object {
+                      "type": "return",
+                      "value": [Circular],
+                    },
+                    Object {
+                      "type": "return",
+                      "value": [Circular],
+                    },
+                    Object {
+                      "type": "return",
+                      "value": [Circular],
+                    },
+                    Object {
+                      "type": "return",
+                      "value": [Circular],
+                    },
+                    Object {
+                      "type": "return",
+                      "value": [Circular],
+                    },
+                    Object {
+                      "type": "return",
+                      "value": [Circular],
+                    },
+                    Object {
+                      "type": "return",
+                      "value": [Circular],
+                    },
+                  ],
+                },
+                "sizeMapping": [MockFunction] {
+                  "calls": Array [
+                    Array [],
+                  ],
+                  "results": Array [
+                    Object {
+                      "type": "return",
+                      "value": Object {
+                        "addSize": [MockFunction] {
+                          "calls": Array [
+                            Array [
+                              Array [
+                                0,
+                                0,
+                              ],
+                              Array [],
+                            ],
+                            Array [
+                              Array [
+                                320,
+                                700,
+                              ],
+                              Array [
+                                Array [
+                                  300,
+                                  250,
+                                ],
+                                Array [
+                                  320,
+                                  50,
+                                ],
+                              ],
+                            ],
+                            Array [
+                              Array [
+                                1050,
+                                200,
+                              ],
+                              Array [],
+                            ],
+                          ],
+                          "results": Array [
+                            Object {
+                              "type": "return",
+                              "value": undefined,
+                            },
+                            Object {
+                              "type": "return",
+                              "value": undefined,
+                            },
+                            Object {
+                              "type": "return",
+                              "value": undefined,
+                            },
+                          ],
+                        },
+                        "build": [MockFunction] {
+                          "calls": Array [
+                            Array [],
+                          ],
+                          "results": Array [
+                            Object {
+                              "type": "return",
+                              "value": Array [
+                                Array [
+                                  Array [
+                                    0,
+                                    0,
+                                  ],
+                                  Array [],
+                                ],
+                                Array [
+                                  Array [
+                                    320,
+                                    700,
+                                  ],
+                                  Array [
+                                    Array [
+                                      300,
+                                      250,
+                                    ],
+                                    Array [
+                                      320,
+                                      50,
+                                    ],
+                                  ],
+                                ],
+                                Array [
+                                  Array [
+                                    1050,
+                                    200,
+                                  ],
+                                  Array [],
+                                ],
+                              ],
+                            },
+                          ],
+                        },
+                      },
+                    },
+                  ],
+                },
+              },
+            ],
+          ],
+          "results": Array [
+            Object {
+              "type": "return",
+              "value": [Circular],
+            },
+          ],
+        },
+        "defineSizeMapping": [MockFunction],
+        "setCollapseEmptyDiv": [MockFunction],
+        "setTargeting": [MockFunction] {
+          "calls": Array [
+            Array [
+              "a",
+              666,
+            ],
+          ],
+          "results": Array [
+            Object {
+              "type": "return",
+              "value": [Circular],
+            },
+          ],
+        },
       },
     ],
   ],
@@ -253,7 +883,7 @@ Array [
 ]
 `;
 
-exports[`When I instantiate an advertising main module and call the setup method the GPT slot that is defined for the “foo” ad gets the correct targeting parameters 1`] = `
+exports[`When I instantiate an advertising main module and call the setup method the GPT slot that is defined for the “foo” ad gets the correct targeting key values 1`] = `
 Array [
   Array [
     "a",
@@ -312,16 +942,1167 @@ Array [
 exports[`When I instantiate an advertising main module and call the setup method the slots of the advertising module instance are correct 1`] = `
 Object {
   "div-gpt-ad-bar": Object {
-    "addService": [Function],
-    "defineSizeMapping": [Function],
-    "setCollapseEmptyDiv": [Function],
-    "setTargeting": [Function],
+    "addService": [MockFunction] {
+      "calls": Array [
+        Array [
+          Object {
+            "addService": [MockFunction],
+            "cmd": Object {
+              "push": [MockFunction] {
+                "calls": Array [
+                  Array [
+                    [Function],
+                  ],
+                ],
+                "results": Array [
+                  Object {
+                    "type": "return",
+                    "value": undefined,
+                  },
+                ],
+              },
+            },
+            "collapseEmptyDivs": [MockFunction],
+            "defineOutOfPageSlot": [MockFunction],
+            "defineSlot": [MockFunction] {
+              "calls": Array [
+                Array [
+                  "global/ad/unit/path",
+                  Array [
+                    "fluid",
+                    Array [
+                      320,
+                      240,
+                    ],
+                  ],
+                  "div-gpt-ad-foo",
+                ],
+                Array [
+                  "slot/ad/unit/path",
+                  Array [
+                    "fluid",
+                    Array [
+                      320,
+                      240,
+                    ],
+                  ],
+                  "div-gpt-ad-bar",
+                ],
+              ],
+              "results": Array [
+                Object {
+                  "type": "return",
+                  "value": Object {
+                    "addService": [MockFunction] {
+                      "calls": Array [
+                        Array [
+                          [Circular],
+                        ],
+                      ],
+                      "results": Array [
+                        Object {
+                          "type": "return",
+                          "value": [Circular],
+                        },
+                      ],
+                    },
+                    "defineSizeMapping": [MockFunction],
+                    "setCollapseEmptyDiv": [MockFunction],
+                    "setTargeting": [MockFunction] {
+                      "calls": Array [
+                        Array [
+                          "a",
+                          666,
+                        ],
+                      ],
+                      "results": Array [
+                        Object {
+                          "type": "return",
+                          "value": [Circular],
+                        },
+                      ],
+                    },
+                  },
+                },
+                Object {
+                  "type": "return",
+                  "value": [Circular],
+                },
+              ],
+            },
+            "destroySlots": [MockFunction],
+            "disableInitialLoad": [MockFunction] {
+              "calls": Array [
+                Array [],
+              ],
+              "results": Array [
+                Object {
+                  "type": "return",
+                  "value": undefined,
+                },
+              ],
+            },
+            "display": [MockFunction] {
+              "calls": Array [
+                Array [
+                  "div-gpt-ad-foo",
+                ],
+                Array [
+                  "div-gpt-ad-bar",
+                ],
+              ],
+              "results": Array [
+                Object {
+                  "type": "return",
+                  "value": undefined,
+                },
+                Object {
+                  "type": "return",
+                  "value": undefined,
+                },
+              ],
+            },
+            "enableServices": [MockFunction] {
+              "calls": Array [
+                Array [],
+              ],
+              "results": Array [
+                Object {
+                  "type": "return",
+                  "value": undefined,
+                },
+              ],
+            },
+            "enableSingleRequest": [MockFunction] {
+              "calls": Array [
+                Array [],
+              ],
+              "results": Array [
+                Object {
+                  "type": "return",
+                  "value": undefined,
+                },
+              ],
+            },
+            "fakeSizeMapping": Object {
+              "addSize": [MockFunction] {
+                "calls": Array [
+                  Array [
+                    Array [
+                      0,
+                      0,
+                    ],
+                    Array [],
+                  ],
+                  Array [
+                    Array [
+                      320,
+                      700,
+                    ],
+                    Array [
+                      Array [
+                        300,
+                        250,
+                      ],
+                      Array [
+                        320,
+                        50,
+                      ],
+                    ],
+                  ],
+                  Array [
+                    Array [
+                      1050,
+                      200,
+                    ],
+                    Array [],
+                  ],
+                ],
+                "results": Array [
+                  Object {
+                    "type": "return",
+                    "value": undefined,
+                  },
+                  Object {
+                    "type": "return",
+                    "value": undefined,
+                  },
+                  Object {
+                    "type": "return",
+                    "value": undefined,
+                  },
+                ],
+              },
+              "build": [MockFunction] {
+                "calls": Array [
+                  Array [],
+                ],
+                "results": Array [
+                  Object {
+                    "type": "return",
+                    "value": Array [
+                      Array [
+                        Array [
+                          0,
+                          0,
+                        ],
+                        Array [],
+                      ],
+                      Array [
+                        Array [
+                          320,
+                          700,
+                        ],
+                        Array [
+                          Array [
+                            300,
+                            250,
+                          ],
+                          Array [
+                            320,
+                            50,
+                          ],
+                        ],
+                      ],
+                      Array [
+                        Array [
+                          1050,
+                          200,
+                        ],
+                        Array [],
+                      ],
+                    ],
+                  },
+                ],
+              },
+            },
+            "fakeSlots": Array [
+              Object {
+                "addService": [MockFunction] {
+                  "calls": Array [
+                    Array [
+                      [Circular],
+                    ],
+                  ],
+                  "results": Array [
+                    Object {
+                      "type": "return",
+                      "value": [Circular],
+                    },
+                  ],
+                },
+                "defineSizeMapping": [MockFunction],
+                "setCollapseEmptyDiv": [MockFunction],
+                "setTargeting": [MockFunction] {
+                  "calls": Array [
+                    Array [
+                      "a",
+                      666,
+                    ],
+                  ],
+                  "results": Array [
+                    Object {
+                      "type": "return",
+                      "value": [Circular],
+                    },
+                  ],
+                },
+              },
+              [Circular],
+            ],
+            "pubads": [MockFunction] {
+              "calls": Array [
+                Array [],
+                Array [],
+                Array [],
+              ],
+              "results": Array [
+                Object {
+                  "type": "return",
+                  "value": [Circular],
+                },
+                Object {
+                  "type": "return",
+                  "value": [Circular],
+                },
+                Object {
+                  "type": "return",
+                  "value": [Circular],
+                },
+              ],
+            },
+            "refresh": [MockFunction],
+            "setTargeting": [MockFunction] {
+              "calls": Array [
+                Array [
+                  "eagt",
+                  Array [
+                    666,
+                  ],
+                ],
+                Array [
+                  "mt-ab",
+                  "test",
+                ],
+                Array [
+                  "mt-ma",
+                  Array [
+                    "Poserwagen",
+                  ],
+                ],
+                Array [
+                  "mt-mo",
+                  Array [
+                    "Brummstinko",
+                    "Grand Umweltverpestino",
+                  ],
+                ],
+                Array [
+                  "mt-thread",
+                  Array [
+                    666,
+                  ],
+                ],
+                Array [
+                  "mt-u2",
+                  Array [
+                    "00",
+                  ],
+                ],
+                Array [
+                  "mt-u4",
+                  true,
+                ],
+              ],
+              "results": Array [
+                Object {
+                  "type": "return",
+                  "value": [Circular],
+                },
+                Object {
+                  "type": "return",
+                  "value": [Circular],
+                },
+                Object {
+                  "type": "return",
+                  "value": [Circular],
+                },
+                Object {
+                  "type": "return",
+                  "value": [Circular],
+                },
+                Object {
+                  "type": "return",
+                  "value": [Circular],
+                },
+                Object {
+                  "type": "return",
+                  "value": [Circular],
+                },
+                Object {
+                  "type": "return",
+                  "value": [Circular],
+                },
+              ],
+            },
+            "sizeMapping": [MockFunction] {
+              "calls": Array [
+                Array [],
+              ],
+              "results": Array [
+                Object {
+                  "type": "return",
+                  "value": Object {
+                    "addSize": [MockFunction] {
+                      "calls": Array [
+                        Array [
+                          Array [
+                            0,
+                            0,
+                          ],
+                          Array [],
+                        ],
+                        Array [
+                          Array [
+                            320,
+                            700,
+                          ],
+                          Array [
+                            Array [
+                              300,
+                              250,
+                            ],
+                            Array [
+                              320,
+                              50,
+                            ],
+                          ],
+                        ],
+                        Array [
+                          Array [
+                            1050,
+                            200,
+                          ],
+                          Array [],
+                        ],
+                      ],
+                      "results": Array [
+                        Object {
+                          "type": "return",
+                          "value": undefined,
+                        },
+                        Object {
+                          "type": "return",
+                          "value": undefined,
+                        },
+                        Object {
+                          "type": "return",
+                          "value": undefined,
+                        },
+                      ],
+                    },
+                    "build": [MockFunction] {
+                      "calls": Array [
+                        Array [],
+                      ],
+                      "results": Array [
+                        Object {
+                          "type": "return",
+                          "value": Array [
+                            Array [
+                              Array [
+                                0,
+                                0,
+                              ],
+                              Array [],
+                            ],
+                            Array [
+                              Array [
+                                320,
+                                700,
+                              ],
+                              Array [
+                                Array [
+                                  300,
+                                  250,
+                                ],
+                                Array [
+                                  320,
+                                  50,
+                                ],
+                              ],
+                            ],
+                            Array [
+                              Array [
+                                1050,
+                                200,
+                              ],
+                              Array [],
+                            ],
+                          ],
+                        },
+                      ],
+                    },
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      ],
+      "results": Array [
+        Object {
+          "type": "return",
+          "value": [Circular],
+        },
+      ],
+    },
+    "defineSizeMapping": [MockFunction] {
+      "calls": Array [
+        Array [
+          Array [
+            Array [
+              Array [
+                0,
+                0,
+              ],
+              Array [],
+            ],
+            Array [
+              Array [
+                320,
+                700,
+              ],
+              Array [
+                Array [
+                  300,
+                  250,
+                ],
+                Array [
+                  320,
+                  50,
+                ],
+              ],
+            ],
+            Array [
+              Array [
+                1050,
+                200,
+              ],
+              Array [],
+            ],
+          ],
+        ],
+      ],
+      "results": Array [
+        Object {
+          "type": "return",
+          "value": [Circular],
+        },
+      ],
+    },
+    "setCollapseEmptyDiv": [MockFunction] {
+      "calls": Array [
+        Array [
+          true,
+          true,
+        ],
+      ],
+      "results": Array [
+        Object {
+          "type": "return",
+          "value": [Circular],
+        },
+      ],
+    },
+    "setTargeting": [MockFunction] {
+      "calls": Array [
+        Array [
+          "a",
+          Array [
+            11,
+            666,
+          ],
+        ],
+      ],
+      "results": Array [
+        Object {
+          "type": "return",
+          "value": [Circular],
+        },
+      ],
+    },
   },
   "div-gpt-ad-foo": Object {
-    "addService": [Function],
-    "defineSizeMapping": [Function],
-    "setCollapseEmptyDiv": [Function],
-    "setTargeting": [Function],
+    "addService": [MockFunction] {
+      "calls": Array [
+        Array [
+          Object {
+            "addService": [MockFunction],
+            "cmd": Object {
+              "push": [MockFunction] {
+                "calls": Array [
+                  Array [
+                    [Function],
+                  ],
+                ],
+                "results": Array [
+                  Object {
+                    "type": "return",
+                    "value": undefined,
+                  },
+                ],
+              },
+            },
+            "collapseEmptyDivs": [MockFunction],
+            "defineOutOfPageSlot": [MockFunction],
+            "defineSlot": [MockFunction] {
+              "calls": Array [
+                Array [
+                  "global/ad/unit/path",
+                  Array [
+                    "fluid",
+                    Array [
+                      320,
+                      240,
+                    ],
+                  ],
+                  "div-gpt-ad-foo",
+                ],
+                Array [
+                  "slot/ad/unit/path",
+                  Array [
+                    "fluid",
+                    Array [
+                      320,
+                      240,
+                    ],
+                  ],
+                  "div-gpt-ad-bar",
+                ],
+              ],
+              "results": Array [
+                Object {
+                  "type": "return",
+                  "value": [Circular],
+                },
+                Object {
+                  "type": "return",
+                  "value": Object {
+                    "addService": [MockFunction] {
+                      "calls": Array [
+                        Array [
+                          [Circular],
+                        ],
+                      ],
+                      "results": Array [
+                        Object {
+                          "type": "return",
+                          "value": [Circular],
+                        },
+                      ],
+                    },
+                    "defineSizeMapping": [MockFunction] {
+                      "calls": Array [
+                        Array [
+                          Array [
+                            Array [
+                              Array [
+                                0,
+                                0,
+                              ],
+                              Array [],
+                            ],
+                            Array [
+                              Array [
+                                320,
+                                700,
+                              ],
+                              Array [
+                                Array [
+                                  300,
+                                  250,
+                                ],
+                                Array [
+                                  320,
+                                  50,
+                                ],
+                              ],
+                            ],
+                            Array [
+                              Array [
+                                1050,
+                                200,
+                              ],
+                              Array [],
+                            ],
+                          ],
+                        ],
+                      ],
+                      "results": Array [
+                        Object {
+                          "type": "return",
+                          "value": [Circular],
+                        },
+                      ],
+                    },
+                    "setCollapseEmptyDiv": [MockFunction] {
+                      "calls": Array [
+                        Array [
+                          true,
+                          true,
+                        ],
+                      ],
+                      "results": Array [
+                        Object {
+                          "type": "return",
+                          "value": [Circular],
+                        },
+                      ],
+                    },
+                    "setTargeting": [MockFunction] {
+                      "calls": Array [
+                        Array [
+                          "a",
+                          Array [
+                            11,
+                            666,
+                          ],
+                        ],
+                      ],
+                      "results": Array [
+                        Object {
+                          "type": "return",
+                          "value": [Circular],
+                        },
+                      ],
+                    },
+                  },
+                },
+              ],
+            },
+            "destroySlots": [MockFunction],
+            "disableInitialLoad": [MockFunction] {
+              "calls": Array [
+                Array [],
+              ],
+              "results": Array [
+                Object {
+                  "type": "return",
+                  "value": undefined,
+                },
+              ],
+            },
+            "display": [MockFunction] {
+              "calls": Array [
+                Array [
+                  "div-gpt-ad-foo",
+                ],
+                Array [
+                  "div-gpt-ad-bar",
+                ],
+              ],
+              "results": Array [
+                Object {
+                  "type": "return",
+                  "value": undefined,
+                },
+                Object {
+                  "type": "return",
+                  "value": undefined,
+                },
+              ],
+            },
+            "enableServices": [MockFunction] {
+              "calls": Array [
+                Array [],
+              ],
+              "results": Array [
+                Object {
+                  "type": "return",
+                  "value": undefined,
+                },
+              ],
+            },
+            "enableSingleRequest": [MockFunction] {
+              "calls": Array [
+                Array [],
+              ],
+              "results": Array [
+                Object {
+                  "type": "return",
+                  "value": undefined,
+                },
+              ],
+            },
+            "fakeSizeMapping": Object {
+              "addSize": [MockFunction] {
+                "calls": Array [
+                  Array [
+                    Array [
+                      0,
+                      0,
+                    ],
+                    Array [],
+                  ],
+                  Array [
+                    Array [
+                      320,
+                      700,
+                    ],
+                    Array [
+                      Array [
+                        300,
+                        250,
+                      ],
+                      Array [
+                        320,
+                        50,
+                      ],
+                    ],
+                  ],
+                  Array [
+                    Array [
+                      1050,
+                      200,
+                    ],
+                    Array [],
+                  ],
+                ],
+                "results": Array [
+                  Object {
+                    "type": "return",
+                    "value": undefined,
+                  },
+                  Object {
+                    "type": "return",
+                    "value": undefined,
+                  },
+                  Object {
+                    "type": "return",
+                    "value": undefined,
+                  },
+                ],
+              },
+              "build": [MockFunction] {
+                "calls": Array [
+                  Array [],
+                ],
+                "results": Array [
+                  Object {
+                    "type": "return",
+                    "value": Array [
+                      Array [
+                        Array [
+                          0,
+                          0,
+                        ],
+                        Array [],
+                      ],
+                      Array [
+                        Array [
+                          320,
+                          700,
+                        ],
+                        Array [
+                          Array [
+                            300,
+                            250,
+                          ],
+                          Array [
+                            320,
+                            50,
+                          ],
+                        ],
+                      ],
+                      Array [
+                        Array [
+                          1050,
+                          200,
+                        ],
+                        Array [],
+                      ],
+                    ],
+                  },
+                ],
+              },
+            },
+            "fakeSlots": Array [
+              [Circular],
+              Object {
+                "addService": [MockFunction] {
+                  "calls": Array [
+                    Array [
+                      [Circular],
+                    ],
+                  ],
+                  "results": Array [
+                    Object {
+                      "type": "return",
+                      "value": [Circular],
+                    },
+                  ],
+                },
+                "defineSizeMapping": [MockFunction] {
+                  "calls": Array [
+                    Array [
+                      Array [
+                        Array [
+                          Array [
+                            0,
+                            0,
+                          ],
+                          Array [],
+                        ],
+                        Array [
+                          Array [
+                            320,
+                            700,
+                          ],
+                          Array [
+                            Array [
+                              300,
+                              250,
+                            ],
+                            Array [
+                              320,
+                              50,
+                            ],
+                          ],
+                        ],
+                        Array [
+                          Array [
+                            1050,
+                            200,
+                          ],
+                          Array [],
+                        ],
+                      ],
+                    ],
+                  ],
+                  "results": Array [
+                    Object {
+                      "type": "return",
+                      "value": [Circular],
+                    },
+                  ],
+                },
+                "setCollapseEmptyDiv": [MockFunction] {
+                  "calls": Array [
+                    Array [
+                      true,
+                      true,
+                    ],
+                  ],
+                  "results": Array [
+                    Object {
+                      "type": "return",
+                      "value": [Circular],
+                    },
+                  ],
+                },
+                "setTargeting": [MockFunction] {
+                  "calls": Array [
+                    Array [
+                      "a",
+                      Array [
+                        11,
+                        666,
+                      ],
+                    ],
+                  ],
+                  "results": Array [
+                    Object {
+                      "type": "return",
+                      "value": [Circular],
+                    },
+                  ],
+                },
+              },
+            ],
+            "pubads": [MockFunction] {
+              "calls": Array [
+                Array [],
+                Array [],
+                Array [],
+              ],
+              "results": Array [
+                Object {
+                  "type": "return",
+                  "value": [Circular],
+                },
+                Object {
+                  "type": "return",
+                  "value": [Circular],
+                },
+                Object {
+                  "type": "return",
+                  "value": [Circular],
+                },
+              ],
+            },
+            "refresh": [MockFunction],
+            "setTargeting": [MockFunction] {
+              "calls": Array [
+                Array [
+                  "eagt",
+                  Array [
+                    666,
+                  ],
+                ],
+                Array [
+                  "mt-ab",
+                  "test",
+                ],
+                Array [
+                  "mt-ma",
+                  Array [
+                    "Poserwagen",
+                  ],
+                ],
+                Array [
+                  "mt-mo",
+                  Array [
+                    "Brummstinko",
+                    "Grand Umweltverpestino",
+                  ],
+                ],
+                Array [
+                  "mt-thread",
+                  Array [
+                    666,
+                  ],
+                ],
+                Array [
+                  "mt-u2",
+                  Array [
+                    "00",
+                  ],
+                ],
+                Array [
+                  "mt-u4",
+                  true,
+                ],
+              ],
+              "results": Array [
+                Object {
+                  "type": "return",
+                  "value": [Circular],
+                },
+                Object {
+                  "type": "return",
+                  "value": [Circular],
+                },
+                Object {
+                  "type": "return",
+                  "value": [Circular],
+                },
+                Object {
+                  "type": "return",
+                  "value": [Circular],
+                },
+                Object {
+                  "type": "return",
+                  "value": [Circular],
+                },
+                Object {
+                  "type": "return",
+                  "value": [Circular],
+                },
+                Object {
+                  "type": "return",
+                  "value": [Circular],
+                },
+              ],
+            },
+            "sizeMapping": [MockFunction] {
+              "calls": Array [
+                Array [],
+              ],
+              "results": Array [
+                Object {
+                  "type": "return",
+                  "value": Object {
+                    "addSize": [MockFunction] {
+                      "calls": Array [
+                        Array [
+                          Array [
+                            0,
+                            0,
+                          ],
+                          Array [],
+                        ],
+                        Array [
+                          Array [
+                            320,
+                            700,
+                          ],
+                          Array [
+                            Array [
+                              300,
+                              250,
+                            ],
+                            Array [
+                              320,
+                              50,
+                            ],
+                          ],
+                        ],
+                        Array [
+                          Array [
+                            1050,
+                            200,
+                          ],
+                          Array [],
+                        ],
+                      ],
+                      "results": Array [
+                        Object {
+                          "type": "return",
+                          "value": undefined,
+                        },
+                        Object {
+                          "type": "return",
+                          "value": undefined,
+                        },
+                        Object {
+                          "type": "return",
+                          "value": undefined,
+                        },
+                      ],
+                    },
+                    "build": [MockFunction] {
+                      "calls": Array [
+                        Array [],
+                      ],
+                      "results": Array [
+                        Object {
+                          "type": "return",
+                          "value": Array [
+                            Array [
+                              Array [
+                                0,
+                                0,
+                              ],
+                              Array [],
+                            ],
+                            Array [
+                              Array [
+                                320,
+                                700,
+                              ],
+                              Array [
+                                Array [
+                                  300,
+                                  250,
+                                ],
+                                Array [
+                                  320,
+                                  50,
+                                ],
+                              ],
+                            ],
+                            Array [
+                              Array [
+                                1050,
+                                200,
+                              ],
+                              Array [],
+                            ],
+                          ],
+                        },
+                      ],
+                    },
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      ],
+      "results": Array [
+        Object {
+          "type": "return",
+          "value": [Circular],
+        },
+      ],
+    },
+    "defineSizeMapping": [MockFunction],
+    "setCollapseEmptyDiv": [MockFunction],
+    "setTargeting": [MockFunction] {
+      "calls": Array [
+        Array [
+          "a",
+          666,
+        ],
+      ],
+      "results": Array [
+        Object {
+          "type": "return",
+          "value": [Circular],
+        },
+      ],
+    },
   },
 }
 `;

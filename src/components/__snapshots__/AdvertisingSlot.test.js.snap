@@ -2,13 +2,9 @@
 
 exports[`The advertising slot component renders correctly 1`] = `
 <div
-  className="my-class"
+  class="my-class"
   id="my-id"
-  style={
-    Object {
-      "color": "hotpink",
-    }
-  }
+  style="color: hotpink;"
 >
   <h1>
     hello

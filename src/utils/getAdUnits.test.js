@@ -5,5 +5,5 @@ describe('When I get ad units from a given config', () => {
   let adUnits;
   beforeEach(() => (adUnits = getAdUnits(config.slots)));
   describe('the result', () =>
-    it('is correct', () => expect(adUnits).toMatchSnapshot()));
+    void it('is correct', () => expect(adUnits).toMatchSnapshot()));
 });

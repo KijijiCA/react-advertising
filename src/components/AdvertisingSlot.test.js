@@ -1,20 +1,21 @@
 import React from 'react';
-import { spy, match } from 'sinon';
-import expectSnapshot from '@mt-testutils/expect-snapshot';
-import { mount } from 'enzyme';
+import { render } from '@testing-library/react';
 import AdvertisingSlot from './AdvertisingSlot';
 
 jest.mock('./utils/connectToAdServer', () => (Component) => Component);
 
-describe('The advertising slot component', () => {
-  const ID = 'my-id';
-  const mockActivate = spy();
-  beforeEach(() => {
-    mockActivate.resetHistory();
-  });
+const ID = 'my-id';
+const mockActivate = jest.fn();
 
-  it('renders correctly', () => {
-    expectSnapshot(
+describe('The advertising slot component', () => {
+  let slot, rerender;
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    ({
+      container: { firstChild: slot },
+      rerender,
+    } = render(
       <AdvertisingSlot
         activate={mockActivate}
         id={ID}
@@ -23,46 +24,40 @@ describe('The advertising slot component', () => {
       >
         <h1>hello</h1>
       </AdvertisingSlot>
+    ));
+  });
+
+  it('renders correctly', () => {
+    expect(slot).toMatchSnapshot();
+  });
+
+  it('calls the activate function with the ID', () => {
+    expect(mockActivate).toHaveBeenCalledWith(ID, expect.anything());
+  });
+
+  it('calls the activate function with a collapse callback', () => {
+    expect(mockActivate).toHaveBeenCalledWith(
+      expect.anything(),
+      expect.any(Object)
     );
   });
 
-  describe('when mounted', () => {
-    let slot;
-    beforeEach(() => {
-      slot = mount(<AdvertisingSlot activate={mockActivate} id={ID} />);
-    });
+  it('calls the new activate function if the new activate function changes', (done) => {
+    const newMockActivate = jest.fn();
+    rerender(<AdvertisingSlot activate={newMockActivate} id={ID} />);
 
-    it('calls the activate function with the ID', () => {
-      mockActivate.should.have.been.calledWith(ID);
-    });
-
-    it('calls the activate function with a collapse callback', () => {
-      mockActivate.should.have.been.calledWith(match.any, match.object);
-    });
-
-    it('calls the new activate function if the new activate function changes', (done) => {
-      const newMockActivate = spy();
-      slot.setProps({ activate: newMockActivate });
-
-      // setProps is a async operation
-      setTimeout(() => {
-        // eslint-disable-next-line no-unused-expressions
-        newMockActivate.should.has.been.calledOnce;
-        done();
-      }, 0);
-    });
-
-    it('does not call the new activate function if the activate function does not change', (done) => {
-      slot.setProps({ activate: mockActivate });
-
-      // setProps is a async operation
-      setTimeout(() => {
-        // eslint-disable-next-line no-unused-expressions
-        mockActivate.should.has.been.calledOnce;
-        done();
-      }, 0);
-    });
+    setTimeout(() => {
+      expect(newMockActivate).toHaveBeenCalledTimes(1);
+      done();
+    }, 0);
   });
 
-  afterEach(() => jest.resetModules());
+  it('does not call the new activate function if the activate function does not change', (done) => {
+    rerender(<AdvertisingSlot activate={mockActivate} id={ID} />);
+
+    setTimeout(() => {
+      expect(mockActivate).toHaveBeenCalledTimes(1);
+      done();
+    }, 0);
+  });
 });
