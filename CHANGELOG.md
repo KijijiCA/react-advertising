@@ -1,9 +1,12 @@
 # Changelog
 
+## 4.0.0
+
+* Use of Prebid.js is now optional, you can display ads using only GPT (issue #37, PR #44)
+
 ## 3.0.2 / 1 April 2021
 
 * add option to passthrough path information in defineOutOfPageSlots method from outOfPage slots in the config
-
 
 ## 3.0.1 / 2 March 2021
 
