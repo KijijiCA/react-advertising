@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`The AdvertisingProvider component renders correctly 1`] = `
+exports[`The AdvertisingProvider component when provided a configuration from the start renders correctly 1`] = `
 <div
   id="advertising-context-provider"
 >
@@ -10,4 +10,4 @@ exports[`The AdvertisingProvider component renders correctly 1`] = `
 </div>
 `;
 
-exports[`The AdvertisingProvider component when mounted uses an AdvertisingContext.Provider to pass the activate method of the advertising module 1`] = `[Function]`;
+exports[`The AdvertisingProvider component when provided a configuration from the start uses an AdvertisingContext.Provider to pass the activate method of the advertising module 1`] = `[Function]`;

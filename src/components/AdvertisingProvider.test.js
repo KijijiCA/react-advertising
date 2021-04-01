@@ -1,17 +1,15 @@
 import React from 'react';
-import expectSnapshot from '@mt-testutils/expect-snapshot';
+import { render } from '@testing-library/react';
 import AdvertisingProvider from './AdvertisingProvider';
-import { stub, spy } from 'sinon';
-import { mount } from 'enzyme';
 import { config } from '../utils/testAdvertisingConfig';
 
-const mockActivate = spy();
-const mockSetup = stub().returns(Promise.resolve());
-const mockTeardown = spy();
-const mockConstructor = spy();
-const mockValueSpy = spy();
-const mockIsConfigReady = stub().returns(true);
-const mockSetConfig = spy();
+const mockActivate = jest.fn();
+const mockSetup = jest.fn();
+const mockTeardown = jest.fn();
+const mockConstructor = jest.fn();
+const mockValueSpy = jest.fn();
+const mockIsConfigReady = jest.fn();
+const mockSetConfig = jest.fn();
 
 jest.mock('../AdvertisingContext', () => ({
   // eslint-disable-next-line react/prop-types
@@ -31,10 +29,10 @@ jest.mock(
       activate(...args) {
         mockActivate(...args);
       }
-      setup(...args) {
-        return mockSetup(...args);
+      async setup(...args) {
+        mockSetup(...args);
       }
-      teardown(...args) {
+      async teardown(...args) {
         mockTeardown(...args);
       }
       isConfigReady() {
@@ -48,159 +46,160 @@ jest.mock(
 
 /* eslint-disable no-unused-expressions */
 describe('The AdvertisingProvider component', () => {
-  it('renders correctly', () => {
-    expectSnapshot(
-      <AdvertisingProvider config={config}>
-        <h1>hello</h1>
-      </AdvertisingProvider>
-    );
-  });
+  describe('when provided a configuration from the start', () => {
+    let provider, rerender, unmount;
 
-  describe('when mounted', () => {
-    let provider;
     beforeEach(() => {
-      provider = mount(<AdvertisingProvider config={config} />);
+      jest.clearAllMocks();
+      mockIsConfigReady.mockReturnValue(true);
+      ({
+        container: { firstChild: provider },
+        rerender,
+        unmount,
+      } = render(
+        <AdvertisingProvider config={config}>
+          <h1>hello</h1>
+        </AdvertisingProvider>
+      ));
+    });
+
+    it('renders correctly', () => {
+      expect(provider).toMatchSnapshot();
     });
 
     it('constructs an Advertising module with the provided configuration', () => {
-      mockConstructor.should.have.been.calledWith(config);
+      expect(mockConstructor).toHaveBeenCalledWith(
+        config,
+        undefined,
+        undefined
+      );
     });
 
     it('sets up the Advertising module', () => {
-      mockSetup.should.have.been.called;
+      expect(mockSetup).toHaveBeenCalled();
     });
 
-    it('sets up only once even if config reference is changed but the content does not changed', () => {
-      provider.setProps({ config: { ...config } });
-
-      mockSetup.should.have.been.calledOnce;
+    it('calls setup only once even if config reference is changed but the content has not changed', () => {
+      rerender(<AdvertisingProvider config={{ ...config }} />);
+      expect(mockSetup).toHaveBeenCalledTimes(1);
     });
 
-    it('sets up should be called if the config content is changed', (done) => {
-      provider.setProps({
-        config: { ...config, path: 'global/ad/unit/path2' },
-      });
+    it('calls setup when the config content is changed', (done) => {
+      rerender(
+        <AdvertisingProvider
+          config={{ ...config, path: 'global/ad/unit/path2' }}
+        />
+      );
 
-      // setProps is a async operation
       setTimeout(() => {
-        mockTeardown.should.have.been.calledOnce;
-        mockSetup.should.have.been.calledTwice;
+        expect(mockSetup).toHaveBeenCalledTimes(2);
+        expect(mockTeardown).toHaveBeenCalledTimes(1);
         done();
       }, 0);
     });
 
-    it('create a new Advertising instance with a new config if the config is changed', (done) => {
-      provider.setProps({ config: undefined });
+    it('creates a new Advertising instance with a new config when the config is changed', (done) => {
+      rerender(<AdvertisingProvider />);
 
-      // setProps is a async operation
       setTimeout(() => {
-        mockTeardown.should.have.been.calledOnce;
-        mockConstructor.should.have.been.calledWith(undefined, undefined);
+        expect(mockConstructor).toHaveBeenCalledWith(
+          undefined,
+          undefined,
+          undefined
+        );
+        expect(mockTeardown).toHaveBeenCalledTimes(1);
         done();
       }, 0);
     });
 
-    it('sets up should not be called if the config content is changed but active is `false`', (done) => {
-      provider.setProps({
-        config: { ...config, path: 'global/ad/unit/path2' },
-        active: false,
-      });
+    it('does not call setup if the config content is changed but active is `false`', (done) => {
+      rerender(
+        <AdvertisingProvider
+          config={{ ...config, path: 'global/ad/unit/path2' }}
+          active={false}
+        />
+      );
 
-      // setProps is a async operation
       setTimeout(() => {
-        mockSetup.should.have.been.calledOnce;
+        expect(mockSetup).toHaveBeenCalledTimes(1);
         done();
       }, 0);
     });
 
-    it('does not setup if the config change to `undefined`', (done) => {
-      provider.setProps({ config: undefined });
-      mockIsConfigReady.resetBehavior();
-      mockIsConfigReady.returns(false);
+    it('does not call setup if the config changes to `undefined`', (done) => {
+      mockIsConfigReady.mockReturnValueOnce(false);
+      rerender(<AdvertisingProvider />);
 
-      // setProps is a async operation
       setTimeout(() => {
-        mockTeardown.should.have.been.calledOnce;
-        mockSetup.should.have.been.calledOnce;
+        expect(mockTeardown).toHaveBeenCalledTimes(0);
+        expect(mockSetup).toHaveBeenCalledTimes(1);
         done();
       }, 0);
     });
 
     it('uses an AdvertisingContext.Provider to pass the activate method of the advertising module', () => {
-      expect(mockValueSpy.firstCall.args[0]).toMatchSnapshot();
+      expect(mockValueSpy.mock.calls[0][0]).toMatchSnapshot();
     });
 
-    it('tears down the Advertising module', () => {
-      provider.unmount();
-
-      mockTeardown.should.have.been.calledOnce;
+    it('tears down the Advertising module when it unmounts', () => {
+      unmount();
+      expect(mockTeardown).toHaveBeenCalledTimes(1);
     });
-
-    afterEach(resetMocks);
   });
 
-  describe('when config is loaded asynchronously', () => {
-    let provider;
+  describe('when config is loaded asynchronously and provided later', () => {
+    let rerender, unmount;
     beforeEach(() => {
-      mockIsConfigReady.resetBehavior();
-      mockIsConfigReady.returns(false);
-
-      provider = mount(<AdvertisingProvider />);
+      jest.clearAllMocks();
+      mockIsConfigReady.mockReturnValue(false);
+      ({ rerender, unmount } = render(<AdvertisingProvider />));
     });
 
     it('constructs an Advertising module', () => {
-      mockConstructor.should.have.been.called;
+      expect(mockConstructor).toHaveBeenCalled();
     });
 
     it('sets configuration and sets up the Advertising module', () => {
-      provider.setProps({ config });
+      rerender(<AdvertisingProvider config={config} />);
 
-      mockSetConfig.should.have.been.calledWith(config);
-      mockSetup.should.have.been.calledOnce;
+      expect(mockSetConfig).toHaveBeenCalledWith(config);
+      expect(mockSetup).toHaveBeenCalledTimes(1);
     });
 
     it('tears down the Advertising module', (done) => {
-      provider.setProps({ config });
-      provider.unmount();
+      rerender(<AdvertisingProvider config={config} />);
+      unmount();
 
-      // setProps is a async operation
       setTimeout(() => {
-        mockTeardown.should.have.been.calledOnce;
+        expect(mockTeardown).toHaveBeenCalledTimes(1);
         done();
       }, 0);
     });
 
     it('does not tear down the Advertising module if the config is undefined', () => {
-      provider.unmount();
+      unmount();
 
-      mockTeardown.should.not.have.been.calledOnce;
+      expect(mockTeardown).toHaveBeenCalledTimes(0);
     });
-
-    afterEach(resetMocks);
   });
 
   describe('when mounted with active = false', () => {
     beforeEach(() => {
-      mount(<AdvertisingProvider config={config} active={false} />);
+      jest.clearAllMocks();
+      mockIsConfigReady.mockReturnValue(true);
+      render(<AdvertisingProvider config={config} active={false} />);
     });
 
     it('constructs an Advertising module with the provided configuration', () => {
-      mockConstructor.should.have.been.called;
+      expect(mockConstructor).toHaveBeenCalledWith(
+        config,
+        undefined,
+        undefined
+      );
     });
 
-    it('does not set up an Advertising module', () => {
-      mockSetup.should.not.have.been.called;
+    it('does not set up the Advertising module', () => {
+      expect(mockSetup).toHaveBeenCalledTimes(0);
     });
-
-    afterEach(resetMocks);
   });
 });
-
-function resetMocks() {
-  mockConstructor.resetHistory();
-  mockSetup.resetHistory();
-  mockTeardown.resetHistory();
-  mockActivate.resetHistory();
-  mockValueSpy.resetHistory();
-  mockSetConfig.resetHistory();
-}
