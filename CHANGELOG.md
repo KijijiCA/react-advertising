@@ -1,6 +1,6 @@
 # Changelog
 
-## 3.0.2 / 31 March 2021
+## 3.0.2 / 1 April 2021
 
 * add option to passthrough path information in defineOutOfPageSlots method from outOfPage slots in the config
 
