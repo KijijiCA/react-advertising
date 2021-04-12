@@ -20,6 +20,9 @@ describe('When I instantiate an advertising main module', () => {
     originalGoogletag = setupGoogletag();
     advertising = new Advertising(config);
   });
+  describe('the property `isPrebidUsed`', () =>
+    void it('is set to true', () =>
+      expect(advertising.isPrebidUsed).toBeTruthy()));
   describe('call the setup method', () => {
     let onErrorSpy;
     beforeEach(() => {
@@ -480,6 +483,119 @@ describe('When I instantiate an advertising main module with outOfPageSlots', ()
   });
   afterEach(() => {
     global.pbjs = originalPbjs;
+    global.googletag = originalGoogletag;
+  });
+});
+
+describe('When I instantiate an advertising main module without Prebid.js being used', () => {
+  let originalGoogletag, advertising;
+  beforeEach(() => {
+    originalGoogletag = setupGoogletag();
+    advertising = new Advertising(config);
+  });
+  describe('the property `isPrebidUsed`', () =>
+    void it('is set to false', () =>
+      expect(advertising.isPrebidUsed).toBeFalsy()));
+  describe('and call the setup method', () => {
+    beforeEach(() => {
+      advertising.setup();
+    });
+    describe('initial loading of ad creatives through GPT', () =>
+      void it('is disabled', () =>
+        expect(
+          global.googletag.pubads().disableInitialLoad
+        ).toHaveBeenCalledTimes(1)));
+    describe('size mappings for responsive ads', () =>
+      void it('are defined using GPT', () =>
+        expect(
+          global.googletag.sizeMapping().addSize.mock.calls
+        ).toMatchSnapshot()));
+    describe('a GPT slot', () => {
+      it('is defined for each slot', () =>
+        expect(global.googletag.defineSlot).toHaveBeenCalledTimes(2));
+      it('is defined for the “foo” ad with the correct parameters', () =>
+        expect(global.googletag.defineSlot.mock.calls[0]).toMatchSnapshot());
+      it('is defined for the “bar” ad with the correct parameters', () =>
+        expect(global.googletag.defineSlot.mock.calls[1]).toMatchSnapshot());
+    });
+    describe('the GPT slot that is defined for the “foo” ad', () => {
+      let foo;
+      beforeEach(() => (foo = global.googletag.fakeSlots[0]));
+      it('does not get a size mapping because no size mapping name is configured', () =>
+        expect(foo.defineSizeMapping).toHaveBeenCalledTimes(0));
+      it('does not collapse empty divs because that is not configured', () =>
+        expect(foo.setCollapseEmptyDiv).toHaveBeenCalledTimes(0));
+      it('gets the correct targeting key values', () =>
+        expect(foo.setTargeting.mock.calls).toMatchSnapshot());
+      it('gets the pubads service added to it', () =>
+        expect(foo.addService.mock.calls[0][0]).toStrictEqual(
+          global.googletag.pubads()
+        ));
+    });
+    describe('the GPT slot that is defined for the “bar” ad', () => {
+      let foo;
+      beforeEach(() => (foo = global.googletag.fakeSlots[1]));
+      it('gets a size mapping', () =>
+        expect(foo.defineSizeMapping.mock.calls).toMatchSnapshot());
+      it('collapses empty divs', () =>
+        expect(foo.setCollapseEmptyDiv.mock.calls).toMatchSnapshot());
+      it('gets the correct targeting parameters', () =>
+        expect(foo.setTargeting.mock.calls).toMatchSnapshot());
+      it('gets the pubads service added to it', () =>
+        expect(foo.addService.mock.calls[0][0]).toStrictEqual(
+          global.googletag.pubads()
+        ));
+    });
+    describe('global GPT targeting parameters', () =>
+      void it('are set correctly', () =>
+        expect(
+          global.googletag.pubads().setTargeting.mock.calls
+        ).toMatchSnapshot()));
+    describe('GPT single request mode', () =>
+      void it('is enabled', () =>
+        expect(
+          global.googletag.pubads().enableSingleRequest
+        ).toHaveBeenCalledTimes(1)));
+    describe('the GPT services', () =>
+      void it('are enabled', () =>
+        expect(global.googletag.enableServices).toHaveBeenCalledTimes(1)));
+    //----------------------------------------------------------------------------------------------------
+    describe('the display method of GPT', () => {
+      it('is called for each slot', () =>
+        expect(global.googletag.display).toHaveBeenCalledTimes(2));
+      it('is called with the DIV ID of the “foo” ad', () =>
+        expect(global.googletag.display).toHaveBeenCalledWith(DIV_ID_FOO));
+      it('is called with the DIV ID of the “bar” ad', () =>
+        expect(global.googletag.display).toHaveBeenCalledWith(DIV_ID_BAR));
+    });
+    describe('the slots of the advertising module instance', () =>
+      void it('are correct', () =>
+        expect(advertising.slots).toMatchSnapshot()));
+    describe('the GPT size mappings of the advertising module instance', () =>
+      void it('are correct', () =>
+        expect(advertising.gptSizeMappings).toMatchSnapshot()));
+    describe('and call the teardown method', () => {
+      beforeEach(() => advertising.teardown());
+      describe('the GPT slots', () =>
+        void it('are destroyed', () =>
+          expect(global.googletag.destroySlots).toHaveBeenCalledTimes(1)));
+      describe('the slots of the advertising module instance', () =>
+        void it('are empty', () =>
+          expect(advertising.slots).toStrictEqual({})));
+      describe('the GPT size mappings of the advertising module instance', () =>
+        void it('are empty', () =>
+          expect(advertising.gptSizeMappings).toStrictEqual({})));
+    });
+    describe('and I activate the “foo” ad', () => {
+      beforeEach(() => advertising.activate(DIV_ID_FOO));
+      describe('the ad slot', () =>
+        void it('is refreshed', () =>
+          expect(
+            global.googletag.pubads().refresh.mock.calls
+          ).toMatchSnapshot()));
+    });
+  });
+  afterEach(() => {
     global.googletag = originalGoogletag;
   });
 });
