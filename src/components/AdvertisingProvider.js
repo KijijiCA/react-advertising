@@ -12,6 +12,9 @@ export default class AdvertisingProvider extends Component {
 
     this.state = {
       activate: this.advertising.activate.bind(this.advertising),
+      getLazyLoadConfig: this.advertising.getLazyLoadConfig.bind(
+        this.advertising
+      ),
     };
   }
 
@@ -45,6 +48,9 @@ export default class AdvertisingProvider extends Component {
         // eslint-disable-next-line react/no-did-update-set-state
         this.setState({
           activate: this.advertising.activate.bind(this.advertising),
+          getLazyLoadConfig: this.advertising.getLazyLoadConfig.bind(
+            this.advertising
+          ),
         });
 
         if (this.advertising.isConfigReady()) {
@@ -63,7 +69,7 @@ export default class AdvertisingProvider extends Component {
   async teardown() {
     await this.advertising.teardown();
     this.advertising = null;
-    this.activate = null;
+    this.setState({ activate: null, getLazyLoadConfig: null });
   }
 
   initialize() {
@@ -72,9 +78,9 @@ export default class AdvertisingProvider extends Component {
   }
 
   render() {
-    const { activate } = this.state;
+    const { activate, getLazyLoadConfig } = this.state;
     return (
-      <AdvertisingContext.Provider value={activate}>
+      <AdvertisingContext.Provider value={{ activate, getLazyLoadConfig }}>
         {this.props.children}
       </AdvertisingContext.Provider>
     );
