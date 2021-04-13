@@ -21,8 +21,7 @@
     "build:commonjs": "cross-env BABEL_ENV=commonjs babel --out-dir lib src --ignore src/*.test.js,src/**/*.test.js",
     "build:umd": "cross-env BABEL_ENV=commonjs webpack",
     "eslint": "eslint 'src/**/*.js'",
-    "prettier": "prettier 'src/**/*.js' --write",
-    "fixPackageLock": "scripts/fix-package-lock.sh"
+    "prettier": "prettier 'src/**/*.js' --write"
   },
   "lint-staged": {
     "*.js": [
