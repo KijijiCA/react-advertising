@@ -15,6 +15,10 @@ export default class Advertising {
 
   // ---------- PUBLIC METHODS ----------
 
+  getLazyLoadConfig(id) {
+    return `my-fancy-lazy-load-config for slot ${id}`;
+  }
+
   async setup() {
     this.isPrebidUsed =
       typeof this.config.usePrebid === 'undefined'

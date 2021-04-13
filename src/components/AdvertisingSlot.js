@@ -1,26 +1,41 @@
-import React, { Component } from 'react';
-import connectToAdServer from './utils/connectToAdServer';
 import PropTypes from 'prop-types';
+import React, { useEffect, useRef, useContext, memo, useMemo } from 'react';
+import AdvertisingContext from '../AdvertisingContext';
 
-class AdvertisingSlot extends Component {
-  componentDidMount() {
-    const { activate, id, customEventHandlers } = this.props;
-    activate(id, customEventHandlers);
-  }
-
-  componentDidUpdate(prevProps) {
-    const { activate, id, customEventHandlers } = this.props;
-    if (prevProps.activate !== activate) {
-      activate(id, customEventHandlers);
+function AdvertisingSlot({
+  id,
+  style,
+  className,
+  children,
+  customEventHandlers,
+}) {
+  const observerRef = useRef(null);
+  const containerDivRef = useRef();
+  const { activate, getLazyLoadConfig } = useContext(AdvertisingContext);
+  const lazyLoadConfig = useMemo(() => getLazyLoadConfig(id), [id]);
+  // eslint-disable-next-line no-console
+  console.log('[PH_LOG] lazyLoadConfig:', lazyLoadConfig); // PH_TODO
+  useEffect(() => {
+    if (observerRef.current) {
+      return;
     }
-  }
-
-  render() {
-    const { id, style, className, children } = this.props;
-    return (
-      <div id={id} style={style} className={className} children={children} />
-    );
-  }
+    observerRef.current = new IntersectionObserver(([{ isIntersecting }]) => {
+      if (isIntersecting) {
+        activate(id, customEventHandlers);
+        observerRef.current.unobserve(containerDivRef.current);
+      }
+    });
+    observerRef.current.observe(containerDivRef.current);
+  }, []);
+  return (
+    <div
+      id={id}
+      style={style}
+      className={className}
+      children={children}
+      ref={containerDivRef}
+    />
+  );
 }
 
 AdvertisingSlot.propTypes = {
@@ -28,7 +43,6 @@ AdvertisingSlot.propTypes = {
   style: PropTypes.object,
   className: PropTypes.string,
   children: PropTypes.node,
-  activate: PropTypes.func.isRequired,
   customEventHandlers: PropTypes.objectOf(PropTypes.func).isRequired,
 };
 
@@ -36,4 +50,4 @@ AdvertisingSlot.defaultProps = {
   customEventHandlers: {},
 };
 
-export default connectToAdServer(AdvertisingSlot);
+export default memo(AdvertisingSlot);
