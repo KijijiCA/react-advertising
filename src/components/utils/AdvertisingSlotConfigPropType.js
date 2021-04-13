@@ -34,5 +34,5 @@ export default PropTypes.shape({
         })
       ).isRequired,
     })
-  ).isRequired,
+  ),
 });
