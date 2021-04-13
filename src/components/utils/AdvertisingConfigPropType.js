@@ -104,4 +104,8 @@ export default PropTypes.shape({
       divIdPrefix: PropTypes.string,
     })
   ),
+  enableLazyLoad: PropTypes.shape({
+    marginPercent: PropTypes.number,
+    mobileScaling: PropTypes.number,
+  }),
 });

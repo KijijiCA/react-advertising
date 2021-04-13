@@ -35,4 +35,8 @@ export default PropTypes.shape({
       ).isRequired,
     })
   ),
+  enableLazyLoad: PropTypes.shape({
+    marginPercent: PropTypes.number,
+    mobileScaling: PropTypes.number,
+  }),
 });
