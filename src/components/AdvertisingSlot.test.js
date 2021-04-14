@@ -50,7 +50,16 @@ describe('The advertising slot component', () => {
 
   it('calls the new activate function if the new activate function changes', (done) => {
     const newMockActivate = jest.fn();
-    rerender(<AdvertisingSlot activate={newMockActivate} id={ID} />);
+    rerender(
+      <AdvertisingContext.Provider
+        value={{
+          activate: newMockActivate,
+          getLazyLoadConfig: mockGetLazyLoadConfig,
+        }}
+      >
+        <AdvertisingSlot id={ID} />
+      </AdvertisingContext.Provider>
+    );
 
     setTimeout(() => {
       expect(newMockActivate).toHaveBeenCalledTimes(1);
@@ -59,7 +68,16 @@ describe('The advertising slot component', () => {
   });
 
   it('does not call the new activate function if the activate function does not change', (done) => {
-    rerender(<AdvertisingSlot activate={mockActivate} id={ID} />);
+    rerender(
+      <AdvertisingContext.Provider
+        value={{
+          activate: mockActivate,
+          getLazyLoadConfig: mockGetLazyLoadConfig,
+        }}
+      >
+        <AdvertisingSlot id={ID} />
+      </AdvertisingContext.Provider>
+    );
 
     setTimeout(() => {
       expect(mockActivate).toHaveBeenCalledTimes(1);

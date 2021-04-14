@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useEffect, useRef, useContext, memo, useMemo } from 'react';
+import React, { useEffect, useRef, useContext, useMemo } from 'react';
 import AdvertisingContext from '../AdvertisingContext';
 import isLazyLoading from './utils/isLazyLoading';
 
@@ -13,14 +13,13 @@ function AdvertisingSlot({
   const observerRef = useRef(null);
   const containerDivRef = useRef();
   const { activate, getLazyLoadConfig } = useContext(AdvertisingContext);
-  const lazyLoadConfig = useMemo(() => getLazyLoadConfig(id), [id]);
+  const lazyLoadConfig = getLazyLoadConfig(id);
   const isLazyLoadEnabled = useMemo(() => isLazyLoading(lazyLoadConfig), [
     lazyLoadConfig,
   ]);
   // eslint-disable-next-line no-console
-  console.log('[PH_LOG] isLazyLoadEnabled:', isLazyLoadEnabled); // PH_TODO
   useEffect(() => {
-    if (observerRef.current) {
+    if (!isLazyLoadEnabled || observerRef.current) {
       return;
     }
     observerRef.current = new IntersectionObserver(([{ isIntersecting }]) => {
@@ -30,7 +29,14 @@ function AdvertisingSlot({
       }
     });
     observerRef.current.observe(containerDivRef.current);
-  }, []);
+  }, []); // PH_TODO: what about if “activate” changes?
+
+  useEffect(() => {
+    if (isLazyLoadEnabled) {
+      return;
+    }
+    activate(id, customEventHandlers);
+  }, [activate]);
   return (
     <div
       id={id}
@@ -54,4 +60,4 @@ AdvertisingSlot.defaultProps = {
   customEventHandlers: {},
 };
 
-export default memo(AdvertisingSlot);
+export default AdvertisingSlot;
