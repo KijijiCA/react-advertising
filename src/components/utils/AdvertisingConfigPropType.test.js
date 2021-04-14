@@ -110,6 +110,18 @@ describe('When I check the prop types for an invalid config', () => {
   });
 });
 
+describe('When I check the prop types for a config with usePrebid option', () => {
+  let result;
+  beforeEach(
+    () =>
+      (result = checkPropTypes(MyComponent.propTypes, {
+        config: { ...config, usePrebid: false },
+      }))
+  );
+  describe('the prop type validation', () =>
+    void it('passes', () => expect(result).toBeUndefined()));
+});
+
 describe('When I check the prop types with a price granularity', () => {
   const testCases = [
     { priceGranularity: 'low', expectToPass: true },

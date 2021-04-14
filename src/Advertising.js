@@ -16,7 +16,10 @@ export default class Advertising {
   // ---------- PUBLIC METHODS ----------
 
   async setup() {
-    this.isPrebidUsed = typeof window.pbjs !== 'undefined';
+    this.isPrebidUsed =
+      typeof this.config.usePrebid === 'undefined'
+        ? typeof window.pbjs !== 'undefined'
+        : this.config.usePrebid;
     this.setDefaultConfig();
     this.executePlugins('setup');
     const { slots, outOfPageSlots, queue, isPrebidUsed } = this;

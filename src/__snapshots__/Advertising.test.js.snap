@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`When I instantiate an advertising main module and call setup without prebid config the prebid config is set to sensible defaults 1`] = `Object {}`;
+exports[`When I instantiate an advertising main module and call setup without ad config the ad config is set to sensible defaults 1`] = `Object {}`;
 
 exports[`When I instantiate an advertising main module and call the setup method a GPT slot is defined for the “bar” ad with the correct parameters 1`] = `
 Array [
@@ -2123,7 +2123,7 @@ Array [
 ]
 `;
 
-exports[`When I instantiate an advertising main module without Prebid.js being used and call the setup method a GPT slot is defined for the “bar” ad with the correct parameters 1`] = `
+exports[`When I instantiate an advertising main module without Prebid.js library being loaded and call the setup method a GPT slot is defined for the “bar” ad with the correct parameters 1`] = `
 Array [
   "slot/ad/unit/path",
   Array [
@@ -2137,7 +2137,7 @@ Array [
 ]
 `;
 
-exports[`When I instantiate an advertising main module without Prebid.js being used and call the setup method a GPT slot is defined for the “foo” ad with the correct parameters 1`] = `
+exports[`When I instantiate an advertising main module without Prebid.js library being loaded and call the setup method a GPT slot is defined for the “foo” ad with the correct parameters 1`] = `
 Array [
   "global/ad/unit/path",
   Array [
@@ -2151,7 +2151,7 @@ Array [
 ]
 `;
 
-exports[`When I instantiate an advertising main module without Prebid.js being used and call the setup method and I activate the “foo” ad the ad slot is refreshed 1`] = `
+exports[`When I instantiate an advertising main module without Prebid.js library being loaded and call the setup method and I activate the “foo” ad the ad slot is refreshed 1`] = `
 Array [
   Array [
     Array [
@@ -2796,7 +2796,7 @@ Array [
 ]
 `;
 
-exports[`When I instantiate an advertising main module without Prebid.js being used and call the setup method global GPT targeting parameters are set correctly 1`] = `
+exports[`When I instantiate an advertising main module without Prebid.js library being loaded and call the setup method global GPT targeting parameters are set correctly 1`] = `
 Array [
   Array [
     "eagt",
@@ -2840,7 +2840,7 @@ Array [
 ]
 `;
 
-exports[`When I instantiate an advertising main module without Prebid.js being used and call the setup method size mappings for responsive ads are defined using GPT 1`] = `
+exports[`When I instantiate an advertising main module without Prebid.js library being loaded and call the setup method size mappings for responsive ads are defined using GPT 1`] = `
 Array [
   Array [
     Array [
@@ -2875,7 +2875,7 @@ Array [
 ]
 `;
 
-exports[`When I instantiate an advertising main module without Prebid.js being used and call the setup method the GPT size mappings of the advertising module instance are correct 1`] = `
+exports[`When I instantiate an advertising main module without Prebid.js library being loaded and call the setup method the GPT size mappings of the advertising module instance are correct 1`] = `
 Object {
   "mobailAndTablet": Array [
     Array [
@@ -2912,7 +2912,7 @@ Object {
 }
 `;
 
-exports[`When I instantiate an advertising main module without Prebid.js being used and call the setup method the GPT slot that is defined for the “bar” ad collapses empty divs 1`] = `
+exports[`When I instantiate an advertising main module without Prebid.js library being loaded and call the setup method the GPT slot that is defined for the “bar” ad collapses empty divs 1`] = `
 Array [
   Array [
     true,
@@ -2921,7 +2921,7 @@ Array [
 ]
 `;
 
-exports[`When I instantiate an advertising main module without Prebid.js being used and call the setup method the GPT slot that is defined for the “bar” ad gets a size mapping 1`] = `
+exports[`When I instantiate an advertising main module without Prebid.js library being loaded and call the setup method the GPT slot that is defined for the “bar” ad gets a size mapping 1`] = `
 Array [
   Array [
     Array [
@@ -2960,7 +2960,7 @@ Array [
 ]
 `;
 
-exports[`When I instantiate an advertising main module without Prebid.js being used and call the setup method the GPT slot that is defined for the “bar” ad gets the correct targeting parameters 1`] = `
+exports[`When I instantiate an advertising main module without Prebid.js library being loaded and call the setup method the GPT slot that is defined for the “bar” ad gets the correct targeting parameters 1`] = `
 Array [
   Array [
     "a",
@@ -2972,7 +2972,7 @@ Array [
 ]
 `;
 
-exports[`When I instantiate an advertising main module without Prebid.js being used and call the setup method the GPT slot that is defined for the “foo” ad gets the correct targeting key values 1`] = `
+exports[`When I instantiate an advertising main module without Prebid.js library being loaded and call the setup method the GPT slot that is defined for the “foo” ad gets the correct targeting key values 1`] = `
 Array [
   Array [
     "a",
@@ -2981,7 +2981,7 @@ Array [
 ]
 `;
 
-exports[`When I instantiate an advertising main module without Prebid.js being used and call the setup method the slots of the advertising module instance are correct 1`] = `
+exports[`When I instantiate an advertising main module without Prebid.js library being loaded and call the setup method the slots of the advertising module instance are correct 1`] = `
 Object {
   "div-gpt-ad-bar": Object {
     "addService": [MockFunction] {
@@ -4149,7 +4149,7 @@ Object {
 }
 `;
 
-exports[`When I instantiate an advertising main module without prebid config and set config later is set to proper config 1`] = `
+exports[`When I instantiate an advertising main module without ad config config and set config later is set to proper config 1`] = `
 Object {
   "active": true,
   "customEvents": Object {
