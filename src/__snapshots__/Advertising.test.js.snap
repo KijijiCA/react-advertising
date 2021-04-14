@@ -1,5 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`When I instantiate an advertising main module and call setup without prebid config the prebid config is set to sensible defaults 1`] = `Object {}`;
+
 exports[`When I instantiate an advertising main module and call the setup method a GPT slot is defined for the “bar” ad with the correct parameters 1`] = `
 Array [
   "slot/ad/unit/path",
@@ -4300,13 +4302,5 @@ Object {
     ],
     "mt-u4": true,
   },
-}
-`;
-
-exports[`When I instantiate an advertising main module without prebid config the prebid config is set to sensible defaults 1`] = `
-Object {
-  "metaData": Object {},
-  "prebid": Object {},
-  "targeting": Object {},
 }
 `;
