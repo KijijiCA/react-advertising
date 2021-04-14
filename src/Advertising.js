@@ -11,16 +11,13 @@ export default class Advertising {
     this.customEventCallbacks = {};
     this.customEventHandlers = {};
     this.queue = [];
-    this.isPrebidUsed = typeof window.pbjs !== 'undefined';
-
-    if (config) {
-      this.setDefaultConfig();
-    }
   }
 
   // ---------- PUBLIC METHODS ----------
 
   async setup() {
+    this.isPrebidUsed = typeof window.pbjs !== 'undefined';
+    this.setDefaultConfig();
     this.executePlugins('setup');
     const { slots, outOfPageSlots, queue, isPrebidUsed } = this;
     this.setupCustomEvents();

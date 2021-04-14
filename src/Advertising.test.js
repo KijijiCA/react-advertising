@@ -20,9 +20,6 @@ describe('When I instantiate an advertising main module', () => {
     originalGoogletag = setupGoogletag();
     advertising = new Advertising(config);
   });
-  describe('the property `isPrebidUsed`', () =>
-    void it('is set to true', () =>
-      expect(advertising.isPrebidUsed).toBeTruthy()));
   describe('call the setup method', () => {
     let onErrorSpy;
     beforeEach(() => {
@@ -122,6 +119,9 @@ describe('When I instantiate an advertising main module', () => {
     beforeEach(() => {
       advertising.setup();
     });
+    describe('the property `isPrebidUsed`', () =>
+      void it('is set to true', () =>
+        expect(advertising.isPrebidUsed).toBeTruthy()));
     describe('the Prebid module', () =>
       void it('is used to add ad units', () =>
         expect(global.pbjs.addAdUnits).toHaveBeenCalledTimes(1)));
@@ -339,7 +339,7 @@ describe('When I instantiate an advertising main module', () => {
   });
 });
 
-describe('When I instantiate an advertising main module', () => {
+describe('When I instantiate an advertising main module and call setup', () => {
   describe('without prebid config', () => {
     let originalPbjs, originalGoogletag, advertising;
     beforeEach(() => {
@@ -426,27 +426,30 @@ describe('When I instantiate an advertising main module with plugins', () => {
     describe("the plugin's hook for displaying outOfPage slots", () =>
       void it('is called', () =>
         expect(plugins[0].displayOutOfPageSlot).toHaveBeenCalled()));
-  });
-  describe('and call the teardown method', () => {
-    beforeEach(() => advertising.teardown());
-    describe("the plugin's hook for Prebid setup", () =>
-      void it('is not called', () =>
-        expect(plugins[0].setupPrebid).toHaveBeenCalledTimes(0)));
-    describe("the plugin's hook for Prebid teardown", () =>
-      void it('is called', () =>
-        expect(plugins[0].teardownPrebid).toHaveBeenCalled()));
-    describe("the plugin's hook for GPT setup", () =>
-      void it('is not called', () =>
-        expect(plugins[0].setupGpt).toHaveBeenCalledTimes(0)));
-    describe("the plugin's hook for GPT teardown", () =>
-      void it('is called', () =>
-        expect(plugins[0].teardownGpt).toHaveBeenCalled()));
-    describe("the plugin's hook for displaying slots", () =>
-      void it('is not called', () =>
-        expect(plugins[0].displaySlots).toHaveBeenCalledTimes(0)));
-    describe("the plugin's hook for displaying outOfPage slots", () =>
-      void it('is not called', () =>
-        expect(plugins[0].displayOutOfPageSlot).toHaveBeenCalledTimes(0)));
+    describe('and call the teardown method', () => {
+      beforeEach(() => {
+        jest.clearAllMocks();
+        advertising.teardown();
+      });
+      describe("the plugin's hook for Prebid setup", () =>
+        void it('is not called', () =>
+          expect(plugins[0].setupPrebid).toHaveBeenCalledTimes(0)));
+      describe("the plugin's hook for Prebid teardown", () =>
+        void it('is called', () =>
+          expect(plugins[0].teardownPrebid).toHaveBeenCalled()));
+      describe("the plugin's hook for GPT setup", () =>
+        void it('is not called', () =>
+          expect(plugins[0].setupGpt).toHaveBeenCalledTimes(0)));
+      describe("the plugin's hook for GPT teardown", () =>
+        void it('is called', () =>
+          expect(plugins[0].teardownGpt).toHaveBeenCalled()));
+      describe("the plugin's hook for displaying slots", () =>
+        void it('is not called', () =>
+          expect(plugins[0].displaySlots).toHaveBeenCalledTimes(0)));
+      describe("the plugin's hook for displaying outOfPage slots", () =>
+        void it('is not called', () =>
+          expect(plugins[0].displayOutOfPageSlot).toHaveBeenCalledTimes(0)));
+    });
   });
   afterEach(() => {
     global.pbjs = originalPbjs;
