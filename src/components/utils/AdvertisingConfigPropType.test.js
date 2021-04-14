@@ -433,6 +433,14 @@ describe('When I check the prop types with a prebid size config', () => {
 describe('When I check the prop types', () => {
   const testCases = [
     {
+      enableLazyLoad: false,
+      expectToPass: true,
+    },
+    {
+      enableLazyLoad: true,
+      expectToPass: true,
+    },
+    {
       enableLazyLoad: 'blub',
       expectToPass: false,
     },

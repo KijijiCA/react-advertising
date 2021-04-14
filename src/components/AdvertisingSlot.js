@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useRef, useContext, memo, useMemo } from 'react';
 import AdvertisingContext from '../AdvertisingContext';
+import isLazyLoading from './utils/isLazyLoading';
 
 function AdvertisingSlot({
   id,
@@ -13,8 +14,11 @@ function AdvertisingSlot({
   const containerDivRef = useRef();
   const { activate, getLazyLoadConfig } = useContext(AdvertisingContext);
   const lazyLoadConfig = useMemo(() => getLazyLoadConfig(id), [id]);
+  const isLazyLoadEnabled = useMemo(() => isLazyLoading(lazyLoadConfig), [
+    lazyLoadConfig,
+  ]);
   // eslint-disable-next-line no-console
-  console.log('[PH_LOG] lazyLoadConfig:', lazyLoadConfig); // PH_TODO
+  console.log('[PH_LOG] isLazyLoadEnabled:', isLazyLoadEnabled); // PH_TODO
   useEffect(() => {
     if (observerRef.current) {
       return;
