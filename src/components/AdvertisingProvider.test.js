@@ -10,6 +10,7 @@ const mockConstructor = jest.fn();
 const mockValueSpy = jest.fn();
 const mockIsConfigReady = jest.fn();
 const mockSetConfig = jest.fn();
+const mockGetLazyLoadConfig = jest.fn().mockReturnValue(false);
 
 jest.mock('../AdvertisingContext', () => ({
   // eslint-disable-next-line react/prop-types
@@ -40,6 +41,9 @@ jest.mock(
       }
       setConfig(...args) {
         mockSetConfig(...args);
+      }
+      getLazyLoadConfig(...args) {
+        return mockGetLazyLoadConfig(...args);
       }
     }
 );
@@ -137,9 +141,13 @@ describe('The AdvertisingProvider component', () => {
       }, 0);
     });
 
-    it('uses an AdvertisingContext.Provider to pass the activate method of the advertising module', () => {
-      expect(mockValueSpy.mock.calls[0][0]).toMatchSnapshot();
-    });
+    it(
+      'uses an AdvertisingContext.Provider to pass the activate ' +
+        'and getLazyLoadConfig methods of the advertising module',
+      () => {
+        expect(mockValueSpy.mock.calls[0][0]).toMatchSnapshot();
+      }
+    );
 
     it('tears down the Advertising module when it unmounts', () => {
       unmount();
