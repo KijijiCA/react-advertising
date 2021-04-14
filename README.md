@@ -24,7 +24,7 @@ account set up, along with configuration to use Prebid in place. Please refer to
 
 You can view a demo of this library online on _CodeSandbox_:
 
-- [https://codesandbox.io/s/react-advertising-demo-p5xdm](https://codesandbox.io/s/react-advertising-demo-p5xdm)
+- [https://codesandbox.io/s/gptprebid-npmes6-k5czp](https://codesandbox.io/s/gptprebid-npmes6-k5czp)
 
 The demo uses the same test Prebid configuration as the
 [code examples from the official documentation](http://prebid.org/dev-docs/examples/basic-example.html).
@@ -43,4 +43,4 @@ You can find documentation on how to use this library in the project's wiki:
 
 [MIT licensed](LICENSE)
 
-Copyright © 2018-2020 mobile.de GmbH
+Copyright © 2018-2021 mobile.de GmbH
