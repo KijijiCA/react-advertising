@@ -1,11 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import AdvertisingSlot from './AdvertisingSlot';
-
-jest.mock('./utils/connectToAdServer', () => (Component) => Component);
+import AdvertisingContext from '../AdvertisingContext';
 
 const ID = 'my-id';
 const mockActivate = jest.fn();
+const mockGetLazyLoadConfig = jest.fn().mockReturnValue(false);
 
 describe('The advertising slot component', () => {
   let slot, rerender;
@@ -16,14 +16,20 @@ describe('The advertising slot component', () => {
       container: { firstChild: slot },
       rerender,
     } = render(
-      <AdvertisingSlot
-        activate={mockActivate}
-        id={ID}
-        style={{ color: 'hotpink' }}
-        className="my-class"
+      <AdvertisingContext.Provider
+        value={{
+          activate: mockActivate,
+          getLazyLoadConfig: mockGetLazyLoadConfig,
+        }}
       >
-        <h1>hello</h1>
-      </AdvertisingSlot>
+        <AdvertisingSlot
+          id={ID}
+          style={{ color: 'hotpink' }}
+          className="my-class"
+        >
+          <h1>hello</h1>
+        </AdvertisingSlot>
+      </AdvertisingContext.Provider>
     ));
   });
 

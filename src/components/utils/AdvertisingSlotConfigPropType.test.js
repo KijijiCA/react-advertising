@@ -200,6 +200,14 @@ describe('When I check the prop types for a slot config', () => {
 describe('When I check the prop types for a slot config', () => {
   const testCases = [
     {
+      enableLazyLoad: false,
+      expectToPass: true,
+    },
+    {
+      enableLazyLoad: true,
+      expectToPass: true,
+    },
+    {
       enableLazyLoad: 'blub',
       expectToPass: false,
     },
