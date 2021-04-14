@@ -10,4 +10,9 @@ exports[`The AdvertisingProvider component when provided a configuration from th
 </div>
 `;
 
-exports[`The AdvertisingProvider component when provided a configuration from the start uses an AdvertisingContext.Provider to pass the activate method of the advertising module 1`] = `[Function]`;
+exports[`The AdvertisingProvider component when provided a configuration from the start uses an AdvertisingContext.Provider to pass the activate and getLazyLoadConfig methods of the advertising module 1`] = `
+Object {
+  "activate": [Function],
+  "getLazyLoadConfig": [Function],
+}
+`;
