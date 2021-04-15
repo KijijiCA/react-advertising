@@ -340,7 +340,7 @@ describe('When I instantiate an advertising main module', () => {
 });
 
 describe('When I instantiate an advertising main module and call setup', () => {
-  describe('without prebid config', () => {
+  describe('without ad config', () => {
     let originalPbjs, originalGoogletag, advertising;
     beforeEach(() => {
       originalPbjs = setupPbjs();
@@ -348,7 +348,7 @@ describe('When I instantiate an advertising main module and call setup', () => {
       advertising = new Advertising({});
     });
     beforeEach(() => (advertising = new Advertising({})));
-    describe('the prebid config', () =>
+    describe('the ad config', () =>
       void it('is set to sensible defaults', () => {
         expect(advertising.config).toMatchSnapshot();
       }));
@@ -360,7 +360,7 @@ describe('When I instantiate an advertising main module and call setup', () => {
 });
 
 describe('When I instantiate an advertising main module', () => {
-  describe('without prebid config', () => {
+  describe('without ad config config', () => {
     let advertising;
     beforeEach(() => (advertising = new Advertising()));
 
@@ -490,19 +490,19 @@ describe('When I instantiate an advertising main module with outOfPageSlots', ()
   });
 });
 
-describe('When I instantiate an advertising main module without Prebid.js being used', () => {
+describe('When I instantiate an advertising main module without Prebid.js library being loaded', () => {
   let originalGoogletag, advertising;
   beforeEach(() => {
     originalGoogletag = setupGoogletag();
     advertising = new Advertising(config);
   });
-  describe('the property `isPrebidUsed`', () =>
-    void it('is set to false', () =>
-      expect(advertising.isPrebidUsed).toBeFalsy()));
   describe('and call the setup method', () => {
     beforeEach(() => {
       advertising.setup();
     });
+    describe('the property `isPrebidUsed`', () =>
+      void it('is set to false', () =>
+        expect(advertising.isPrebidUsed).toBeFalsy()));
     describe('initial loading of ad creatives through GPT', () =>
       void it('is disabled', () =>
         expect(
@@ -602,6 +602,28 @@ describe('When I instantiate an advertising main module without Prebid.js being 
     global.googletag = originalGoogletag;
   });
 });
+
+// https://github.com/eBayClassifiedsGroup/react-advertising/issues/50
+describe(
+  'When I instantiate and initialize an Advertising module, ' +
+    'with gpt.js and prebid.js available, with config.usePrebid set to false',
+  () => {
+    let originalPbjs, originalGoogletag, advertising;
+    beforeEach(() => {
+      originalPbjs = setupPbjs();
+      originalGoogletag = setupGoogletag();
+      advertising = new Advertising({ ...config, usePrebid: false });
+      advertising.setup();
+    });
+    describe('the property `isPrebidUsed`', () =>
+      void it('is set to false', () =>
+        expect(advertising.isPrebidUsed).toBeFalsy()));
+    afterEach(() => {
+      global.pbjs = originalPbjs;
+      global.googletag = originalGoogletag;
+    });
+  }
+);
 
 function setupPbjs() {
   const originalPbjs = global.pbjs;
