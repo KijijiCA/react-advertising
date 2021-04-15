@@ -17,7 +17,6 @@ function AdvertisingSlot({
   const isLazyLoadEnabled = useMemo(() => isLazyLoading(lazyLoadConfig), [
     lazyLoadConfig,
   ]);
-  // eslint-disable-next-line no-console
   useEffect(() => {
     if (!isLazyLoadEnabled || observerRef.current) {
       return;
