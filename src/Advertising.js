@@ -15,8 +15,16 @@ export default class Advertising {
 
   // ---------- PUBLIC METHODS ----------
 
-  getLazyLoadConfig() {
-    return false;
+  getLazyLoadConfig(id) {
+    const { config, slots } = this;
+    const lazyLoadConfigFromSlot = slots?.[id]?.enableLazyLoad;
+    if (
+      lazyLoadConfigFromSlot !== undefined &&
+      lazyLoadConfigFromSlot !== null
+    ) {
+      return lazyLoadConfigFromSlot;
+    }
+    return config?.enableLazyLoad;
   }
 
   async setup() {

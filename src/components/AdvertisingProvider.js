@@ -67,7 +67,7 @@ export default class AdvertisingProvider extends Component {
   }
 
   async teardown() {
-    this.setState({ activate: null, getLazyLoadConfig: null });
+    this.setState({ activate: () => {}, getLazyLoadConfig: () => null });
     await this.advertising.teardown();
     this.advertising = null;
   }
