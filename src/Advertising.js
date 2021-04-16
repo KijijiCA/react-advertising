@@ -5,6 +5,7 @@ export default class Advertising {
     this.config = config;
     this.slots = {};
     this.outOfPageSlots = {};
+    this.interstitialSlots = {};
     this.plugins = plugins;
     this.onError = onError;
     this.gptSizeMappings = {};
@@ -48,7 +49,7 @@ export default class Advertising {
     }
     const divIds = queue.map(({ id }) => id);
     const selectedSlots = queue.map(
-      ({ id }) => slots[id] || outOfPageSlots[id]
+      ({ id }) => slots[id] || outOfPageSlots[id] || interstitialSlots[id]
     );
     if (isPrebidUsed) {
       Advertising.queueForPrebid(
@@ -250,13 +251,26 @@ export default class Advertising {
 
   defineOutOfPageSlots() {
     if (this.config.outOfPageSlots) {
-      this.config.outOfPageSlots.forEach(({ id, path }) => {
+      this.config.outOfPageSlots.forEach(({ id, path, interstitialFormat }) => {
         const slot = window.googletag.defineOutOfPageSlot(
           path || this.config.path,
-          id
+          interstitialFormat ? window.googletag.enums.OutOfPageFormat.INTERSTITIAL : id
         );
         slot.addService(window.googletag.pubads());
         this.outOfPageSlots[id] = slot;
+      });
+    }
+  }
+
+  defineInterstitialSlots() {
+    if (this.config.intertitialSlots) {
+      this.config.intertitialSlots.forEach(({ id, path }) => {
+        const slot = window.googletag.defineOutOfPageSlot(
+          path || this.config.path,
+          window.googletag.enums.OutOfPageFormat.INTERSTITIAL
+        );
+        slot.addService(window.googletag.pubads());
+        this.interstitialSlots[id] = slot;
       });
     }
   }
@@ -298,6 +312,7 @@ export default class Advertising {
     this.defineGptSizeMappings();
     this.defineSlots();
     this.defineOutOfPageSlots();
+    this.defineInterstitialSlots();
     const entries = Object.entries(targeting);
     for (let i = 0; i < entries.length; i++) {
       const [key, value] = entries[i];
