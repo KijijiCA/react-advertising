@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useRef, useContext, useMemo } from 'react';
 import AdvertisingContext from '../AdvertisingContext';
 import isLazyLoading from './utils/isLazyLoading';
+import calculateRootMargin from './utils/calculateRootMargin';
 
 function AdvertisingSlot({
   id,
@@ -17,16 +18,22 @@ function AdvertisingSlot({
   const isLazyLoadEnabled = useMemo(() => isLazyLoading(lazyLoadConfig), [
     lazyLoadConfig,
   ]);
+  const rootMargin = useMemo(() => calculateRootMargin(lazyLoadConfig), [
+    lazyLoadConfig,
+  ]);
   useEffect(() => {
     if (!isLazyLoadEnabled || observerRef.current) {
       return;
     }
-    observerRef.current = new IntersectionObserver(([{ isIntersecting }]) => {
-      if (isIntersecting) {
-        activate(id, customEventHandlers);
-        observerRef.current.unobserve(containerDivRef.current);
-      }
-    });
+    observerRef.current = new IntersectionObserver(
+      ([{ isIntersecting }]) => {
+        if (isIntersecting) {
+          activate(id, customEventHandlers);
+          observerRef.current.unobserve(containerDivRef.current);
+        }
+      },
+      { rootMargin }
+    );
     observerRef.current.observe(containerDivRef.current);
   }, []); // PH_TODO: what about if “activate” changes?
 

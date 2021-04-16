@@ -1,4 +1,4 @@
-export default (lazyLoadConfig) => {
+export default function isLazyLoading(lazyLoadConfig) {
   if (typeof lazyLoadConfig === 'boolean') {
     return lazyLoadConfig;
   }
@@ -14,4 +14,4 @@ export default (lazyLoadConfig) => {
   }
 
   return marginPercent > -1;
-};
+}
