@@ -23,7 +23,13 @@ export default class Advertising {
         : this.config.usePrebid;
     this.setDefaultConfig();
     this.executePlugins('setup');
-    const { slots, outOfPageSlots, queue, isPrebidUsed } = this;
+    const {
+      slots,
+      outOfPageSlots,
+      interstitialSlots,
+      queue,
+      isPrebidUsed,
+    } = this;
     this.setupCustomEvents();
     const setUpQueueItems = [
       Advertising.queueForGPT(this.setupGpt.bind(this), this.onError),
@@ -251,10 +257,10 @@ export default class Advertising {
 
   defineOutOfPageSlots() {
     if (this.config.outOfPageSlots) {
-      this.config.outOfPageSlots.forEach(({ id, path, interstitialFormat }) => {
+      this.config.outOfPageSlots.forEach(({ id, path }) => {
         const slot = window.googletag.defineOutOfPageSlot(
           path || this.config.path,
-          interstitialFormat ? window.googletag.enums.OutOfPageFormat.INTERSTITIAL : id
+          id
         );
         slot.addService(window.googletag.pubads());
         this.outOfPageSlots[id] = slot;
@@ -263,14 +269,14 @@ export default class Advertising {
   }
 
   defineInterstitialSlots() {
-    if (this.config.intertitialSlots) {
-      this.config.intertitialSlots.forEach(({ id, path }) => {
+    if (this.config.interstitialSlots) {
+      this.config.interstitialSlots.forEach(({ path }, counter) => {
         const slot = window.googletag.defineOutOfPageSlot(
           path || this.config.path,
           window.googletag.enums.OutOfPageFormat.INTERSTITIAL
         );
         slot.addService(window.googletag.pubads());
-        this.interstitialSlots[id] = slot;
+        this.interstitialSlots[`interstitial${counter}`] = slot;
       });
     }
   }
