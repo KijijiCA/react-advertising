@@ -270,12 +270,15 @@ export default class Advertising {
 
   defineInterstitialSlots() {
     if (this.config.interstitialSlots) {
-      this.config.interstitialSlots.forEach(({ path }, counter) => {
+      this.config.interstitialSlots.forEach(({ path, handler }, counter) => {
         const slot = window.googletag.defineOutOfPageSlot(
           path || this.config.path,
           window.googletag.enums.OutOfPageFormat.INTERSTITIAL
         );
-        slot.addService(window.googletag.pubads());
+        if (slot) {
+          slot.addService(window.googletag.pubads());
+          if (typeof handler === 'function') { handler({ slot, googletag }); }
+        }
         this.interstitialSlots[`interstitial${counter}`] = slot;
       });
     }
