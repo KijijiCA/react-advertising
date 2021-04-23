@@ -141,6 +141,12 @@ export default class Advertising {
     this.setDefaultConfig();
   }
 
+  logMessage(...args) {
+    if (window && window.location && window.location.hash === '#logReactAdvertising') {
+      console.log(...args);
+    }
+  }
+
   // ---------- PRIVATE METHODS ----------
 
   setupCustomEvents() {
@@ -228,6 +234,10 @@ export default class Advertising {
           sizes,
           id
         );
+        this.logMessage('defineSlots define', id);
+        window.googletag.pubads().addEventListener('slotOnload', event => {
+          this.logMessage('defineSlots slotOnload', id, event.slot.getResponseInformation());
+        });
 
         const sizeMapping = this.getGptSizeMapping(sizeMappingName);
         if (sizeMapping) {
@@ -262,6 +272,10 @@ export default class Advertising {
           path || this.config.path,
           id
         );
+        this.logMessage('defineOutOfPageSlots define', id);
+        window.googletag.pubads().addEventListener('slotOnload', event => {
+          this.logMessage('defineOutOfPageSlots slotOnload', id, event.slot.getResponseInformation());
+        });
         slot.addService(window.googletag.pubads());
         this.outOfPageSlots[id] = slot;
       });
@@ -275,10 +289,14 @@ export default class Advertising {
           path || this.config.path,
           window.googletag.enums.OutOfPageFormat.INTERSTITIAL
         );
+        this.logMessage('defineInterstitialSlots', path || this.config.path, slot);
+        window.googletag.pubads().addEventListener('slotOnload', event => {
+          this.logMessage('defineInterstitialSlots slotOnload', path || this.config.path, event.slot.getResponseInformation());
+        });
         if (slot) {
           slot.addService(window.googletag.pubads());
-          if (typeof handler === 'function') { handler({ slot, googletag }); }
         }
+        if (typeof handler === 'function') { handler({ slot, googletag }); }
         this.interstitialSlots[`interstitial${counter}`] = slot;
       });
     }
