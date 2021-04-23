@@ -142,14 +142,14 @@ describe('The AdvertisingProvider component', () => {
     });
 
     it(
-      'uses an AdvertisingContext.Provider to pass the activate ' +
-        'and getLazyLoadConfig methods of the advertising module',
+      'uses an AdvertisingContext.Provider to pass the activate method ' +
+        'and ad config of the advertising module',
       () => {
         expect(mockValueSpy.mock.calls[0][0]).toMatchSnapshot();
       }
     );
 
-    it('tears down the Advertising module when it unmounts', () => {
+    it.only('tears down the Advertising module when it unmounts', () => {
       unmount();
       expect(mockTeardown).toHaveBeenCalledTimes(1);
     });

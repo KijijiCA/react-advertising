@@ -3,7 +3,7 @@
 exports[`The advertising slot component renders correctly 1`] = `
 <div
   class="my-class"
-  id="my-id"
+  id="div-gpt-ad-foo"
   style="color: hotpink;"
 >
   <h1>

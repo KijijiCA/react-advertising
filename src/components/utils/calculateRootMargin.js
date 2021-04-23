@@ -1,6 +1,9 @@
 import isMobileDevice from './isMobileDevice';
 
-export default function calculateRootMargin({ marginPercent, mobileScaling }) {
+export default function calculateRootMargin({
+  marginPercent,
+  mobileScaling,
+} = {}) {
   if (!marginPercent) {
     return undefined;
   }
