@@ -21,18 +21,6 @@ export default class Advertising {
 
   // ---------- PUBLIC METHODS ----------
 
-  getLazyLoadConfig(id) {
-    const { config, slots } = this;
-    const lazyLoadConfigFromSlot = slots?.[id]?.enableLazyLoad;
-    if (
-      lazyLoadConfigFromSlot !== undefined &&
-      lazyLoadConfigFromSlot !== null
-    ) {
-      return lazyLoadConfigFromSlot;
-    }
-    return config?.enableLazyLoad;
-  }
-
   async setup() {
     this.isPrebidUsed =
       typeof this.config.usePrebid === 'undefined'

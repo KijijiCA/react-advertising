@@ -1,8 +1,22 @@
 import PropTypes from 'prop-types';
-import React, { useEffect, useRef, useContext, useMemo } from 'react';
+import React, { useEffect, useRef, useContext } from 'react';
 import AdvertisingContext from '../AdvertisingContext';
-import isLazyLoading from './utils/isLazyLoading';
 import calculateRootMargin from './utils/calculateRootMargin';
+import isLazyLoading from './utils/isLazyLoading';
+
+function getLazyLoadConfig(config, id) {
+  if (!config?.slots) {
+    return null;
+  }
+  const slotConfig = config.slots.find((slot) => slot.id === id);
+  if (
+    slotConfig?.enableLazyLoad !== undefined &&
+    slotConfig?.enableLazyLoad !== null
+  ) {
+    return slotConfig.enableLazyLoad;
+  }
+  return config?.enableLazyLoad;
+}
 
 function AdvertisingSlot({
   id,
@@ -13,18 +27,14 @@ function AdvertisingSlot({
 }) {
   const observerRef = useRef(null);
   const containerDivRef = useRef();
-  const { activate, getLazyLoadConfig } = useContext(AdvertisingContext);
-  const lazyLoadConfig = getLazyLoadConfig(id);
-  const isLazyLoadEnabled = useMemo(() => isLazyLoading(lazyLoadConfig), [
-    lazyLoadConfig,
-  ]);
-  const rootMargin = useMemo(() => calculateRootMargin(lazyLoadConfig), [
-    lazyLoadConfig,
-  ]);
+  const { activate, config } = useContext(AdvertisingContext);
+  const lazyLoadConfig = getLazyLoadConfig(config, id);
+  const isLazyLoadEnabled = isLazyLoading(lazyLoadConfig);
   useEffect(() => {
-    if (!isLazyLoadEnabled || observerRef.current) {
-      return;
+    if (!config || !isLazyLoadEnabled) {
+      return () => {};
     }
+    const rootMargin = calculateRootMargin(lazyLoadConfig);
     observerRef.current = new IntersectionObserver(
       ([{ isIntersecting }]) => {
         if (isIntersecting) {
@@ -35,14 +45,17 @@ function AdvertisingSlot({
       { rootMargin }
     );
     observerRef.current.observe(containerDivRef.current);
-  }, []); // PH_TODO: what about if “activate” changes?
+    return () => {
+      observerRef.current.unobserve(containerDivRef.current);
+    };
+  }, [activate, config]);
 
   useEffect(() => {
-    if (isLazyLoadEnabled) {
+    if (!config || isLazyLoadEnabled) {
       return;
     }
     activate(id, customEventHandlers);
-  }, [activate]);
+  }, [activate, config]);
   return (
     <div
       id={id}
