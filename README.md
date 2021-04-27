@@ -2,13 +2,17 @@
 
 # react-advertising
 
-A JavaScript library for display ads in [React](https://reactjs.org) applications.
+A JavaScript library for display ads in [React](https://reactjs.org)
+applications.
 
-**Integrate ads in your app the “React way”: by adding ad components to your JSX layout!**
+**Integrate ads in your app the “React way”: by adding ad components to your JSX
+layout!**
 
 - One central configuration file for all your GPT and Prebid placement config
-- One provider component that handles all the “plumbing” with _googletag_ and _pbjs_, nicely hidden away
-- Ad slot components that get filled with creatives from the ad server when they mount to the DOM
+- One provider component that handles all the “plumbing” with _googletag_ and
+  _pbjs_, nicely hidden away
+- Ad slot components that get filled with creatives from the ad server when they
+  mount to the DOM
 - Works well in single page applications with multiple routes
 - Suitable for server-side-rendering
 
@@ -16,8 +20,9 @@ A JavaScript library for display ads in [React](https://reactjs.org) application
 
 ## Prerequisites
 
-To use _react-advertising_, you need to have a [Google Ad Manager](https://admanager.google.com/)
-account set up, along with configuration to use Prebid in place. Please refer to the
+To use _react-advertising_, you need to have a
+[Google Ad Manager](https://admanager.google.com/) account set up, along with
+configuration to use Prebid in place. Please refer to the
 [Prebid documentation](http://prebid.org/overview/intro.html) for details.
 
 ## Demo
