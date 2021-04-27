@@ -3,20 +3,7 @@ import React, { useEffect, useRef, useContext } from 'react';
 import AdvertisingContext from '../AdvertisingContext';
 import calculateRootMargin from './utils/calculateRootMargin';
 import isLazyLoading from './utils/isLazyLoading';
-
-function getLazyLoadConfig(config, id) {
-  if (!config?.slots) {
-    return null;
-  }
-  const slotConfig = config.slots.find((slot) => slot.id === id);
-  if (
-    slotConfig?.enableLazyLoad !== undefined &&
-    slotConfig?.enableLazyLoad !== null
-  ) {
-    return slotConfig.enableLazyLoad;
-  }
-  return config?.enableLazyLoad;
-}
+import getLazyLoadConfig from './utils/getLazyLoadConfig';
 
 function AdvertisingSlot({
   id,
