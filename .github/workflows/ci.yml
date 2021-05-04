@@ -18,8 +18,6 @@ jobs:
         run: yarn --frozen-lockfile
       - name: Test
         run: yarn test --coverage
-      - name: Coverage
-        run: npm run coverage
       - name: Coveralls
         uses: coverallsapp/github-action@master
         with:
