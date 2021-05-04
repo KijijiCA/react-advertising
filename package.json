@@ -1,5 +1,5 @@
 {
-  "name": "react-advertising",
+  "name": "@orelkabets/react-advertising",
   "version": "4.0.0-beta.47.1",
   "description": "Library for display ads in React applications",
   "main": "lib/index.js",
