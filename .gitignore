@@ -16,3 +16,6 @@ lib/
 dist/
 es/
 ignoreme/
+
+# Environment variables
+.env
