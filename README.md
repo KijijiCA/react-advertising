@@ -12,7 +12,7 @@ A JavaScript library for display ads in [React](https://reactjs.org) application
 - Works well in single page applications with multiple routes
 - Suitable for server-side-rendering
 
-[![Build Status](https://travis-ci.com/technology-ebay-de/react-advertising.svg?branch=master)](https://travis-ci.com/technology-ebay-de/react-advertising) [![Coverage Status](https://coveralls.io/repos/github/technology-ebay-de/react-advertising/badge.svg?branch=master)](https://coveralls.io/github/technology-ebay-de/react-advertising?branch=master)
+[![Build Status](https://travis-ci.com/eBayClassifiedsGroup/react-advertising.svg?branch=master)](https://travis-ci.com/eBayClassifiedsGroup/react-advertising) [![Coverage Status](https://coveralls.io/repos/github/eBayClassifiedsGroup/react-advertising/badge.svg?branch=master)](https://coveralls.io/github/eBayClassifiedsGroup/react-advertising?branch=master)
 
 ## Prerequisites
 
