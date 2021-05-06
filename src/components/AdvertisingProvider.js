@@ -69,7 +69,7 @@ export default class AdvertisingProvider extends Component {
 
   async teardown() {
     this.setState({ activate: () => {}, config: null });
-    await this.advertising.teardown();
+    await this.advertising?.teardown();
     this.advertising = null;
   }
 

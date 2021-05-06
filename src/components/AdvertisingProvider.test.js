@@ -116,29 +116,34 @@ describe('The AdvertisingProvider component', () => {
       }, 0);
     });
 
-    it('does not call setup if the config content is changed but active is `false`', (done) => {
-      rerender(
-        <AdvertisingProvider
-          config={{ ...config, path: 'global/ad/unit/path2' }}
-          active={false}
-        />
-      );
-
-      setTimeout(() => {
-        expect(mockSetup).toHaveBeenCalledTimes(1);
-        done();
-      }, 0);
+    describe('and the config content is changed but active is `false`', () => {
+      beforeEach(() => {
+        rerender(
+          <AdvertisingProvider
+            config={{ ...config, path: 'global/ad/unit/path2' }}
+            active={false}
+          />
+        );
+      });
+      it('does not call setup again', (done) => {
+        setTimeout(() => {
+          expect(mockSetup).toHaveBeenCalledTimes(1); // setup only called once on initial render
+          done();
+        }, 0);
+      });
     });
-
-    it('does not call setup if the config changes to `undefined`', (done) => {
-      mockIsConfigReady.mockReturnValueOnce(false);
-      rerender(<AdvertisingProvider />);
-
-      setTimeout(() => {
-        expect(mockTeardown).toHaveBeenCalledTimes(0);
-        expect(mockSetup).toHaveBeenCalledTimes(1);
-        done();
-      }, 0);
+    describe('and the config changes to `undefined`', () => {
+      beforeEach(() => {
+        mockIsConfigReady.mockReturnValueOnce(false);
+        rerender(<AdvertisingProvider />);
+      });
+      it('does not call setup again', (done) => {
+        setTimeout(() => {
+          expect(mockTeardown).toHaveBeenCalledTimes(0);
+          expect(mockSetup).toHaveBeenCalledTimes(1); // setup only called once on initial render
+          done();
+        }, 0);
+      });
     });
 
     it(
@@ -149,7 +154,7 @@ describe('The AdvertisingProvider component', () => {
       }
     );
 
-    it.only('tears down the Advertising module when it unmounts', () => {
+    it('tears down the Advertising module when it unmounts', () => {
       unmount();
       expect(mockTeardown).toHaveBeenCalledTimes(1);
     });
@@ -167,7 +172,7 @@ describe('The AdvertisingProvider component', () => {
       expect(mockConstructor).toHaveBeenCalled();
     });
 
-    it('sets configuration and sets up the Advertising module', () => {
+    it.only('sets configuration and sets up the Advertising module', () => {
       rerender(<AdvertisingProvider config={config} />);
 
       expect(mockSetConfig).toHaveBeenCalledWith(config);
