@@ -1,5 +1,10 @@
 import getAdUnits from './utils/getAdUnits';
 
+const defaultLazyLoadConfig = {
+  marginPercent: 0,
+  mobileScaling: 1,
+};
+
 export default class Advertising {
   constructor(config, plugins = [], onError = () => {}) {
     this.config = config;
@@ -11,6 +16,7 @@ export default class Advertising {
     this.customEventCallbacks = {};
     this.customEventHandlers = {};
     this.queue = [];
+    this.setDefaultConfig();
   }
 
   // ---------- PUBLIC METHODS ----------
@@ -20,7 +26,6 @@ export default class Advertising {
       typeof this.config.usePrebid === 'undefined'
         ? typeof window.pbjs !== 'undefined'
         : this.config.usePrebid;
-    this.setDefaultConfig();
     this.executePlugins('setup');
     const { slots, outOfPageSlots, queue, isPrebidUsed } = this;
     this.setupCustomEvents();
@@ -317,7 +322,10 @@ export default class Advertising {
   }
 
   setDefaultConfig() {
-    if (!this.config.prebid && this.isPrebidUsed) {
+    if (!this.config) {
+      return;
+    }
+    if (!this.config.prebid) {
       this.config.prebid = {};
     }
     if (!this.config.metaData) {
@@ -325,6 +333,16 @@ export default class Advertising {
     }
     if (!this.config.targeting) {
       this.config.targeting = {};
+    }
+    if (this.config.enableLazyLoad === true) {
+      this.config.enableLazyLoad = defaultLazyLoadConfig;
+    }
+    if (this.config.slots) {
+      this.config.slots = this.config.slots.map((slot) =>
+        slot.enableLazyLoad === true
+          ? { ...slot, enableLazyLoad: defaultLazyLoadConfig }
+          : slot
+      );
     }
   }
 

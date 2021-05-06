@@ -1,4 +1,5 @@
 **/.cache
+.env
 
 # IntelliJ IDEA
 .idea

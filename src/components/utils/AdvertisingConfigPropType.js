@@ -104,4 +104,11 @@ export default PropTypes.shape({
       divIdPrefix: PropTypes.string,
     })
   ),
+  enableLazyLoad: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.shape({
+      marginPercent: PropTypes.number,
+      mobileScaling: PropTypes.number,
+    }),
+  ]),
 });
