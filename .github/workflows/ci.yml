@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: [16]
+        node: [14]
     name: Node ${{ matrix.node }}
     steps:
       - name: Checkout
@@ -21,4 +21,4 @@ jobs:
       - name: Coveralls
         uses: coverallsapp/github-action@master
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}     
+          github-token: ${{ secrets.GITHUB_TOKEN }}

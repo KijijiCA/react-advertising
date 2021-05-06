@@ -65,7 +65,6 @@
     "babel-loader": "^8.2.2",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "check-prop-types": "^1.1.2",
-    "coveralls": "^3.1.0",
     "cross-env": "^7.0.3",
     "eslint": "^7.23.0",
     "eslint-config-motor-talk": "^5.0.1",
