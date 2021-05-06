@@ -1,0 +1,24 @@
+name: Test
+on: ["push", "pull_request"]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [16]
+    name: Node ${{ matrix.node }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Use node ${{ matrix.node }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node }}
+      - name: Install
+        run: yarn --frozen-lockfile
+      - name: Test
+        run: yarn test --coverage
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}     
