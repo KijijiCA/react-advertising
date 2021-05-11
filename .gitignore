@@ -22,3 +22,6 @@ ignoreme/
 
 # Testing artifacts
 cypress/videos
+instrumented
+coverage
+.nyc_output

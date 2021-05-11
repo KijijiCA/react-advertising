@@ -21,7 +21,10 @@ jobs:
       - name: Run end-to-end tests
         uses: cypress-io/github-action@v2
         with:
-          start: yarn storybook
+          build: yarn build:instrumented
+          start: yarn storybook:instrumented
+      - name: Prepare combined coverage report (unit + E2E tests)
+        run: yarn build:coverage
       - name: Report code coverage
         uses: coverallsapp/github-action@master
         with:
