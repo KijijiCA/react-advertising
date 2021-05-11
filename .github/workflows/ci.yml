@@ -6,23 +6,23 @@ jobs:
     strategy:
       matrix:
         node: [14]
-    name: Node ${{ matrix.node }}
+    name: Unit and E2E tests
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v2
       - name: Use node ${{ matrix.node }}
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node }}
-      - name: Install
+      - name: Install npm packages
         run: yarn --frozen-lockfile
-      - name: Unit Tests
+      - name: Run unit Tests
         run: yarn test --coverage
-      - name: E2E Tests
+      - name: Run end-to-end tests
         uses: cypress-io/github-action@v2
         with:
           start: yarn storybook
-      - name: Coveralls
+      - name: Report code coverage
         uses: coverallsapp/github-action@master
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
