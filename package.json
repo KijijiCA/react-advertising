@@ -14,16 +14,17 @@
   ],
   "scripts": {
     "test": "jest",
+    "test:e2e": "cypress open",
     "clean": "rimraf lib dist es",
     "watch": "webpack --watch",
     "build": "yarn build:es && yarn build:commonjs && yarn build:umd && scripts/setVersionInfo.js",
     "build:es": "babel --out-dir es src --ignore src/*.test.js,src/**/*.test.js",
     "build:commonjs": "cross-env BABEL_ENV=commonjs babel --out-dir lib src --ignore src/*.test.js,src/**/*.test.js",
     "build:umd": "cross-env BABEL_ENV=commonjs webpack",
+    "build:storybook": "build-storybook",
     "eslint": "eslint 'src/**/*.js'",
     "prettier": "prettier 'src/**/*.js' --write",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "storybook": "start-storybook -p 6006"
   },
   "lint-staged": {
     "*.js": [
@@ -66,9 +67,11 @@
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "check-prop-types": "^1.1.2",
     "cross-env": "^7.0.3",
+    "cypress": "7.3.0",
     "eslint": "^7.23.0",
     "eslint-config-motor-talk": "^5.0.1",
     "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-cypress": "^2.11.3",
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-react": "^7.23.1",
     "html-webpack-plugin": "^5.3.1",
