@@ -13,7 +13,8 @@ const { getConfig, findReportFiles } = require('./utils');
 
 const cwd = process.cwd();
 
-const reportDir = resolve(cwd, 'coverage/report');
+const coverageDir = resolve(cwd, 'coverage');
+const reportDir = resolve(coverageDir, 'report');
 
 (async () => {
   const config = getConfig();
@@ -87,6 +88,14 @@ const reportDir = resolve(cwd, 'coverage/report');
     createContext({
       ...contextOptions,
       dir: reportDir,
+    })
+  );
+
+  const lcovReport = reports.create('lcov');
+  await lcovReport.execute(
+    createContext({
+      ...contextOptions,
+      dir: coverageDir,
     })
   );
 
