@@ -16,7 +16,7 @@ layout!**
 - Works well in single page applications with multiple routes
 - Suitable for server-side-rendering
 
-[![Build Status](https://travis-ci.com/eBayClassifiedsGroup/react-advertising.svg?branch=master)](https://travis-ci.com/eBayClassifiedsGroup/react-advertising) [![Coverage Status](https://coveralls.io/repos/github/eBayClassifiedsGroup/react-advertising/badge.svg?branch=master)](https://coveralls.io/github/eBayClassifiedsGroup/react-advertising?branch=master)
+[![Test](https://github.com/eBayClassifiedsGroup/react-advertising/actions/workflows/ci.yml/badge.svg)](https://github.com/eBayClassifiedsGroup/react-advertising/actions/workflows/ci.yml)[![Coverage Status](https://coveralls.io/repos/github/eBayClassifiedsGroup/react-advertising/badge.svg?branch=master)](https://coveralls.io/github/eBayClassifiedsGroup/react-advertising?branch=master)
 
 ## Prerequisites
 
