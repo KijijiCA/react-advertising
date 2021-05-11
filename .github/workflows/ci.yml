@@ -19,10 +19,9 @@ jobs:
       - name: Unit Tests
         run: yarn test --coverage
       - name: E2E Tests
-        run: |
-          yarn storybook
-          yarn run wait-on http://localhost:6006
-          yarn test:e2e
+        uses: cypress-io/github-action@v2
+        with:
+          start: yarn storybook
       - name: Coveralls
         uses: coverallsapp/github-action@master
         with:
