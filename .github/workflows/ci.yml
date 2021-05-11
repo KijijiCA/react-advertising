@@ -18,7 +18,7 @@ jobs:
         run: yarn --frozen-lockfile
       - name: Unit Tests
         run: yarn test --coverage
-      - name E2E Tests
+      - name: E2E Tests
         run: |
           yarn storybook
           yarn run wait-on http://localhost:6006
