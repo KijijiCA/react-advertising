@@ -16,8 +16,13 @@ jobs:
           node-version: ${{ matrix.node }}
       - name: Install
         run: yarn --frozen-lockfile
-      - name: Test
+      - name: Unit Tests
         run: yarn test --coverage
+      - name E2E Tests
+        run: |
+          yarn storybook
+          yarn run wait-on http://localhost:6006
+          yarn test:e2e
       - name: Coveralls
         uses: coverallsapp/github-action@master
         with:

@@ -19,3 +19,6 @@ ignoreme/
 
 # Environment variables
 .env
+
+# Testing artifacts
+cypress/videos
