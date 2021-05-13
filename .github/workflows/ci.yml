@@ -5,20 +5,27 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: [16]
-    name: Node ${{ matrix.node }}
+        node: [14]
+    name: Unit and E2E tests
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v2
       - name: Use node ${{ matrix.node }}
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node }}
-      - name: Install
+      - name: Install npm packages
         run: yarn --frozen-lockfile
-      - name: Test
+      - name: Run unit Tests
         run: yarn test --coverage
-      - name: Coveralls
+      - name: Run end-to-end tests
+        uses: cypress-io/github-action@v2
+        with:
+          build: yarn build:instrumented
+          start: yarn storybook:instrumented
+      - name: Prepare combined coverage report (unit + E2E tests)
+        run: yarn build:coverage
+      - name: Report code coverage
         uses: coverallsapp/github-action@master
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}     
+          github-token: ${{ secrets.GITHUB_TOKEN }}

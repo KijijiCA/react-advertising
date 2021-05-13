@@ -1,5 +1,4 @@
 **/.cache
-.env
 
 # IntelliJ IDEA
 .idea
@@ -7,6 +6,7 @@
 
 # Logs
 npm-debug.log*
+yarn-error.log
 
 # Dependency directories
 node_modules/
@@ -16,3 +16,12 @@ lib/
 dist/
 es/
 ignoreme/
+
+# Environment variables
+.env
+
+# Testing artifacts
+cypress/videos
+instrumented
+coverage
+.nyc_output

@@ -14,14 +14,21 @@
   ],
   "scripts": {
     "test": "jest",
-    "clean": "rimraf lib dist es",
+    "test:e2e": "cypress run",
+    "clean": "rimraf lib dist es instrumented .nyc_output coverage",
     "watch": "webpack --watch",
+    "watch:e2e": "cypress open",
     "build": "yarn build:es && yarn build:commonjs && yarn build:umd && scripts/setVersionInfo.js",
     "build:es": "babel --out-dir es src --ignore src/*.test.js,src/**/*.test.js",
     "build:commonjs": "cross-env BABEL_ENV=commonjs babel --out-dir lib src --ignore src/*.test.js,src/**/*.test.js",
     "build:umd": "cross-env BABEL_ENV=commonjs webpack",
+    "build:storybook": "build-storybook",
+    "build:instrumented": "nyc instrument src instrumented",
+    "build:coverage": "scripts/checkCoverage.js",
     "eslint": "eslint 'src/**/*.js'",
-    "prettier": "prettier 'src/**/*.js' --write"
+    "prettier": "prettier 'src/**/*.js' --write",
+    "storybook": "start-storybook -p 6006",
+    "storybook:instrumented": "INSTRUMENTED=true start-storybook -p 6006"
   },
   "lint-staged": {
     "*.js": [
@@ -33,7 +40,8 @@
   "jest": {
     "testEnvironmentOptions": {
       "url": "http://www.motor-talk.de/"
-    }
+    },
+    "coverageDirectory": "./coverage/unit-tests"
   },
   "repository": {
     "type": "git",
@@ -48,26 +56,38 @@
     "@babel/cli": "^7.13.14",
     "@babel/core": "^7.13.14",
     "@babel/plugin-proposal-object-rest-spread": "^7.13.8",
+    "@babel/plugin-proposal-private-property-in-object": "^7.14.0",
     "@babel/plugin-transform-modules-commonjs": "^7.13.8",
     "@babel/plugin-transform-runtime": "^7.13.10",
     "@babel/preset-env": "^7.13.12",
     "@babel/preset-react": "^7.13.13",
+    "@cypress/code-coverage": "^3.9.5",
+    "@storybook/addon-actions": "^6.2.9",
+    "@storybook/addon-essentials": "^6.2.9",
+    "@storybook/addon-links": "^6.2.9",
+    "@storybook/react": "^6.2.9",
     "@testing-library/react": "^11.2.6",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.6.3",
     "babel-loader": "^8.2.2",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "check-prop-types": "^1.1.2",
-    "coveralls": "^3.1.0",
     "cross-env": "^7.0.3",
+    "cypress": "7.3.0",
     "eslint": "^7.23.0",
     "eslint-config-motor-talk": "^5.0.1",
     "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-cypress": "^2.11.3",
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-react": "^7.23.1",
+    "html-webpack-plugin": "^5.3.1",
     "husky": "^6.0.0",
+    "istanbul-lib-coverage": "^3.0.0",
+    "istanbul-lib-report": "^3.0.0",
+    "istanbul-reports": "^3.0.2",
     "jest": "^26.6.3",
     "lint-staged": "^10.5.4",
+    "nyc": "^15.1.0",
     "prettier": "^2.2.1",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
