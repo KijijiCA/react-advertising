@@ -2,11 +2,11 @@
 *.iml
 **/*.test.js
 **/__snapshots__
-**/*.stories.js
+src/stories/
 .github
 .storybook
-cypress
-scripts
-instrumented
-coverage
-.nyc_output
+cypress/
+scripts/
+instrumented/
+coverage/
+.nyc_output/
