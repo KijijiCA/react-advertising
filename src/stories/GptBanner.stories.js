@@ -1,7 +1,8 @@
 import { Title, Description, Primary } from '@storybook/addon-docs/blocks';
-import React, { useRef, useEffect } from 'react';
+import React from 'react';
 import AdvertisingConfigPropType from '../components/utils/AdvertisingConfigPropType';
 import { AdvertisingProvider, AdvertisingSlot } from '../index';
+import { GptDecorator } from './utils';
 
 export const DefaultStory = () => {
   const config = {
@@ -28,23 +29,7 @@ DefaultStory.storyName = 'GPT Banner';
 
 export default {
   title: 'GPT Banner',
-  decorators: [
-    (Story) => {
-      window.googletag = { cmd: [] };
-      const wrapper = useRef();
-      useEffect(() => {
-        const script = document.createElement('script');
-        script.async = true;
-        script.src = '//securepubads.g.doubleclick.net/tag/js/gpt.js';
-        wrapper.current.appendChild(script);
-      }, [wrapper]);
-      return (
-        <div ref={wrapper}>
-          <Story />
-        </div>
-      );
-    },
-  ],
+  decorators: [GptDecorator],
   parameters: {
     docs: {
       // see https://github.com/storybookjs/storybook/issues/12022

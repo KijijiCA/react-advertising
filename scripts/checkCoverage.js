@@ -15,6 +15,7 @@ const cwd = process.cwd();
 
 const coverageDir = resolve(cwd, 'coverage');
 const reportDir = resolve(coverageDir, 'report');
+const srcDir = resolve(cwd, 'src');
 
 (async () => {
   const config = getConfig();
@@ -27,7 +28,21 @@ const reportDir = resolve(coverageDir, 'report');
     );
   }
 
-  reportFiles.forEach(({ path }) => coverageMap.merge(readJsonSync(path)));
+  reportFiles.forEach(({ path }) => {
+    const fileContent = readJsonSync(path);
+    /* we are removing all the files that are not in the src directory here,
+     * otherwise we would also have everything in /instrumented and /.storybook
+     * included in coverage measurement; in theory, these should be automatically
+     * excluded, or we should be able to use the .nyc config for that, but neither
+     * works, unfortunately
+     */
+    const filteredFileContent = Object.entries(fileContent).reduce(
+      (acc, [key, value]) =>
+        key.startsWith(srcDir) ? { ...acc, [key]: value } : acc,
+      {}
+    );
+    coverageMap.merge(filteredFileContent);
+  });
 
   coverageMap.files().forEach((file) => {
     const fileCoverage = coverageMap.fileCoverageFor(file);
