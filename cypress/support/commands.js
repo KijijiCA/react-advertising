@@ -1,3 +1,7 @@
+function createGoogleAdSelector(adUnitPath) {
+  return `#google_ads_iframe_${adUnitPath.replace(/([./])/g, '\\$1')}`;
+}
+
 // Enables tests for iframes (like Google ads)
 // https://www.cypress.io/blog/2020/02/12/working-with-iframes-in-cypress/
 Cypress.Commands.add('getIFrameBody', (selector) => {
@@ -12,9 +16,17 @@ Cypress.Commands.add('getIFrameBody', (selector) => {
 // Convenience function to the the iFrame body of a Google by ad unit path
 Cypress.Commands.add('getGoogleAd', (adUnitPath) => {
   cy.log('getGoogleAd', adUnitPath);
-  const selector = `#google_ads_iframe_${adUnitPath.replace(
-    /([./])/g,
-    '\\$1'
-  )}`;
-  return cy.getIFrameBody(selector);
+  return cy.getIFrameBody(createGoogleAdSelector(adUnitPath));
+});
+
+Cypress.Commands.add('googleAdShouldNotExist', (adUnitPath) => {
+  cy.log('googleAdShouldNotExist', adUnitPath);
+  cy.get(createGoogleAdSelector(adUnitPath), { log: false }).should(
+    'not.exist'
+  );
+});
+
+Cypress.Commands.add('googleAdShouldExist', (adUnitPath) => {
+  cy.log('googleAdShouldExist', adUnitPath);
+  cy.get(createGoogleAdSelector(adUnitPath), { log: false }).should('exist');
 });

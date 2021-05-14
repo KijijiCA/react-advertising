@@ -17,7 +17,7 @@
     "test:e2e": "cypress run",
     "clean": "rimraf lib dist es instrumented .nyc_output coverage",
     "watch": "webpack --watch",
-    "watch:e2e": "cypress open",
+    "watch:e2e": "cypress open --env coverage=false",
     "build": "yarn build:es && yarn build:commonjs && yarn build:umd && scripts/setVersionInfo.js",
     "build:es": "babel --out-dir es src --ignore src/*.test.js,src/**/*.test.js",
     "build:commonjs": "cross-env BABEL_ENV=commonjs babel --out-dir lib src --ignore src/*.test.js,src/**/*.test.js",
