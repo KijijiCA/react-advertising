@@ -1,6 +1,6 @@
 # Changelog
 
-## 4.0.0
+## 4.0.0 / 19 May 2021
 
 - Use of Prebid.js is now optional, you can display ads using only GPT (issue
   #37, PR #44)
