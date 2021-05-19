@@ -1,8 +1,6 @@
 .idea
 *.iml
-**/*.test.js
-**/__snapshots__
-src/stories/
+stories/
 .github
 .storybook
 cypress/
