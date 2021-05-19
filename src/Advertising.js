@@ -91,7 +91,7 @@ export default class Advertising {
     await Promise.all(teardownQueueItems);
     this.slots = {};
     this.gptSizeMappings = {};
-    this.queue = {};
+    this.queue = [];
   }
 
   activate(id, customEventHandlers = {}) {
