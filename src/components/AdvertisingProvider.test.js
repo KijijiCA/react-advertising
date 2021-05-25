@@ -10,6 +10,7 @@ const mockConstructor = jest.fn();
 const mockValueSpy = jest.fn();
 const mockIsConfigReady = jest.fn();
 const mockSetConfig = jest.fn();
+const mockGetLazyLoadConfig = jest.fn().mockReturnValue(false);
 
 jest.mock('../AdvertisingContext', () => ({
   // eslint-disable-next-line react/prop-types
@@ -40,6 +41,9 @@ jest.mock(
       }
       setConfig(...args) {
         mockSetConfig(...args);
+      }
+      getLazyLoadConfig(...args) {
+        return mockGetLazyLoadConfig(...args);
       }
     }
 );
@@ -112,34 +116,43 @@ describe('The AdvertisingProvider component', () => {
       }, 0);
     });
 
-    it('does not call setup if the config content is changed but active is `false`', (done) => {
-      rerender(
-        <AdvertisingProvider
-          config={{ ...config, path: 'global/ad/unit/path2' }}
-          active={false}
-        />
-      );
-
-      setTimeout(() => {
-        expect(mockSetup).toHaveBeenCalledTimes(1);
-        done();
-      }, 0);
+    describe('and the config content is changed but active is `false`', () => {
+      beforeEach(() => {
+        rerender(
+          <AdvertisingProvider
+            config={{ ...config, path: 'global/ad/unit/path2' }}
+            active={false}
+          />
+        );
+      });
+      it('does not call setup again', (done) => {
+        setTimeout(() => {
+          expect(mockSetup).toHaveBeenCalledTimes(1); // setup only called once on initial render
+          done();
+        }, 0);
+      });
+    });
+    describe('and the config changes to `undefined`', () => {
+      beforeEach(() => {
+        mockIsConfigReady.mockReturnValueOnce(false);
+        rerender(<AdvertisingProvider />);
+      });
+      it('does not call setup again', (done) => {
+        setTimeout(() => {
+          expect(mockTeardown).toHaveBeenCalledTimes(0);
+          expect(mockSetup).toHaveBeenCalledTimes(1); // setup only called once on initial render
+          done();
+        }, 0);
+      });
     });
 
-    it('does not call setup if the config changes to `undefined`', (done) => {
-      mockIsConfigReady.mockReturnValueOnce(false);
-      rerender(<AdvertisingProvider />);
-
-      setTimeout(() => {
-        expect(mockTeardown).toHaveBeenCalledTimes(0);
-        expect(mockSetup).toHaveBeenCalledTimes(1);
-        done();
-      }, 0);
-    });
-
-    it('uses an AdvertisingContext.Provider to pass the activate method of the advertising module', () => {
-      expect(mockValueSpy.mock.calls[0][0]).toMatchSnapshot();
-    });
+    it(
+      'uses an AdvertisingContext.Provider to pass the activate method ' +
+        'and ad config of the advertising module',
+      () => {
+        expect(mockValueSpy.mock.calls[0][0]).toMatchSnapshot();
+      }
+    );
 
     it('tears down the Advertising module when it unmounts', () => {
       unmount();
@@ -159,7 +172,7 @@ describe('The AdvertisingProvider component', () => {
       expect(mockConstructor).toHaveBeenCalled();
     });
 
-    it('sets configuration and sets up the Advertising module', () => {
+    it.only('sets configuration and sets up the Advertising module', () => {
       rerender(<AdvertisingProvider config={config} />);
 
       expect(mockSetConfig).toHaveBeenCalledWith(config);

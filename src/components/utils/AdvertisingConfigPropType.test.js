@@ -429,3 +429,83 @@ describe('When I check the prop types with a prebid size config', () => {
     });
   }
 });
+
+describe('When I check the prop types', () => {
+  const testCases = [
+    {
+      enableLazyLoad: undefined,
+      expectToPass: true,
+    },
+    {
+      enableLazyLoad: null,
+      expectToPass: true,
+    },
+    {
+      enableLazyLoad: false,
+      expectToPass: true,
+    },
+    {
+      enableLazyLoad: true,
+      expectToPass: true,
+    },
+    {
+      enableLazyLoad: 'blub',
+      expectToPass: false,
+    },
+    {
+      enableLazyLoad: [],
+      expectToPass: false,
+    },
+    {
+      enableLazyLoad: {},
+      expectToPass: true,
+    },
+    {
+      enableLazyLoad: {
+        mobileScaling: 'blob',
+      },
+      expectToPass: false,
+    },
+    {
+      enableLazyLoad: {
+        mobileScaling: 666,
+      },
+      expectToPass: true,
+    },
+    {
+      enableLazyLoad: {
+        marginPercent: 'blob',
+      },
+      expectToPass: false,
+    },
+    {
+      enableLazyLoad: {
+        marginPercent: 666,
+      },
+      expectToPass: true,
+    },
+  ];
+  for (let i = 0; i < testCases.length; i++) {
+    const { enableLazyLoad, expectToPass } = testCases[i];
+    describe(`with enableLazyLoad config ${JSON.stringify(
+      enableLazyLoad
+    )}`, () => {
+      let result;
+      beforeEach(
+        () =>
+          (result = checkPropTypes(MyComponent.propTypes, {
+            config: {
+              enableLazyLoad,
+            },
+          }))
+      );
+      if (expectToPass) {
+        describe('the prop type validation', () =>
+          void it('passes', () => expect(result).toBeUndefined()));
+      } else {
+        describe('the prop type validation', () =>
+          void it('fails', () => expect(result).toBeTruthy()));
+      }
+    });
+  }
+});

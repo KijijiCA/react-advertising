@@ -1,5 +1,10 @@
 import getAdUnits from './utils/getAdUnits';
 
+const defaultLazyLoadConfig = {
+  marginPercent: 0,
+  mobileScaling: 1,
+};
+
 export default class Advertising {
   constructor(config, plugins = [], onError = () => {}) {
     this.config = config;
@@ -12,6 +17,7 @@ export default class Advertising {
     this.customEventCallbacks = {};
     this.customEventHandlers = {};
     this.queue = [];
+    this.setDefaultConfig();
   }
 
   // ---------- PUBLIC METHODS ----------
@@ -21,7 +27,6 @@ export default class Advertising {
       typeof this.config.usePrebid === 'undefined'
         ? typeof window.pbjs !== 'undefined'
         : this.config.usePrebid;
-    this.setDefaultConfig();
     this.executePlugins('setup');
     const {
       slots,
@@ -81,6 +86,7 @@ export default class Advertising {
   }
 
   async teardown() {
+    this.logMessage( '----------- teardown ----------');
     this.teardownCustomEvents();
     const teardownQueueItems = [
       Advertising.queueForGPT(this.teardownGpt.bind(this), this.onError),
@@ -93,11 +99,12 @@ export default class Advertising {
     await Promise.all(teardownQueueItems);
     this.slots = {};
     this.gptSizeMappings = {};
-    this.queue = {};
+    this.queue = [];
   }
 
   activate(id, customEventHandlers = {}) {
     const { slots, isPrebidUsed } = this;
+
     if (Object.values(slots).length === 0) {
       this.queue.push({ id, customEventHandlers });
       return;
@@ -139,12 +146,6 @@ export default class Advertising {
   setConfig(config) {
     this.config = config;
     this.setDefaultConfig();
-  }
-
-  logMessage(...args) {
-    if (window && window.location && window.location.hash === '#logReactAdvertising') {
-      console.log(...args);
-    }
   }
 
   // ---------- PRIVATE METHODS ----------
@@ -234,10 +235,6 @@ export default class Advertising {
           sizes,
           id
         );
-        this.logMessage('defineSlots define', id);
-        window.googletag.pubads().addEventListener('slotOnload', event => {
-          this.logMessage('defineSlots slotOnload', id, event.slot.getResponseInformation());
-        });
 
         const sizeMapping = this.getGptSizeMapping(sizeMappingName);
         if (sizeMapping) {
@@ -260,7 +257,8 @@ export default class Advertising {
 
         slot.addService(window.googletag.pubads());
 
-        this.slots[id] = slot;
+        this.logMessage('define', slot.getSlotId().getDomId(), slot);
+        this.slots[slot.getSlotId().getDomId()] = slot;
       }
     );
   }
@@ -272,32 +270,24 @@ export default class Advertising {
           path || this.config.path,
           id
         );
-        this.logMessage('defineOutOfPageSlots define', id);
-        window.googletag.pubads().addEventListener('slotOnload', event => {
-          this.logMessage('defineOutOfPageSlots slotOnload', id, event.slot.getResponseInformation());
-        });
         slot.addService(window.googletag.pubads());
-        this.outOfPageSlots[id] = slot;
+        this.logMessage('defineOutOfPageSlot', slot.getSlotId().getDomId(), slot);
+        this.outOfPageSlots[slot.getSlotId().getDomId()] = slot;
       });
     }
   }
 
   defineInterstitialSlots() {
     if (this.config.interstitialSlots) {
-      this.config.interstitialSlots.forEach(({ path, handler }, counter) => {
-        const slot = window.googletag.defineOutOfPageSlot(
-          path || this.config.path,
-          window.googletag.enums.OutOfPageFormat.INTERSTITIAL
-        );
-        this.logMessage('defineInterstitialSlots', path || this.config.path, slot);
-        window.googletag.pubads().addEventListener('slotOnload', event => {
-          this.logMessage('defineInterstitialSlots slotOnload', path || this.config.path, event.slot.getResponseInformation());
+      this.config.interstitialSlots.forEach(({ path }) => {
+        window.addEventListener('load', () => {
+          const slot = window.googletag.defineOutOfPageSlot(path || this.config.path, window.googletag.enums.OutOfPageFormat.INTERSTITIAL);
+          if (slot) {
+            slot.addService(window.googletag.pubads());
+          }
+          googletag.pubads().refresh([slot]);
+          this.logMessage('defineInterstitialSlots', slot.getSlotId().getDomId(), slot);
         });
-        if (slot) {
-          slot.addService(window.googletag.pubads());
-        }
-        if (typeof handler === 'function') { handler({ slot, googletag }); }
-        this.interstitialSlots[`interstitial${counter}`] = slot;
       });
     }
   }
@@ -323,6 +313,7 @@ export default class Advertising {
     const adUnits = getAdUnits(this.config.slots);
     window.pbjs.addAdUnits(adUnits);
     window.pbjs.setConfig(this.config.prebid);
+    this.logMessage('setupPrebid', window.pbjs);
   }
 
   teardownPrebid() {
@@ -332,9 +323,28 @@ export default class Advertising {
     );
   }
 
+  logMessage(...args) {
+    if (window && window.location && ['#logGoogletag'].includes(window.location.hash)) {
+      sessionStorage.setItem('logGoogletag', true);
+    }
+    if (sessionStorage.getItem('logGoogletag')) {
+      console.log(...args);
+    }
+  }
+
   setupGpt() {
     this.executePlugins('setupGpt');
     const pubads = window.googletag.pubads();
+    this.logMessage('setupGpt', pubads);
+    pubads.addEventListener('slotRequested', e => {
+      this.logMessage( 'event slotRequested', e.slot.getSlotId().getDomId(), e.slot.getResponseInformation());
+    });
+    pubads.addEventListener('slotResponseReceived', e => {
+      this.logMessage( 'event slotRequested', e.slot.getSlotId().getDomId(), e.slot.getResponseInformation());
+    });
+    pubads.addEventListener('slotOnload', e => {
+      this.logMessage( 'event slotOnload', e.slot.getSlotId().getDomId(), e.slot.getResponseInformation());
+    });
     const { targeting } = this.config;
     this.defineGptSizeMappings();
     this.defineSlots();
@@ -359,7 +369,10 @@ export default class Advertising {
   }
 
   setDefaultConfig() {
-    if (!this.config.prebid && this.isPrebidUsed) {
+    if (!this.config) {
+      return;
+    }
+    if (!this.config.prebid) {
       this.config.prebid = {};
     }
     if (!this.config.metaData) {
@@ -367,6 +380,16 @@ export default class Advertising {
     }
     if (!this.config.targeting) {
       this.config.targeting = {};
+    }
+    if (this.config.enableLazyLoad === true) {
+      this.config.enableLazyLoad = defaultLazyLoadConfig;
+    }
+    if (this.config.slots) {
+      this.config.slots = this.config.slots.map((slot) =>
+        slot.enableLazyLoad === true
+          ? { ...slot, enableLazyLoad: defaultLazyLoadConfig }
+          : slot
+      );
     }
   }
 

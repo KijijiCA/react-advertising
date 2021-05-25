@@ -10,4 +10,161 @@ exports[`The AdvertisingProvider component when provided a configuration from th
 </div>
 `;
 
-exports[`The AdvertisingProvider component when provided a configuration from the start uses an AdvertisingContext.Provider to pass the activate method of the advertising module 1`] = `[Function]`;
+exports[`The AdvertisingProvider component when provided a configuration from the start uses an AdvertisingContext.Provider to pass the activate method and ad config of the advertising module 1`] = `
+Object {
+  "activate": [Function],
+  "config": Object {
+    "active": true,
+    "customEvents": Object {
+      "collapse": Object {
+        "divIdPrefix": "div-gpt-ad-",
+        "eventMessagePrefix": "CloseAdvContainer:",
+      },
+    },
+    "metaData": Object {
+      "usdToEurRate": 2,
+    },
+    "path": "global/ad/unit/path",
+    "prebid": Object {
+      "bidderSequence": "random",
+      "bidderTimeout": 1500,
+      "priceGranularity": "medium",
+    },
+    "sizeMappings": Object {
+      "mobailAndTablet": Array [
+        Object {
+          "sizes": Array [],
+          "viewPortSize": Array [
+            0,
+            0,
+          ],
+        },
+        Object {
+          "sizes": Array [
+            Array [
+              300,
+              250,
+            ],
+            Array [
+              320,
+              50,
+            ],
+          ],
+          "viewPortSize": Array [
+            320,
+            700,
+          ],
+        },
+        Object {
+          "sizes": Array [],
+          "viewPortSize": Array [
+            1050,
+            200,
+          ],
+        },
+      ],
+    },
+    "slots": Array [
+      Object {
+        "id": "div-gpt-ad-foo",
+        "prebid": Array [
+          Object {
+            "bids": Array [
+              Object {
+                "bidder": "bidder-foo",
+                "params": Object {
+                  "foo": "bar",
+                },
+              },
+            ],
+            "mediaTypes": Object {
+              "banner": Object {
+                "sizes": Array [
+                  Array [
+                    320,
+                    240,
+                  ],
+                ],
+              },
+            },
+          },
+        ],
+        "sizes": Array [
+          "fluid",
+          Array [
+            320,
+            240,
+          ],
+        ],
+        "targeting": Object {
+          "a": 666,
+        },
+      },
+      Object {
+        "collapseEmptyDiv": Array [
+          true,
+          true,
+        ],
+        "id": "div-gpt-ad-bar",
+        "path": "slot/ad/unit/path",
+        "prebid": Array [
+          Object {
+            "bids": Array [
+              Object {
+                "bidder": "bidder-bar",
+                "params": Object {
+                  "bar": "foo",
+                },
+              },
+            ],
+            "mediaTypes": Object {
+              "banner": Object {
+                "sizes": Array [
+                  Array [
+                    320,
+                    240,
+                  ],
+                ],
+              },
+            },
+          },
+        ],
+        "sizeMappingName": "mobailAndTablet",
+        "sizes": Array [
+          "fluid",
+          Array [
+            320,
+            240,
+          ],
+        ],
+        "targeting": Object {
+          "a": Array [
+            11,
+            666,
+          ],
+        },
+      },
+    ],
+    "targeting": Object {
+      "eagt": Array [
+        666,
+      ],
+      "mt-ab": "test",
+      "mt-ma": Array [
+        "Poserwagen",
+      ],
+      "mt-mo": Array [
+        "Brummstinko",
+        "Grand Umweltverpestino",
+      ],
+      "mt-thread": Array [
+        666,
+      ],
+      "mt-u2": Array [
+        "00",
+      ],
+      "mt-u4": true,
+    },
+  },
+}
+`;

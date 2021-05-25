@@ -1,5 +1,5 @@
 {
-  "extends": ["motor-talk", "prettier"],
+  "extends": ["motor-talk", "prettier", "plugin:cypress/recommended"],
   "rules": {
     "max-len": ["error", { "code": 120, "ignoreUrls": true }],
     "prettier/prettier": "error"

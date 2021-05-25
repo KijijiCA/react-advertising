@@ -6,6 +6,7 @@
 
 # Logs
 npm-debug.log*
+yarn-error.log
 
 # Dependency directories
 node_modules/
@@ -15,3 +16,13 @@ lib/
 dist/
 es/
 ignoreme/
+
+# Environment variables
+.env
+
+# Testing artifacts
+cypress/videos
+cypress/screenshots
+instrumented
+coverage
+.nyc_output

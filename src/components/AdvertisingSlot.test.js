@@ -1,10 +1,9 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import AdvertisingSlot from './AdvertisingSlot';
+import AdvertisingContext from '../AdvertisingContext';
+import { config, DIV_ID_FOO } from '../utils/testAdvertisingConfig';
 
-jest.mock('./utils/connectToAdServer', () => (Component) => Component);
-
-const ID = 'my-id';
 const mockActivate = jest.fn();
 
 describe('The advertising slot component', () => {
@@ -16,14 +15,20 @@ describe('The advertising slot component', () => {
       container: { firstChild: slot },
       rerender,
     } = render(
-      <AdvertisingSlot
-        activate={mockActivate}
-        id={ID}
-        style={{ color: 'hotpink' }}
-        className="my-class"
+      <AdvertisingContext.Provider
+        value={{
+          activate: mockActivate,
+          config,
+        }}
       >
-        <h1>hello</h1>
-      </AdvertisingSlot>
+        <AdvertisingSlot
+          id={DIV_ID_FOO}
+          style={{ color: 'hotpink' }}
+          className="my-class"
+        >
+          <h1>hello</h1>
+        </AdvertisingSlot>
+      </AdvertisingContext.Provider>
     ));
   });
 
@@ -32,7 +37,7 @@ describe('The advertising slot component', () => {
   });
 
   it('calls the activate function with the ID', () => {
-    expect(mockActivate).toHaveBeenCalledWith(ID, expect.anything());
+    expect(mockActivate).toHaveBeenCalledWith(DIV_ID_FOO, expect.anything());
   });
 
   it('calls the activate function with a collapse callback', () => {
@@ -44,7 +49,16 @@ describe('The advertising slot component', () => {
 
   it('calls the new activate function if the new activate function changes', (done) => {
     const newMockActivate = jest.fn();
-    rerender(<AdvertisingSlot activate={newMockActivate} id={ID} />);
+    rerender(
+      <AdvertisingContext.Provider
+        value={{
+          activate: newMockActivate,
+          config,
+        }}
+      >
+        <AdvertisingSlot id={DIV_ID_FOO} />
+      </AdvertisingContext.Provider>
+    );
 
     setTimeout(() => {
       expect(newMockActivate).toHaveBeenCalledTimes(1);
@@ -53,7 +67,16 @@ describe('The advertising slot component', () => {
   });
 
   it('does not call the new activate function if the activate function does not change', (done) => {
-    rerender(<AdvertisingSlot activate={mockActivate} id={ID} />);
+    rerender(
+      <AdvertisingContext.Provider
+        value={{
+          activate: mockActivate,
+          config,
+        }}
+      >
+        <AdvertisingSlot id={DIV_ID_FOO} />
+      </AdvertisingContext.Provider>
+    );
 
     setTimeout(() => {
       expect(mockActivate).toHaveBeenCalledTimes(1);
