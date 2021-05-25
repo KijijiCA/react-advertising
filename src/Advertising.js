@@ -17,6 +17,11 @@ export default class Advertising {
     this.customEventCallbacks = {};
     this.customEventHandlers = {};
     this.queue = [];
+    this.refreshedSlotState = {
+      toFastRefreshThreshold: 500,
+      lastList: [],
+      lastTime: 0
+    };
     this.setDefaultConfig();
   }
 
@@ -70,7 +75,7 @@ export default class Advertising {
             bidsBackHandler: () => {
               window.pbjs.setTargetingForGPTAsync(divIds);
               Advertising.queueForGPT(
-                () => window.googletag.pubads().refresh(selectedSlots),
+                () => this.refreshSlots(selectedSlots),
                 this.onError
               );
             },
@@ -79,7 +84,7 @@ export default class Advertising {
       );
     } else {
       Advertising.queueForGPT(
-        () => window.googletag.pubads().refresh(selectedSlots),
+        () => this.refreshSlots(selectedSlots),
         this.onError
       );
     }
@@ -124,7 +129,7 @@ export default class Advertising {
             bidsBackHandler: () => {
               window.pbjs.setTargetingForGPTAsync([id]);
               Advertising.queueForGPT(
-                () => window.googletag.pubads().refresh([slots[id]]),
+                () => this.refreshSlots([slots[id]]),
                 this.onError
               );
             },
@@ -133,7 +138,7 @@ export default class Advertising {
       );
     } else {
       Advertising.queueForGPT(
-        () => window.googletag.pubads().refresh([slots[id]]),
+        () => this.refreshSlots([slots[id]]),
         this.onError
       );
     }
@@ -146,6 +151,18 @@ export default class Advertising {
   setConfig(config) {
     this.config = config;
     this.setDefaultConfig();
+  }
+
+  refreshSlots(list) {
+    const now = new Date().getTime();
+    const timeBetween = now - this.refreshedSlotState.lastTime;
+    if (timeBetween <= this.refreshedSlotState.toFastRefreshThreshold) {
+      this.logMessage( 'refreshSlots: ignore refresh because to fast again(' + timeBetween + ')');
+      return;
+    }
+    this.logMessage( 'refreshSlots: refresh', list);
+    this.refreshedSlotState.lastTime = now;
+    window.googletag.pubads().refresh(list);
   }
 
   // ---------- PRIVATE METHODS ----------
