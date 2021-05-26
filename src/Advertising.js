@@ -27,7 +27,12 @@ export default class Advertising {
         ? typeof window.pbjs !== 'undefined'
         : this.config.usePrebid;
     this.executePlugins('setup');
-    const { slots, outOfPageSlots, queue, isPrebidUsed } = this;
+    const {
+      slots,
+      outOfPageSlots,
+      queue,
+      isPrebidUsed,
+    } = this;
     this.setupCustomEvents();
     const setUpQueueItems = [
       Advertising.queueForGPT(this.setupGpt.bind(this), this.onError),
@@ -266,6 +271,25 @@ export default class Advertising {
     }
   }
 
+  defineInterstitialSlot() {
+    if (this.config.interstitialSlot) {
+      const { path, targeting } = this.config.interstitialSlot;
+      const slot = window.googletag.defineOutOfPageSlot(
+        path || this.config.path,
+        window.googletag.enums.OutOfPageFormat.INTERSTITIAL
+      );
+      if (slot) {
+        const entries = Object.entries(targeting);
+        for (let i = 0; i < entries.length; i++) {
+          const [key, value] = entries[i];
+          slot.setTargeting(key, value);
+        }
+        slot.addService(window.googletag.pubads());
+        this.interstitialSlot = slot;
+      }
+    }
+  }
+
   displaySlots() {
     this.executePlugins('displaySlots');
     this.config.slots.forEach(({ id }) => {
@@ -279,6 +303,13 @@ export default class Advertising {
       this.config.outOfPageSlots.forEach(({ id }) => {
         window.googletag.display(id);
       });
+    }
+  }
+
+  refreshInterstitialSlot() {
+    this.executePlugins('refreshInterstitialSlot');
+    if (this.interstitialSlot) {
+      window.googletag.pubads().refresh([this.interstitialSlot]);
     }
   }
 
@@ -303,6 +334,7 @@ export default class Advertising {
     this.defineGptSizeMappings();
     this.defineSlots();
     this.defineOutOfPageSlots();
+    this.defineInterstitialSlot();
     const entries = Object.entries(targeting);
     for (let i = 0; i < entries.length; i++) {
       const [key, value] = entries[i];
@@ -314,6 +346,7 @@ export default class Advertising {
     window.googletag.enableServices();
     this.displaySlots();
     this.displayOutOfPageSlots();
+    this.refreshInterstitialSlot();
   }
 
   teardownGpt() {

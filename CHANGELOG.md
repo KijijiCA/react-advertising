@@ -1,9 +1,12 @@
 # Changelog
 
+## 4.0.1 / XX May 2021
+
+- implement interstial ad slot option
+
 ## 4.0.0 / 19 May 2021
 
-- Use of Prebid.js is now optional, you can display ads using only GPT (issue
-  #37, PR #44)
+- Use of Prebid.js is now optional, you can display ads using only GPT (issue #37, PR #44)
 - Ads can now be lazy loaded, through global or individual slot configuration,
   even when using Prebid (issue #25, PR #47)
 
