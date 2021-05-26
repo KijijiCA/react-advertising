@@ -27,12 +27,7 @@ export default class Advertising {
         ? typeof window.pbjs !== 'undefined'
         : this.config.usePrebid;
     this.executePlugins('setup');
-    const {
-      slots,
-      outOfPageSlots,
-      queue,
-      isPrebidUsed,
-    } = this;
+    const { slots, outOfPageSlots, queue, isPrebidUsed } = this;
     this.setupCustomEvents();
     const setUpQueueItems = [
       Advertising.queueForGPT(this.setupGpt.bind(this), this.onError),
