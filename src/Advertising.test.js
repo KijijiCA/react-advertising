@@ -528,6 +528,36 @@ describe('When I instantiate an advertising main module with an interstitial slo
   });
 });
 
+describe('When I instantiate an advertising main module with an interstitial slot doesnt create', () => {
+  let originalPbjs, originalGoogletag, advertising, interstitialSlotConfig;
+  beforeEach(() => {
+    originalPbjs = setupPbjs();
+    originalGoogletag = setupGoogletag();
+    global.googletag.interstitialNotProvided = true;
+
+    interstitialSlotConfig = { ...config };
+    interstitialSlotConfig.interstitialSlot = {
+      path: 'Path/Interstitial',
+      targeting: {
+        a: 'int123'
+      }
+    };
+
+    advertising = new Advertising(interstitialSlotConfig);
+  });
+  describe('a GPT interstitial slot', () => {
+    beforeEach(() => advertising.setup());
+    it('is not returning an outofpage slot', () =>
+      expect(
+        global.googletag.defineOutOfPageSlot.mock.results[0].value
+      ).not.toBeDefined());
+  });
+  afterEach(() => {
+    global.pbjs = originalPbjs;
+    global.googletag = originalGoogletag;
+  });
+});
+
 describe('When I instantiate an advertising main module without Prebid.js library being loaded', () => {
   let originalGoogletag, advertising;
   beforeEach(() => {
@@ -696,7 +726,10 @@ function setupGoogletag() {
     global.googletag.fakeSlots.push(fakeSlot);
     return fakeSlot;
   });
-  global.googletag.defineOutOfPageSlot = jest.fn(() => {
+  global.googletag.defineOutOfPageSlot = jest.fn((path, id) => {
+    if (global.googletag.interstitialNotProvided && id === window.googletag.enums.OutOfPageFormat.INTERSTITIAL) {
+      return;
+    }
     const fakeSlot = {};
     fakeSlot.addService = jest.fn().mockReturnValue(fakeSlot);
     fakeSlot.setTargeting = jest.fn();
