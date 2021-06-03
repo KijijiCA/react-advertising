@@ -1,6 +1,6 @@
 # Changelog
 
-## 4.0.1 / XX May 2021
+## 4.0.1 / X June 2021
 
 - implement interstial ad slot option
 
