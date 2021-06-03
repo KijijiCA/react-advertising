@@ -400,6 +400,7 @@ describe('When I instantiate an advertising main module with plugins', () => {
         teardownGpt: jest.fn(),
         displaySlots: jest.fn(),
         displayOutOfPageSlot: jest.fn(),
+        refreshInterstitialSlot: jest.fn(),
       },
     ];
     advertising = new Advertising(config, plugins);
@@ -426,6 +427,9 @@ describe('When I instantiate an advertising main module with plugins', () => {
     describe("the plugin's hook for displaying outOfPage slots", () =>
       void it('is called', () =>
         expect(plugins[0].displayOutOfPageSlot).toHaveBeenCalled()));
+    describe("the plugin's hook for refreshing interstitial slot", () =>
+      void it('is called', () =>
+        expect(plugins[0].refreshInterstitialSlot).toHaveBeenCalled()));
     describe('and call the teardown method', () => {
       beforeEach(() => {
         jest.clearAllMocks();
@@ -449,6 +453,9 @@ describe('When I instantiate an advertising main module with plugins', () => {
       describe("the plugin's hook for displaying outOfPage slots", () =>
         void it('is not called', () =>
           expect(plugins[0].displayOutOfPageSlot).toHaveBeenCalledTimes(0)));
+      describe("the plugin's hook for refreshing interstiotials slots", () =>
+        void it('is not called', () =>
+          expect(plugins[0].refreshInterstitialSlot).toHaveBeenCalledTimes(0)));
     });
   });
   afterEach(() => {
@@ -482,6 +489,38 @@ describe('When I instantiate an advertising main module with outOfPageSlots', ()
     it('is defined for the “outOfPageSlot2” ad with the correct parameters', () =>
       expect(
         global.googletag.defineOutOfPageSlot.mock.calls[1]
+      ).toMatchSnapshot());
+  });
+  afterEach(() => {
+    global.pbjs = originalPbjs;
+    global.googletag = originalGoogletag;
+  });
+});
+
+describe('When I instantiate an advertising main module with an interstitial slot', () => {
+  let originalPbjs, originalGoogletag, advertising, interstitialSlotConfig;
+  beforeEach(() => {
+    originalPbjs = setupPbjs();
+    originalGoogletag = setupGoogletag();
+
+    interstitialSlotConfig = { ...config };
+    interstitialSlotConfig.interstitialSlot = {
+      path: 'Path/Interstitial',
+      targeting: {
+        a: 'int123',
+        ab: 'version2'
+      }
+    };
+
+    advertising = new Advertising(interstitialSlotConfig);
+  });
+  describe('a GPT interstitial slot', () => {
+    beforeEach(() => advertising.setup());
+    it('is defined from given data', () =>
+      expect(global.googletag.defineOutOfPageSlot).toHaveBeenCalledTimes(1));
+    it('is defined with the correct parameters', () =>
+      expect(
+        global.googletag.defineOutOfPageSlot.mock.calls[0]
       ).toMatchSnapshot());
   });
   afterEach(() => {
