@@ -262,6 +262,11 @@ Array [
                     },
                   ],
                 },
+                "enums": Object {
+                  "OutOfPageFormat": Object {
+                    "INTERSTITIAL": 2,
+                  },
+                },
                 "fakeSizeMapping": Object {
                   "addSize": [MockFunction] {
                     "calls": Array [
@@ -1092,6 +1097,11 @@ Object {
                 },
               ],
             },
+            "enums": Object {
+              "OutOfPageFormat": Object {
+                "INTERSTITIAL": 2,
+              },
+            },
             "fakeSizeMapping": Object {
               "addSize": [MockFunction] {
                 "calls": Array [
@@ -1703,6 +1713,11 @@ Object {
                 },
               ],
             },
+            "enums": Object {
+              "OutOfPageFormat": Object {
+                "INTERSTITIAL": 2,
+              },
+            },
             "fakeSizeMapping": Object {
               "addSize": [MockFunction] {
                 "calls": Array [
@@ -2115,6 +2130,13 @@ Object {
 }
 `;
 
+exports[`When I instantiate an advertising main module with an interstitial slot a GPT interstitial slot is defined with the correct parameters 1`] = `
+Array [
+  "Path/Interstitial",
+  2,
+]
+`;
+
 exports[`When I instantiate an advertising main module with outOfPageSlots a GPT outOfPage slot is defined for the “outOfPageSlot1” ad with the correct parameters 1`] = `
 Array [
   "global/ad/unit/path",
@@ -2369,6 +2391,11 @@ Array [
                       "value": undefined,
                     },
                   ],
+                },
+                "enums": Object {
+                  "OutOfPageFormat": Object {
+                    "INTERSTITIAL": 2,
+                  },
                 },
                 "fakeSizeMapping": Object {
                   "addSize": [MockFunction] {
@@ -3132,6 +3159,11 @@ Object {
                 },
               ],
             },
+            "enums": Object {
+              "OutOfPageFormat": Object {
+                "INTERSTITIAL": 2,
+              },
+            },
             "fakeSizeMapping": Object {
               "addSize": [MockFunction] {
                 "calls": Array [
@@ -3742,6 +3774,11 @@ Object {
                   "value": undefined,
                 },
               ],
+            },
+            "enums": Object {
+              "OutOfPageFormat": Object {
+                "INTERSTITIAL": 2,
+              },
             },
             "fakeSizeMapping": Object {
               "addSize": [MockFunction] {

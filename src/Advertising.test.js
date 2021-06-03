@@ -507,8 +507,7 @@ describe('When I instantiate an advertising main module with an interstitial slo
     interstitialSlotConfig.interstitialSlot = {
       path: 'Path/Interstitial',
       targeting: {
-        a: 'int123',
-        ab: 'version2'
+        a: 'int123'
       }
     };
 
@@ -685,6 +684,7 @@ function setupGoogletag() {
   const originalGoogletag = global.googletag;
   global.googletag = {
     cmd: { push: jest.fn((func) => func()) },
+    enums: { OutOfPageFormat: { INTERSTITIAL: 2 } }
   };
   global.googletag.fakeSlots = [];
   global.googletag.defineSlot = jest.fn(() => {
@@ -699,6 +699,7 @@ function setupGoogletag() {
   global.googletag.defineOutOfPageSlot = jest.fn(() => {
     const fakeSlot = {};
     fakeSlot.addService = jest.fn().mockReturnValue(fakeSlot);
+    fakeSlot.setTargeting = jest.fn();
     global.googletag.fakeSlots.push(fakeSlot);
     return fakeSlot;
   });
