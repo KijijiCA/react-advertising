@@ -212,6 +212,9 @@ export default class Advertising {
   }
 
   defineSlots() {
+    if (!this.config.slots) {
+      return;
+    }
     this.config.slots.forEach(
       ({
         id,
