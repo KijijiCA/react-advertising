@@ -507,8 +507,8 @@ describe('When I instantiate an advertising main module with an interstitial slo
     interstitialSlotConfig.interstitialSlot = {
       path: 'Path/Interstitial',
       targeting: {
-        a: 'int123'
-      }
+        a: 'int123',
+      },
     };
 
     advertising = new Advertising(interstitialSlotConfig);
@@ -539,8 +539,8 @@ describe('When I instantiate an advertising main module with an interstitial slo
     interstitialSlotConfig.interstitialSlot = {
       path: 'Path/Interstitial',
       targeting: {
-        a: 'int123'
-      }
+        a: 'int123',
+      },
     };
 
     advertising = new Advertising(interstitialSlotConfig);
@@ -714,7 +714,7 @@ function setupGoogletag() {
   const originalGoogletag = global.googletag;
   global.googletag = {
     cmd: { push: jest.fn((func) => func()) },
-    enums: { OutOfPageFormat: { INTERSTITIAL: 2 } }
+    enums: { OutOfPageFormat: { INTERSTITIAL: 2 } },
   };
   global.googletag.fakeSlots = [];
   global.googletag.defineSlot = jest.fn(() => {
@@ -727,7 +727,10 @@ function setupGoogletag() {
     return fakeSlot;
   });
   global.googletag.defineOutOfPageSlot = jest.fn((path, id) => {
-    if (global.googletag.interstitialNotProvided && id === window.googletag.enums.OutOfPageFormat.INTERSTITIAL) {
+    if (
+      global.googletag.interstitialNotProvided &&
+      id === window.googletag.enums.OutOfPageFormat.INTERSTITIAL
+    ) {
       return;
     }
     const fakeSlot = {};
