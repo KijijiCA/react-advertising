@@ -98,6 +98,11 @@ export default PropTypes.shape({
       id: PropTypes.string,
     })
   ),
+  interstitialSlot: PropTypes.objectOf(
+    PropTypes.shape({
+      path: PropTypes.string,
+    })
+  ),
   customEvents: PropTypes.objectOf(
     PropTypes.shape({
       eventMessagePrefix: PropTypes.string.isRequired,
