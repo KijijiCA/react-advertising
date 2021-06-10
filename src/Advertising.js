@@ -277,7 +277,7 @@ export default class Advertising {
         window.googletag.enums.OutOfPageFormat.INTERSTITIAL
       );
       if (slot) {
-        const entries = Object.entries(targeting);
+        const entries = Object.entries(targeting || []);
         for (let i = 0; i < entries.length; i++) {
           const [key, value] = entries[i];
           slot.setTargeting(key, value);
