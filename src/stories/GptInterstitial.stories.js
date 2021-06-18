@@ -6,17 +6,23 @@ import { GptDecorator } from './utils';
 
 export const DefaultStory = () => {
   const config = {
+    slots: [
+      {
+        id: "div-slot",
+        path: "/6355419/Travel/Europe",
+        sizes: [[100, 100]]
+      }
+    ],
     interstitialSlot: {
-      path: '/4288/mobile.homepage/Mob_Interstitial',
-      targeting: {
-        a: 'm138',
-        eagt: '1555325533',
-      },
-    },
+      path: "/6355419/Travel/Europe/France/Paris"
+    }
   };
   return (
     <AdvertisingProvider config={config}>
-      <AdvertisingSlot id="banner-ad" />
+      <AdvertisingSlot id="div-slot" />
+      <a id="link" href="https://www.example.com/">
+        TRIGGER INTERSTITIAL
+      </a>
     </AdvertisingProvider>
   );
 };
@@ -36,8 +42,16 @@ export default {
       source: { type: 'code' },
       description: {
         component: `
-In example of them all, we show an interstitial ad, delivered by the Google Ad 
-Manager, through Google Publisher Tag (GPT).
+This example is the simplest implementation of an interstitial ad, delivered by the Google Ad 
+Manager, through Google Publisher Tag (GPT). see more information of the default implementation here:
+https://developers.google.com/publisher-tag/samples/display-web-interstitial-ad
+
+You can prevent specific links from triggering GPT-managed web interstials by adding a 
+data-google-interstitial="false" attribute to the anchor element or any ancestor of the anchor element.
+
+⚠️ **Please note** currently an interstitial is not working standalone, there must be a basic slot available that would be displayed.
+
+⚠️ **Please note** an interstistial can only triggered in separate window, it doesn't work in an iframe....
         `,
       },
       page: () => (
