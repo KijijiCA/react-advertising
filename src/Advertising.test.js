@@ -1,5 +1,5 @@
 import Advertising from './Advertising';
-import { config, DIV_ID_BAR, DIV_ID_FOO } from './utils/testAdvertisingConfig';
+import { config, configWithoutSlots, DIV_ID_BAR, DIV_ID_FOO } from './utils/testAdvertisingConfig';
 
 const GPT_SIZE_MAPPING = [
   [[0, 0], []],
@@ -554,6 +554,22 @@ describe('When I instantiate an advertising main module with an interstitial slo
   });
   afterEach(() => {
     global.pbjs = originalPbjs;
+    global.googletag = originalGoogletag;
+  });
+});
+
+describe('When I instantiate an advertising main module and call the setup method with no slots given', () => {
+  let originalGoogletag, advertising;
+  beforeEach(() => {
+    originalGoogletag = setupGoogletag();
+    advertising = new Advertising(configWithoutSlots);
+    advertising.setup();
+  });
+  describe('a GPT slot', () => {
+    it('is not defined', () =>
+      expect(global.googletag.defineSlot).not.toHaveBeenCalled());
+  });
+  afterEach(() => {
     global.googletag = originalGoogletag;
   });
 });
