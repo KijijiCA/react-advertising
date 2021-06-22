@@ -1,6 +1,6 @@
 # Changelog
 
-## 4.1.0
+## 4.1.0 / 22 June 2021
 
 - Added interstitial ad slot option
 
