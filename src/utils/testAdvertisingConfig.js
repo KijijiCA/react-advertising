@@ -17,7 +17,7 @@ const GLOBAL_AD_UNIT_PATH = 'global/ad/unit/path';
 const SLOT_AD_UNIT_PATH = 'slot/ad/unit/path';
 const USD_TO_EUR_RATE = 2;
 
-export const config = {
+export const configWithoutSlots = {
   active: true,
   path: GLOBAL_AD_UNIT_PATH,
   prebid: {
@@ -25,6 +25,47 @@ export const config = {
     priceGranularity: 'medium',
     bidderSequence: 'random',
   },
+  sizeMappings: {
+    mobailAndTablet: [
+      {
+        viewPortSize: [0, 0],
+        sizes: [],
+      },
+      {
+        viewPortSize: [320, 700],
+        sizes: [
+          [300, 250],
+          [320, 50],
+        ],
+      },
+      {
+        viewPortSize: [1050, 200],
+        sizes: [],
+      },
+    ],
+  },
+  metaData: {
+    usdToEurRate: USD_TO_EUR_RATE,
+  },
+
+  targeting: {
+    eagt: [666],
+    'mt-ab': 'test',
+    'mt-ma': ['Poserwagen'],
+    'mt-mo': ['Brummstinko', 'Grand Umweltverpestino'],
+    'mt-thread': [666],
+    'mt-u2': ['00'],
+    'mt-u4': true,
+  },
+  customEvents: {
+    collapse: {
+      eventMessagePrefix: 'CloseAdvContainer:',
+      divIdPrefix: 'div-gpt-ad-',
+    },
+  },
+};
+export const config = {
+  ...configWithoutSlots,
   slots: [
     {
       id: DIV_ID_FOO,
@@ -69,43 +110,5 @@ export const config = {
         },
       ],
     },
-  ],
-  sizeMappings: {
-    mobailAndTablet: [
-      {
-        viewPortSize: [0, 0],
-        sizes: [],
-      },
-      {
-        viewPortSize: [320, 700],
-        sizes: [
-          [300, 250],
-          [320, 50],
-        ],
-      },
-      {
-        viewPortSize: [1050, 200],
-        sizes: [],
-      },
-    ],
-  },
-  metaData: {
-    usdToEurRate: USD_TO_EUR_RATE,
-  },
-
-  targeting: {
-    eagt: [666],
-    'mt-ab': 'test',
-    'mt-ma': ['Poserwagen'],
-    'mt-mo': ['Brummstinko', 'Grand Umweltverpestino'],
-    'mt-thread': [666],
-    'mt-u2': ['00'],
-    'mt-u4': true,
-  },
-  customEvents: {
-    collapse: {
-      eventMessagePrefix: 'CloseAdvContainer:',
-      divIdPrefix: 'div-gpt-ad-',
-    },
-  },
+  ]
 };

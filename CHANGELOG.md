@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.1.0 / 22 June 2021
+
+- Added interstitial ad slot option
+
 ## 4.0.0 / 19 May 2021
 
 - Use of Prebid.js is now optional, you can display ads using only GPT (issue
