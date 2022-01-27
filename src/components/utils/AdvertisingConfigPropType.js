@@ -18,7 +18,6 @@ export default PropTypes.shape({
         buckets: PropTypes.arrayOf(
           PropTypes.shape({
             precision: PropTypes.number,
-            min: PropTypes.number.isRequired,
             max: PropTypes.number.isRequired,
             increment: PropTypes.number.isRequired,
           })
@@ -32,7 +31,6 @@ export default PropTypes.shape({
           buckets: PropTypes.arrayOf(
             PropTypes.shape({
               precision: PropTypes.number,
-              min: PropTypes.number.isRequired,
               max: PropTypes.number.isRequired,
               increment: PropTypes.number.isRequired,
             })
@@ -45,7 +43,6 @@ export default PropTypes.shape({
           buckets: PropTypes.arrayOf(
             PropTypes.shape({
               precision: PropTypes.number,
-              min: PropTypes.number.isRequired,
               max: PropTypes.number.isRequired,
               increment: PropTypes.number.isRequired,
             })
@@ -58,7 +55,6 @@ export default PropTypes.shape({
           buckets: PropTypes.arrayOf(
             PropTypes.shape({
               precision: PropTypes.number,
-              min: PropTypes.number.isRequired,
               max: PropTypes.number.isRequired,
               increment: PropTypes.number.isRequired,
             })
