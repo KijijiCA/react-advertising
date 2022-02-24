@@ -32,9 +32,9 @@ function AdvertisingSlot({
       { rootMargin }
     );
     observerRef.current.observe(containerDivRef.current);
-    return () => {
+    return () =>
+      containerDivRef.current &&
       observerRef.current.unobserve(containerDivRef.current);
-    };
   }, [activate, config]);
 
   useEffect(() => {
