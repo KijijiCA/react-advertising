@@ -33,7 +33,9 @@ function AdvertisingSlot({
     );
     observerRef.current.observe(containerDivRef.current);
     return () => {
-      observerRef.current.unobserve(containerDivRef.current);
+      if (containerDivRef.current) {
+        observerRef.current.unobserve(containerDivRef.current);
+      }
     };
   }, [activate, config]);
 
