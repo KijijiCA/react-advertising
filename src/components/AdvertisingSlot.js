@@ -26,7 +26,9 @@ function AdvertisingSlot({
       ([{ isIntersecting }]) => {
         if (isIntersecting) {
           activate(id, customEventHandlers);
-          observerRef.current.unobserve(containerDivRef.current);
+          if (containerDivRef.current) {
+            observerRef.current.unobserve(containerDivRef.current);
+          }
         }
       },
       { rootMargin }
