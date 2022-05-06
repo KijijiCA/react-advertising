@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.1.1 / 6 May 2022
+
+- Fix for empty container error (PR #78)
+
 ## 4.1.0 / 22 June 2021
 
 - Added interstitial ad slot option
