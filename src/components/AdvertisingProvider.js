@@ -36,11 +36,15 @@ export default class AdvertisingProvider extends Component {
       this.advertising.setConfig(config);
       // eslint-disable-next-line react/no-did-update-set-state
       await this.advertising.setup();
-      // eslint-disable-next-line react/no-did-update-set-state
-      this.setState({
-        activate: this.advertising.activate.bind(this.advertising),
-        config: this.advertising.config,
-      });
+
+      // Due to setup being async, it is possible for teardown to have happened and this.advertising being null here
+      if (this.advertising) {
+        // eslint-disable-next-line react/no-did-update-set-state
+        this.setState({
+          activate: this.advertising.activate.bind(this.advertising),
+          config: this.advertising.config,
+        });
+      }
     } else if (isConfigReady && !equal(prevProps.config, config)) {
       // teardown the old configuration
       // to make sure the teardown and initialization are in a right sequence, need `await`
