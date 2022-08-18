@@ -19,7 +19,6 @@ export default class Advertising {
     this.setDefaultConfig();
 
     this.requestManager = {
-      adserverRequestSent: false,
       aps: false,
       prebid: false,
     };
@@ -79,7 +78,7 @@ export default class Advertising {
             bidsBackHandler: () => {
               window.pbjs.setTargetingForGPTAsync(divIds);
               this.requestManager.prebid = true;
-              this.biddersBack(selectedSlots);
+              this.refreshSlots(selectedSlots);
             },
           }),
         this.onError
@@ -95,7 +94,7 @@ export default class Advertising {
           Advertising.queueForGPT(() => {
             window.apstag.setDisplayBids();
             this.requestManager.aps = true; // signals that APS request has completed
-            this.biddersBack(selectedSlots); // checks whether both APS and Prebid have returned
+            this.refreshSlots(selectedSlots); // checks whether both APS and Prebid have returned
           });
         }
       );
@@ -147,7 +146,7 @@ export default class Advertising {
             bidsBackHandler: () => {
               window.pbjs.setTargetingForGPTAsync([id]);
               this.requestManager.prebid = true;
-              this.biddersBack([id]);
+              this.refreshSlots([slots[id]]);
             },
           }),
         this.onError
@@ -163,7 +162,7 @@ export default class Advertising {
           Advertising.queueForGPT(() => {
             window.apstag.setDisplayBids();
             this.requestManager.aps = true; // signals that APS request has completed
-            this.biddersBack([id]); // checks whether both APS and Prebid have returned
+            this.refreshSlots([slots[id]]); // checks whether both APS and Prebid have returned
           });
         }
       );
@@ -434,23 +433,21 @@ export default class Advertising {
   }
 
   // when both APS and Prebid have returned, initiate ad request
-  biddersBack(selectedSlots) {
-    // TODO: handle other cases where prebid and aps are not used together
-    if (this.requestManager.aps && this.requestManager.prebid) {
-      this.sendAdserverRequest(selectedSlots);
-    }
-  }
-
-  // sends adserver request
-  sendAdserverRequest(selectedSlots) {
-    if (this.requestManager.adserverRequestSent) {
+  refreshSlots(selectedSlots) {
+    // If using APS, we need to check that we got a bid from APS.
+    // If using Prebid, we need to check that we got a bid from Prebid.
+    if (
+      this.config.useAPS !== this.requestManager.aps ||
+      this.config.usePrebid !== this.requestManager.prebid
+    ) {
       return;
     }
-    this.requestManager.adserverRequestSent = true;
 
     Advertising.queueForGPT(() => {
       window.googletag.pubads().refresh(selectedSlots);
     });
+    this.requestManager.aps = false;
+    this.requestManager.prebid = false;
   }
 
   static mapSlotToAPSSlot(slot) {
