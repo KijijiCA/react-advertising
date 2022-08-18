@@ -78,15 +78,30 @@ export default class Advertising {
             adUnitCodes: divIds,
             bidsBackHandler: () => {
               window.pbjs.setTargetingForGPTAsync(divIds);
-              Advertising.queueForGPT(
-                () => window.googletag.pubads().refresh(selectedSlots),
-                this.onError
-              );
+              this.requestManager.prebid = true;
+              this.biddersBack(selectedSlots);
             },
           }),
         this.onError
       );
-    } else {
+    }
+
+    if (this.isAPSUsed) {
+      window.apstag.fetchBids(
+        {
+          slots: selectedSlots.map(Advertising.mapSlotToAPSSlot),
+        },
+        () => {
+          Advertising.queueForGPT(() => {
+            window.apstag.setDisplayBids();
+            this.requestManager.aps = true; // signals that APS request has completed
+            this.biddersBack(selectedSlots); // checks whether both APS and Prebid have returned
+          });
+        }
+      );
+    }
+
+    if (!isPrebidUsed && !isAPSUsed) {
       Advertising.queueForGPT(
         () => window.googletag.pubads().refresh(selectedSlots),
         this.onError
@@ -112,6 +127,7 @@ export default class Advertising {
 
   activate(id, customEventHandlers = {}) {
     const { slots, isPrebidUsed } = this;
+    // check if have slots from configurations
     if (Object.values(slots).length === 0) {
       this.queue.push({ id, customEventHandlers });
       return;
@@ -130,15 +146,30 @@ export default class Advertising {
             adUnitCodes: [id],
             bidsBackHandler: () => {
               window.pbjs.setTargetingForGPTAsync([id]);
-              Advertising.queueForGPT(
-                () => window.googletag.pubads().refresh([slots[id]]),
-                this.onError
-              );
+              this.requestManager.prebid = true;
+              this.biddersBack([id]);
             },
           }),
         this.onError
       );
-    } else {
+    }
+
+    if (this.isAPSUsed) {
+      window.apstag.fetchBids(
+        {
+          slots: slots.map(Advertising.mapSlotToAPSSlot),
+        },
+        () => {
+          Advertising.queueForGPT(() => {
+            window.apstag.setDisplayBids();
+            this.requestManager.aps = true; // signals that APS request has completed
+            this.biddersBack([id]); // checks whether both APS and Prebid have returned
+          });
+        }
+      );
+    }
+
+    if (!this.isPrebidUsed && !this.isAPSUsed) {
       Advertising.queueForGPT(
         () => window.googletag.pubads().refresh([slots[id]]),
         this.onError
@@ -403,23 +434,32 @@ export default class Advertising {
   }
 
   // when both APS and Prebid have returned, initiate ad request
-  biddersBack() {
+  biddersBack(selectedSlots) {
     // TODO: handle other cases where prebid and aps are not used together
     if (this.requestManager.aps && this.requestManager.prebid) {
-      this.sendAdserverRequest();
+      this.sendAdserverRequest(selectedSlots);
     }
   }
 
   // sends adserver request
-  sendAdserverRequest() {
+  sendAdserverRequest(selectedSlots) {
     if (this.requestManager.adserverRequestSent) {
       return;
     }
     this.requestManager.adserverRequestSent = true;
 
     Advertising.queueForGPT(() => {
-      window.googletag.pubads().refresh();
+      window.googletag.pubads().refresh(selectedSlots);
     });
+  }
+
+  static mapSlotToAPSSlot(slot) {
+    const { id, path, sizes } = slot;
+    return {
+      id,
+      name: path,
+      sizes,
+    };
   }
 
   static queueForGPT(func, onError) {
