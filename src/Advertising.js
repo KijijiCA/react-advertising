@@ -17,6 +17,12 @@ export default class Advertising {
     this.customEventHandlers = {};
     this.queue = [];
     this.setDefaultConfig();
+
+    this.requestManager = {
+      adserverRequestSent: false,
+      aps: false,
+      prebid: false,
+    };
   }
 
   // ---------- PUBLIC METHODS ----------
@@ -37,7 +43,10 @@ export default class Advertising {
       Advertising.queueForGPT(this.setupGpt.bind(this), this.onError),
     ];
     if (isAPSUsed) {
-      window.apstag.init();
+      window.apstag.init({
+        ...this.config.aps,
+        adServer: 'googletag',
+      });
     }
     if (isPrebidUsed) {
       setUpQueueItems.push(
@@ -391,6 +400,26 @@ export default class Advertising {
         func.call(this);
       }
     }
+  }
+
+  // when both APS and Prebid have returned, initiate ad request
+  biddersBack() {
+    // TODO: handle other cases where prebid and aps are not used together
+    if (this.requestManager.aps && this.requestManager.prebid) {
+      this.sendAdserverRequest();
+    }
+  }
+
+  // sends adserver request
+  sendAdserverRequest() {
+    if (this.requestManager.adserverRequestSent) {
+      return;
+    }
+    this.requestManager.adserverRequestSent = true;
+
+    Advertising.queueForGPT(() => {
+      window.googletag.pubads().refresh();
+    });
   }
 
   static queueForGPT(func, onError) {
