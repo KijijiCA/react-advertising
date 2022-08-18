@@ -26,12 +26,19 @@ export default class Advertising {
       typeof this.config.usePrebid === 'undefined'
         ? typeof window.pbjs !== 'undefined'
         : this.config.usePrebid;
+    this.isAPSUsed =
+      typeof this.config.useAPS === 'undefined'
+        ? typeof window.apstag !== 'undefined'
+        : this.config.useAPS;
     this.executePlugins('setup');
-    const { slots, outOfPageSlots, queue, isPrebidUsed } = this;
+    const { slots, outOfPageSlots, queue, isPrebidUsed, isAPSUsed } = this;
     this.setupCustomEvents();
     const setUpQueueItems = [
       Advertising.queueForGPT(this.setupGpt.bind(this), this.onError),
     ];
+    if (isAPSUsed) {
+      window.apstag.init();
+    }
     if (isPrebidUsed) {
       setUpQueueItems.push(
         Advertising.queueForPrebid(this.setupPrebid.bind(this), this.onError)
