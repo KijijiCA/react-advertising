@@ -3,6 +3,11 @@
 exports[`The test advertising configuration for unit tests is correct 1`] = `
 Object {
   "active": true,
+  "aps": Object {
+    "bidTimeout": 2000,
+    "deals": true,
+    "pubID": "apsid",
+  },
   "customEvents": Object {
     "collapse": Object {
       "divIdPrefix": "div-gpt-ad-",

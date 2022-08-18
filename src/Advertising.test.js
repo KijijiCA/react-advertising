@@ -13,7 +13,35 @@ const GPT_SIZE_MAPPING = [
   [[1050, 200], []],
 ];
 
-describe('When I instantiate an advertising main module', () => {
+describe('When I instantiate an advertising main module, with APS', () => {
+  let originalApstag, originalGoogletag, advertising;
+  beforeEach(() => {
+    originalApstag = setupAps();
+    originalGoogletag = setupGoogletag();
+    advertising = new Advertising(config);
+  });
+  describe('and I activate the “foo” ad before the advertising module was set up', () => {
+    beforeEach(() => advertising.activate(DIV_ID_FOO));
+    describe('and I call the setup method', () => {
+      beforeEach(() => advertising.setup());
+      describe('a bid', () =>
+        void it('is requested', () =>
+          expect(global.apstag.fetchBids).toHaveBeenCalledTimes(1)));
+      describe('set targeting on google tag', () =>
+        void it('is set', () =>
+          expect(global.apstag.setDisplayBids).toHaveBeenCalledTimes(1)));
+      describe('the ad slot', () =>
+        void it('is refreshed', () =>
+          expect(global.googletag.pubads().refresh).toHaveBeenCalledTimes(1)));
+    });
+  });
+  afterEach(() => {
+    global.googletag = originalGoogletag;
+    global.apstag = originalApstag;
+  });
+});
+
+describe('When I instantiate an advertising main module, with Prebid', () => {
   let originalPbjs, originalGoogletag, advertising;
   beforeEach(() => {
     originalPbjs = setupPbjs();
@@ -708,6 +736,16 @@ describe(
     });
   }
 );
+
+function setupAps() {
+  const originalApstag = global.apstag;
+  global.apstag = {
+    init: jest.fn(),
+    fetchBids: jest.fn((_, callback) => callback()),
+    setDisplayBids: jest.fn(),
+  };
+  return originalApstag;
+}
 
 function setupPbjs() {
   const originalPbjs = global.pbjs;

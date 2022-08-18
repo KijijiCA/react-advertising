@@ -20,6 +20,11 @@ const USD_TO_EUR_RATE = 2;
 export const configWithoutSlots = {
   active: true,
   path: GLOBAL_AD_UNIT_PATH,
+  aps: {
+    pubID: 'apsid',
+    bidTimeout: 2e3,
+    deals: true,
+  },
   prebid: {
     bidderTimeout: 1500,
     priceGranularity: 'medium',
