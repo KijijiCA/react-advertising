@@ -154,11 +154,9 @@ export default class Advertising {
     }
 
     if (this.isAPSUsed) {
-      const testSlots = [Advertising.mapSlotToAPSSlot(slots[id])];
-      console.log('activate with APS, beta10', { testSlots });
       window.apstag.fetchBids(
         {
-          slots: testSlots,
+          slots: [Advertising.mapSlotToAPSSlot(slots[id])],
         },
         () => {
           Advertising.queueForGPT(() => {
@@ -458,7 +456,7 @@ export default class Advertising {
     return {
       slotID: slot.getSlotElementId(),
       slotName: slot.getAdUnitPath(),
-      sizes: slot.getSizes(),
+      sizes: slot.getSizes().map(({ width, height }) => [width, height]),
     };
   }
 
