@@ -156,7 +156,7 @@ export default class Advertising {
     if (this.isAPSUsed) {
       window.apstag.fetchBids(
         {
-          slots: slots.map(Advertising.mapSlotToAPSSlot),
+          slots: [Advertising.mapSlotToAPSSlot(slots[id])],
         },
         () => {
           Advertising.queueForGPT(() => {
