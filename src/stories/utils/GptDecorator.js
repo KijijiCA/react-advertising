@@ -1,3 +1,5 @@
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-unused-expressions */
 import React, { useRef, useEffect } from 'react';
 
 export default function (Story) {
