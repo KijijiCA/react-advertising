@@ -181,6 +181,9 @@ Array [
                             },
                           ],
                         },
+                        "getAdUnitPath": [MockFunction],
+                        "getSizes": [MockFunction],
+                        "getSlotElementId": [MockFunction],
                         "setCollapseEmptyDiv": [MockFunction] {
                           "calls": Array [
                             Array [
@@ -427,6 +430,9 @@ Array [
                         },
                       ],
                     },
+                    "getAdUnitPath": [MockFunction],
+                    "getSizes": [MockFunction],
+                    "getSlotElementId": [MockFunction],
                     "setCollapseEmptyDiv": [MockFunction] {
                       "calls": Array [
                         Array [
@@ -686,6 +692,9 @@ Array [
           ],
         },
         "defineSizeMapping": [MockFunction],
+        "getAdUnitPath": [MockFunction],
+        "getSizes": [MockFunction],
+        "getSlotElementId": [MockFunction],
         "setCollapseEmptyDiv": [MockFunction],
         "setTargeting": [MockFunction] {
           "calls": Array [
@@ -960,6 +969,9 @@ Object {
                       ],
                     },
                     "defineSizeMapping": [MockFunction],
+                    "getAdUnitPath": [MockFunction],
+                    "getSizes": [MockFunction],
+                    "getSlotElementId": [MockFunction],
                     "setCollapseEmptyDiv": [MockFunction],
                     "setTargeting": [MockFunction] {
                       "calls": Array [
@@ -1150,6 +1162,9 @@ Object {
                   ],
                 },
                 "defineSizeMapping": [MockFunction],
+                "getAdUnitPath": [MockFunction],
+                "getSizes": [MockFunction],
+                "getSlotElementId": [MockFunction],
                 "setCollapseEmptyDiv": [MockFunction],
                 "setTargeting": [MockFunction] {
                   "calls": Array [
@@ -1419,6 +1434,9 @@ Object {
         },
       ],
     },
+    "getAdUnitPath": [MockFunction],
+    "getSizes": [MockFunction],
+    "getSlotElementId": [MockFunction],
     "setCollapseEmptyDiv": [MockFunction] {
       "calls": Array [
         Array [
@@ -1564,6 +1582,9 @@ Object {
                         },
                       ],
                     },
+                    "getAdUnitPath": [MockFunction],
+                    "getSizes": [MockFunction],
+                    "getSlotElementId": [MockFunction],
                     "setCollapseEmptyDiv": [MockFunction] {
                       "calls": Array [
                         Array [
@@ -1810,6 +1831,9 @@ Object {
                     },
                   ],
                 },
+                "getAdUnitPath": [MockFunction],
+                "getSizes": [MockFunction],
+                "getSlotElementId": [MockFunction],
                 "setCollapseEmptyDiv": [MockFunction] {
                   "calls": Array [
                     Array [
@@ -2051,6 +2075,9 @@ Object {
       ],
     },
     "defineSizeMapping": [MockFunction],
+    "getAdUnitPath": [MockFunction],
+    "getSizes": [MockFunction],
+    "getSlotElementId": [MockFunction],
     "setCollapseEmptyDiv": [MockFunction],
     "setTargeting": [MockFunction] {
       "calls": Array [
@@ -2396,6 +2423,9 @@ Array [
                             },
                           ],
                         },
+                        "getAdUnitPath": [MockFunction],
+                        "getSizes": [MockFunction],
+                        "getSlotElementId": [MockFunction],
                         "setCollapseEmptyDiv": [MockFunction] {
                           "calls": Array [
                             Array [
@@ -2642,6 +2672,9 @@ Array [
                         },
                       ],
                     },
+                    "getAdUnitPath": [MockFunction],
+                    "getSizes": [MockFunction],
+                    "getSlotElementId": [MockFunction],
                     "setCollapseEmptyDiv": [MockFunction] {
                       "calls": Array [
                         Array [
@@ -2901,6 +2934,9 @@ Array [
           ],
         },
         "defineSizeMapping": [MockFunction],
+        "getAdUnitPath": [MockFunction],
+        "getSizes": [MockFunction],
+        "getSlotElementId": [MockFunction],
         "setCollapseEmptyDiv": [MockFunction],
         "setTargeting": [MockFunction] {
           "calls": Array [
@@ -3243,6 +3279,9 @@ Object {
                       ],
                     },
                     "defineSizeMapping": [MockFunction],
+                    "getAdUnitPath": [MockFunction],
+                    "getSizes": [MockFunction],
+                    "getSlotElementId": [MockFunction],
                     "setCollapseEmptyDiv": [MockFunction],
                     "setTargeting": [MockFunction] {
                       "calls": Array [
@@ -3433,6 +3472,9 @@ Object {
                   ],
                 },
                 "defineSizeMapping": [MockFunction],
+                "getAdUnitPath": [MockFunction],
+                "getSizes": [MockFunction],
+                "getSlotElementId": [MockFunction],
                 "setCollapseEmptyDiv": [MockFunction],
                 "setTargeting": [MockFunction] {
                   "calls": Array [
@@ -3702,6 +3744,9 @@ Object {
         },
       ],
     },
+    "getAdUnitPath": [MockFunction],
+    "getSizes": [MockFunction],
+    "getSlotElementId": [MockFunction],
     "setCollapseEmptyDiv": [MockFunction] {
       "calls": Array [
         Array [
@@ -3847,6 +3892,9 @@ Object {
                         },
                       ],
                     },
+                    "getAdUnitPath": [MockFunction],
+                    "getSizes": [MockFunction],
+                    "getSlotElementId": [MockFunction],
                     "setCollapseEmptyDiv": [MockFunction] {
                       "calls": Array [
                         Array [
@@ -4093,6 +4141,9 @@ Object {
                     },
                   ],
                 },
+                "getAdUnitPath": [MockFunction],
+                "getSizes": [MockFunction],
+                "getSlotElementId": [MockFunction],
                 "setCollapseEmptyDiv": [MockFunction] {
                   "calls": Array [
                     Array [
@@ -4334,6 +4385,9 @@ Object {
       ],
     },
     "defineSizeMapping": [MockFunction],
+    "getAdUnitPath": [MockFunction],
+    "getSizes": [MockFunction],
+    "getSlotElementId": [MockFunction],
     "setCollapseEmptyDiv": [MockFunction],
     "setTargeting": [MockFunction] {
       "calls": Array [

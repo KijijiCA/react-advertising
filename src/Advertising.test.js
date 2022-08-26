@@ -772,7 +772,12 @@ function setupGoogletag() {
   };
   global.googletag.fakeSlots = [];
   global.googletag.defineSlot = jest.fn(() => {
-    const fakeSlot = {};
+    const fakeSizes = [{ width: 100, height: 100 }];
+    const fakeSlot = {
+      getSlotElementId: jest.fn(),
+      getAdUnitPath: jest.fn(),
+      getSizes: jest.fn().mockReturnValue(fakeSizes),
+    };
     fakeSlot.setTargeting = jest.fn().mockReturnValue(fakeSlot);
     fakeSlot.defineSizeMapping = jest.fn().mockReturnValue(fakeSlot);
     fakeSlot.addService = jest.fn().mockReturnValue(fakeSlot);
@@ -791,6 +796,7 @@ function setupGoogletag() {
     fakeSlot.addService = jest.fn().mockReturnValue(fakeSlot);
     fakeSlot.setTargeting = jest.fn();
     global.googletag.fakeSlots.push(fakeSlot);
+    // eslint-disable-next-line consistent-return
     return fakeSlot;
   });
   global.googletag.setTargeting = jest.fn().mockReturnValue(global.googletag);

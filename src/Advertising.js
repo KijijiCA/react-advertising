@@ -434,7 +434,6 @@ export default class Advertising {
 
   // when both APS and Prebid have returned, initiate ad request
   refreshSlots(selectedSlots) {
-
     // If using APS, we need to check that we got a bid from APS.
     // If using Prebid, we need to check that we got a bid from Prebid.
     if (
