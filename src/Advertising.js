@@ -68,7 +68,7 @@ export default class Advertising {
     }
     const divIds = queue.map(({ id }) => id);
     const selectedSlots = queue.map(
-      ({ id }) => slots[id] || outOfPageSlots[id]
+      ({ id }) => slots[id].gpt || outOfPageSlots[id]
     );
     if (isPrebidUsed) {
       Advertising.queueForPrebid(
@@ -88,7 +88,7 @@ export default class Advertising {
     if (this.isAPSUsed) {
       window.apstag.fetchBids(
         {
-          slots: selectedSlots.map(Advertising.mapSlotToAPSSlot),
+          slots: selectedSlots.map((slot) => slot.aps),
         },
         () => {
           Advertising.queueForGPT(() => {
@@ -146,7 +146,7 @@ export default class Advertising {
             bidsBackHandler: () => {
               window.pbjs.setTargetingForGPTAsync([id]);
               this.requestManager.prebid = true;
-              this.refreshSlots([slots[id]]);
+              this.refreshSlots([slots[id].gpt]);
             },
           }),
         this.onError
@@ -156,13 +156,13 @@ export default class Advertising {
     if (this.isAPSUsed) {
       window.apstag.fetchBids(
         {
-          slots: [Advertising.mapSlotToAPSSlot(slots[id])],
+          slots: slots[id].aps,
         },
         () => {
           Advertising.queueForGPT(() => {
             window.apstag.setDisplayBids();
             this.requestManager.aps = true; // signals that APS request has completed
-            this.refreshSlots([slots[id]]); // checks whether both APS and Prebid have returned
+            this.refreshSlots([slots[id].gpt]); // checks whether both APS and Prebid have returned
           });
         }
       );
@@ -170,7 +170,7 @@ export default class Advertising {
 
     if (!this.isPrebidUsed && !this.isAPSUsed) {
       Advertising.queueForGPT(
-        () => window.googletag.pubads().refresh([slots[id]]),
+        () => window.googletag.pubads().refresh([slots[id].gpt]),
         this.onError
       );
     }
@@ -270,7 +270,7 @@ export default class Advertising {
         sizes,
         sizeMappingName,
       }) => {
-        const slot = window.googletag.defineSlot(
+        const gptSlot = window.googletag.defineSlot(
           path || this.config.path,
           sizes,
           id
@@ -278,7 +278,7 @@ export default class Advertising {
 
         const sizeMapping = this.getGptSizeMapping(sizeMappingName);
         if (sizeMapping) {
-          slot.defineSizeMapping(sizeMapping);
+          gptSlot.defineSizeMapping(sizeMapping);
         }
 
         if (
@@ -286,18 +286,24 @@ export default class Advertising {
           collapseEmptyDiv.length &&
           collapseEmptyDiv.length > 0
         ) {
-          slot.setCollapseEmptyDiv(...collapseEmptyDiv);
+          gptSlot.setCollapseEmptyDiv(...collapseEmptyDiv);
         }
 
         const entries = Object.entries(targeting);
         for (let i = 0; i < entries.length; i++) {
           const [key, value] = entries[i];
-          slot.setTargeting(key, value);
+          gptSlot.setTargeting(key, value);
         }
 
-        slot.addService(window.googletag.pubads());
+        gptSlot.addService(window.googletag.pubads());
 
-        this.slots[id] = slot;
+        const apsSlot = {
+          slotID: id,
+          slotName: path,
+          sizes, // TODO: Figure out how to handle sizes of types other than number[][]
+        };
+
+        this.slots[id] = { gpt: gptSlot, aps: apsSlot };
       }
     );
   }
@@ -449,14 +455,6 @@ export default class Advertising {
 
     this.requestManager.aps = false;
     this.requestManager.prebid = false;
-  }
-
-  static mapSlotToAPSSlot(slot) {
-    return {
-      slotID: slot.getSlotElementId(),
-      slotName: slot.getAdUnitPath(),
-      sizes: slot.getSizes().map(({ width, height }) => [width, height]),
-    };
   }
 
   static queueForGPT(func, onError) {
