@@ -300,7 +300,14 @@ export default class Advertising {
         const apsSlot = {
           slotID: id,
           slotName: path,
-          sizes, // TODO: Figure out how to handle sizes of types other than number[][]
+          sizes: sizes.filter(
+            // APS requires sizes to have type number[][]. Each entry in sizes
+            // should be an array containing height and width.
+            (size) =>
+              typeof size === 'object' &&
+              typeof size[0] === 'number' &&
+              typeof size[1] === 'number'
+          ),
         };
 
         this.slots[id] = { gpt: gptSlot, aps: apsSlot };
