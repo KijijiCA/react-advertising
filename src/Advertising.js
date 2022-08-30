@@ -86,6 +86,7 @@ export default class Advertising {
     }
 
     if (this.isAPSUsed) {
+      console.log({ selectedSlots });
       window.apstag.fetchBids(
         {
           slots: selectedSlots.map((slot) => slot.aps),
@@ -309,6 +310,8 @@ export default class Advertising {
               typeof size[1] === 'number'
           ),
         };
+
+        console.log({ gptSlot, apsSlot });
 
         this.slots[id] = { gpt: gptSlot, aps: apsSlot };
       }
