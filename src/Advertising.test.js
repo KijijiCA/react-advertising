@@ -35,7 +35,7 @@ describe('When I instantiate an advertising main module, with APS', () => {
     beforeEach(() => {
       onErrorSpy = jest.fn();
       advertising = new Advertising(config, [], onErrorSpy);
-      advertising.activate(DIV_ID_FOO); // The reason is we are creating a new Advertising which isnt activated
+      advertising.activate(DIV_ID_FOO);
     });
     it('should call onError callback when apstag.init throws an error', async () => {
       const error = new Error();
@@ -49,7 +49,7 @@ describe('When I instantiate an advertising main module, with APS', () => {
     });
 
     it('should call onError callback when apstag.fetchBids throws an error', async () => {
-      const error = new Error('foo');
+      const error = new Error();
       global.apstag.fetchBids = jest.fn(() => {
         throw error;
       });
@@ -99,6 +99,55 @@ describe('When I instantiate an advertising main module, with APS', () => {
       expect(global.apstag.fetchBids).toHaveBeenCalledTimes(1);
       expect(global.apstag.setDisplayBids).toHaveBeenCalledTimes(1);
       expect(global.googletag.pubads().refresh).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('call the activate method (with errors)', () => {
+    let onErrorSpy;
+    beforeEach(async () => {
+      onErrorSpy = jest.fn();
+      advertising = new Advertising(config, [], onErrorSpy);
+      await advertising.setup();
+    });
+
+    it('should call onError callback when apstag.fetchBids throws an error', async () => {
+      const error = new Error();
+      global.apstag.fetchBids = jest.fn(() => {
+        throw error;
+      });
+
+      advertising.activate(DIV_ID_FOO);
+
+      expect(onErrorSpy).toHaveBeenCalledWith(error);
+      expect(onErrorSpy).toHaveBeenCalledTimes(1);
+    });
+
+    it('should call onError callback when apstag.setDisplayBids throws an error', async () => {
+      const error = new Error();
+      global.apstag.fetchBids = jest.fn((_, callback) => {
+        callback();
+      });
+      global.apstag.setDisplayBids = jest.fn(() => {
+        throw error;
+      });
+
+      advertising.activate(DIV_ID_FOO);
+
+      expect(onErrorSpy).toHaveBeenCalledWith(error);
+      expect(onErrorSpy).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('call the activate method (without errors)', () => {
+    beforeEach(() => {
+      advertising = new Advertising(config);
+    });
+
+    it("fetchBids and setDisplayBids should not be called if setup isn't called", async () => {
+      advertising.activate(DIV_ID_FOO);
+
+      expect(global.apstag.fetchBids).toHaveBeenCalledTimes(0);
+      expect(global.apstag.setDisplayBids).toHaveBeenCalledTimes(0);
     });
   });
 });
