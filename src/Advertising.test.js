@@ -149,6 +149,14 @@ describe('When I instantiate an advertising main module, with APS', () => {
       expect(global.apstag.fetchBids).toHaveBeenCalledTimes(0);
       expect(global.apstag.setDisplayBids).toHaveBeenCalledTimes(0);
     });
+
+    it('fetchBids and setDisplayBids should be called if setup is called', async () => {
+      await advertising.setup();
+      advertising.activate(DIV_ID_FOO);
+
+      expect(global.apstag.fetchBids).toHaveBeenCalledTimes(1);
+      expect(global.apstag.setDisplayBids).toHaveBeenCalledTimes(1);
+    });
   });
 });
 
