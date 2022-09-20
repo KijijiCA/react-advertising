@@ -17,6 +17,11 @@ export default class Advertising {
     this.customEventHandlers = {};
     this.queue = [];
     this.setDefaultConfig();
+
+    this.requestManager = {
+      aps: false,
+      prebid: false,
+    };
   }
 
   // ---------- PUBLIC METHODS ----------
@@ -26,12 +31,26 @@ export default class Advertising {
       typeof this.config.usePrebid === 'undefined'
         ? typeof window.pbjs !== 'undefined'
         : this.config.usePrebid;
+    this.isAPSUsed =
+      typeof this.config.useAPS === 'undefined'
+        ? typeof window.apstag !== 'undefined'
+        : this.config.useAPS;
     this.executePlugins('setup');
-    const { slots, outOfPageSlots, queue, isPrebidUsed } = this;
+    const { slots, outOfPageSlots, queue, isPrebidUsed, isAPSUsed } = this;
     this.setupCustomEvents();
     const setUpQueueItems = [
       Advertising.queueForGPT(this.setupGpt.bind(this), this.onError),
     ];
+    if (isAPSUsed) {
+      try {
+        window.apstag.init({
+          ...this.config.aps,
+          adServer: 'googletag',
+        });
+      } catch (error) {
+        this.onError(error);
+      }
+    }
     if (isPrebidUsed) {
       setUpQueueItems.push(
         Advertising.queueForPrebid(this.setupPrebid.bind(this), this.onError)
@@ -53,7 +72,7 @@ export default class Advertising {
     }
     const divIds = queue.map(({ id }) => id);
     const selectedSlots = queue.map(
-      ({ id }) => slots[id] || outOfPageSlots[id]
+      ({ id }) => slots[id].gpt || outOfPageSlots[id]
     );
     if (isPrebidUsed) {
       Advertising.queueForPrebid(
@@ -62,15 +81,34 @@ export default class Advertising {
             adUnitCodes: divIds,
             bidsBackHandler: () => {
               window.pbjs.setTargetingForGPTAsync(divIds);
-              Advertising.queueForGPT(
-                () => window.googletag.pubads().refresh(selectedSlots),
-                this.onError
-              );
+              this.requestManager.prebid = true;
+              this.refreshSlots(selectedSlots);
             },
           }),
         this.onError
       );
-    } else {
+    }
+
+    if (this.isAPSUsed) {
+      try {
+        window.apstag.fetchBids(
+          {
+            slots: selectedSlots.map((slot) => slot.aps),
+          },
+          () => {
+            Advertising.queueForGPT(() => {
+              window.apstag.setDisplayBids();
+              this.requestManager.aps = true; // signals that APS request has completed
+              this.refreshSlots(selectedSlots); // checks whether both APS and Prebid have returned
+            }, this.onError);
+          }
+        );
+      } catch (error) {
+        this.onError(error);
+      }
+    }
+
+    if (!isPrebidUsed && !isAPSUsed) {
       Advertising.queueForGPT(
         () => window.googletag.pubads().refresh(selectedSlots),
         this.onError
@@ -96,6 +134,7 @@ export default class Advertising {
 
   activate(id, customEventHandlers = {}) {
     const { slots, isPrebidUsed } = this;
+    // check if have slots from configurations
     if (Object.values(slots).length === 0) {
       this.queue.push({ id, customEventHandlers });
       return;
@@ -114,17 +153,36 @@ export default class Advertising {
             adUnitCodes: [id],
             bidsBackHandler: () => {
               window.pbjs.setTargetingForGPTAsync([id]);
-              Advertising.queueForGPT(
-                () => window.googletag.pubads().refresh([slots[id]]),
-                this.onError
-              );
+              this.requestManager.prebid = true;
+              this.refreshSlots([slots[id].gpt]);
             },
           }),
         this.onError
       );
-    } else {
+    }
+
+    if (this.isAPSUsed) {
+      try {
+        window.apstag.fetchBids(
+          {
+            slots: [slots[id].aps],
+          },
+          () => {
+            Advertising.queueForGPT(() => {
+              window.apstag.setDisplayBids();
+              this.requestManager.aps = true; // signals that APS request has completed
+              this.refreshSlots([slots[id].gpt]); // checks whether both APS and Prebid have returned
+            }, this.onError);
+          }
+        );
+      } catch (error) {
+        this.onError(error);
+      }
+    }
+
+    if (!this.isPrebidUsed && !this.isAPSUsed) {
       Advertising.queueForGPT(
-        () => window.googletag.pubads().refresh([slots[id]]),
+        () => window.googletag.pubads().refresh([slots[id].gpt]),
         this.onError
       );
     }
@@ -224,7 +282,7 @@ export default class Advertising {
         sizes,
         sizeMappingName,
       }) => {
-        const slot = window.googletag.defineSlot(
+        const gptSlot = window.googletag.defineSlot(
           path || this.config.path,
           sizes,
           id
@@ -232,7 +290,7 @@ export default class Advertising {
 
         const sizeMapping = this.getGptSizeMapping(sizeMappingName);
         if (sizeMapping) {
-          slot.defineSizeMapping(sizeMapping);
+          gptSlot.defineSizeMapping(sizeMapping);
         }
 
         if (
@@ -240,18 +298,31 @@ export default class Advertising {
           collapseEmptyDiv.length &&
           collapseEmptyDiv.length > 0
         ) {
-          slot.setCollapseEmptyDiv(...collapseEmptyDiv);
+          gptSlot.setCollapseEmptyDiv(...collapseEmptyDiv);
         }
 
         const entries = Object.entries(targeting);
         for (let i = 0; i < entries.length; i++) {
           const [key, value] = entries[i];
-          slot.setTargeting(key, value);
+          gptSlot.setTargeting(key, value);
         }
 
-        slot.addService(window.googletag.pubads());
+        gptSlot.addService(window.googletag.pubads());
 
-        this.slots[id] = slot;
+        const apsSlot = {
+          slotID: id,
+          slotName: path,
+          sizes: sizes.filter(
+            // APS requires sizes to have type number[][]. Each entry in sizes
+            // should be an array containing height and width.
+            (size) =>
+              typeof size === 'object' &&
+              typeof size[0] === 'number' &&
+              typeof size[1] === 'number'
+          ),
+        };
+
+        this.slots[id] = { gpt: gptSlot, aps: apsSlot };
       }
     );
   }
@@ -384,6 +455,25 @@ export default class Advertising {
         func.call(this);
       }
     }
+  }
+
+  // when both APS and Prebid have returned, initiate ad request
+  refreshSlots(selectedSlots) {
+    // If using APS, we need to check that we got a bid from APS.
+    // If using Prebid, we need to check that we got a bid from Prebid.
+    if (
+      this.isAPSUsed !== this.requestManager.aps ||
+      this.isPrebidUsed !== this.requestManager.prebid
+    ) {
+      return;
+    }
+
+    Advertising.queueForGPT(() => {
+      window.googletag.pubads().refresh(selectedSlots);
+    }, this.onError);
+
+    this.requestManager.aps = false;
+    this.requestManager.prebid = false;
   }
 
   static queueForGPT(func, onError) {

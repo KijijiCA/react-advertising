@@ -75,6 +75,12 @@ export default PropTypes.shape({
       })
     ),
   }),
+  useAPS: PropTypes.bool,
+  aps: PropTypes.shape({
+    pubID: PropTypes.string,
+    bidTimeout: PropTypes.number,
+    deals: PropTypes.bool,
+  }),
   sizeMappings: PropTypes.objectOf(
     PropTypes.arrayOf(
       PropTypes.shape({

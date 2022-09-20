@@ -1,5 +1,10 @@
 import Advertising from './Advertising';
-import { config, configWithoutSlots, DIV_ID_BAR, DIV_ID_FOO } from './utils/testAdvertisingConfig';
+import {
+  config,
+  configWithoutSlots,
+  DIV_ID_BAR,
+  DIV_ID_FOO,
+} from './utils/testAdvertisingConfig';
 
 const GPT_SIZE_MAPPING = [
   [[0, 0], []],
@@ -13,7 +18,153 @@ const GPT_SIZE_MAPPING = [
   [[1050, 200], []],
 ];
 
-describe('When I instantiate an advertising main module', () => {
+describe('When I instantiate an advertising main module, with APS', () => {
+  let originalApstag, originalGoogletag, advertising;
+  beforeEach(() => {
+    originalApstag = setupAps();
+    originalGoogletag = setupGoogletag();
+  });
+
+  afterEach(() => {
+    global.apstag = originalApstag;
+    global.googletag = originalGoogletag;
+  });
+
+  describe('call the setup method (with errors)', () => {
+    let onErrorSpy;
+    beforeEach(() => {
+      onErrorSpy = jest.fn();
+      advertising = new Advertising(config, [], onErrorSpy);
+      advertising.activate(DIV_ID_FOO);
+    });
+    it('should call onError callback when apstag.init throws an error', async () => {
+      const error = new Error();
+      global.apstag.init = jest.fn(() => {
+        throw error;
+      });
+
+      advertising.setup();
+
+      expect(onErrorSpy).toHaveBeenCalledWith(error);
+    });
+
+    it('should call onError callback when apstag.fetchBids throws an error', async () => {
+      const error = new Error();
+      global.apstag.fetchBids = jest.fn(() => {
+        throw error;
+      });
+
+      await advertising.setup();
+
+      expect(onErrorSpy).toHaveBeenCalledWith(error);
+    });
+
+    it('should call onError callback when apstag.setDisplayBids throws an error', async () => {
+      const error = new Error();
+      global.apstag.fetchBids = jest.fn((_, callback) => {
+        callback();
+      });
+      global.apstag.setDisplayBids = jest.fn(() => {
+        throw error;
+      });
+
+      await advertising.setup();
+
+      expect(onErrorSpy).toHaveBeenCalledWith(error);
+    });
+  });
+
+  describe('call the setup method (without errors)', () => {
+    beforeEach(() => {
+      advertising = new Advertising(config);
+    });
+
+    it('the property `isAPSUsed` should be true', async () => {
+      await advertising.setup();
+
+      expect(advertising.isAPSUsed).toBeTruthy();
+    });
+
+    it('fetchBids and setDisplayBids should not be called if the queue is empty', async () => {
+      await advertising.setup();
+
+      expect(global.apstag.fetchBids).toHaveBeenCalledTimes(0);
+      expect(global.apstag.setDisplayBids).toHaveBeenCalledTimes(0);
+    });
+
+    it('fetchBids and setDisplayBids should be called if there are items in the queue', async () => {
+      advertising.activate(DIV_ID_FOO);
+      await advertising.setup();
+
+      expect(global.apstag.fetchBids).toHaveBeenCalledTimes(1);
+      expect(global.apstag.setDisplayBids).toHaveBeenCalledTimes(1);
+      expect(global.googletag.pubads().refresh).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('call the activate method (with errors)', () => {
+    let onErrorSpy;
+    beforeEach(async () => {
+      onErrorSpy = jest.fn();
+      advertising = new Advertising(config, [], onErrorSpy);
+      await advertising.setup();
+    });
+
+    it('should call onError callback when apstag.fetchBids throws an error', async () => {
+      const error = new Error();
+      global.apstag.fetchBids = jest.fn(() => {
+        throw error;
+      });
+
+      advertising.activate(DIV_ID_FOO);
+
+      expect(onErrorSpy).toHaveBeenCalledWith(error);
+      expect(onErrorSpy).toHaveBeenCalledTimes(1);
+    });
+
+    it('should call onError callback when apstag.setDisplayBids throws an error', async () => {
+      const error = new Error();
+      global.apstag.fetchBids = jest.fn((_, callback) => {
+        callback();
+      });
+      global.apstag.setDisplayBids = jest.fn(() => {
+        throw error;
+      });
+
+      advertising.activate(DIV_ID_FOO);
+
+      expect(onErrorSpy).toHaveBeenCalledWith(error);
+      expect(onErrorSpy).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('call the activate method (without errors)', () => {
+    beforeEach(() => {
+      advertising = new Advertising(config);
+    });
+
+    it("fetchBids and setDisplayBids should not be called if setup isn't called", async () => {
+      advertising.activate(DIV_ID_FOO);
+
+      expect(global.apstag.fetchBids).toHaveBeenCalledTimes(0);
+      expect(global.apstag.setDisplayBids).toHaveBeenCalledTimes(0);
+    });
+
+    it('fetchBids and setDisplayBids should be called if setup has been called', async () => {
+      await advertising.setup();
+
+      expect(global.apstag.fetchBids).toHaveBeenCalledTimes(0);
+      expect(global.apstag.setDisplayBids).toHaveBeenCalledTimes(0);
+
+      advertising.activate(DIV_ID_FOO);
+
+      expect(global.apstag.fetchBids).toHaveBeenCalledTimes(1);
+      expect(global.apstag.setDisplayBids).toHaveBeenCalledTimes(1);
+    });
+  });
+});
+
+describe('When I instantiate an advertising main module, with Prebid', () => {
   let originalPbjs, originalGoogletag, advertising;
   beforeEach(() => {
     originalPbjs = setupPbjs();
@@ -465,9 +616,14 @@ describe('When I instantiate an advertising main module with plugins', () => {
 });
 
 describe('When I instantiate an advertising main module with outOfPageSlots', () => {
-  let originalPbjs, originalGoogletag, advertising, outOfPageSlotsConfig;
+  let originalPbjs,
+    originalApstag,
+    originalGoogletag,
+    advertising,
+    outOfPageSlotsConfig;
   beforeEach(() => {
     originalPbjs = setupPbjs();
+    originalApstag = setupAps();
     originalGoogletag = setupGoogletag();
 
     outOfPageSlotsConfig = { ...config };
@@ -493,14 +649,20 @@ describe('When I instantiate an advertising main module with outOfPageSlots', ()
   });
   afterEach(() => {
     global.pbjs = originalPbjs;
+    global.apstag = originalApstag;
     global.googletag = originalGoogletag;
   });
 });
 
 describe('When I instantiate an advertising main module with an interstitial slot', () => {
-  let originalPbjs, originalGoogletag, advertising, interstitialSlotConfig;
+  let originalPbjs,
+    originalApstag,
+    originalGoogletag,
+    advertising,
+    interstitialSlotConfig;
   beforeEach(() => {
     originalPbjs = setupPbjs();
+    originalApstag = setupAps();
     originalGoogletag = setupGoogletag();
 
     interstitialSlotConfig = { ...config };
@@ -524,14 +686,20 @@ describe('When I instantiate an advertising main module with an interstitial slo
   });
   afterEach(() => {
     global.pbjs = originalPbjs;
+    global.apstag = originalApstag;
     global.googletag = originalGoogletag;
   });
 });
 
-describe('When I instantiate an advertising main module with an interstitial slot doesnt create', () => {
-  let originalPbjs, originalGoogletag, advertising, interstitialSlotConfig;
+describe("When I instantiate an advertising main module with an interstitial slot doesn't create", () => {
+  let originalPbjs,
+    originalApstag,
+    originalGoogletag,
+    advertising,
+    interstitialSlotConfig;
   beforeEach(() => {
     originalPbjs = setupPbjs();
+    originalApstag = setupAps();
     originalGoogletag = setupGoogletag();
     global.googletag.interstitialNotProvided = true;
 
@@ -554,14 +722,16 @@ describe('When I instantiate an advertising main module with an interstitial slo
   });
   afterEach(() => {
     global.pbjs = originalPbjs;
+    global.apstag = originalApstag;
     global.googletag = originalGoogletag;
   });
 });
 
 describe('When I instantiate an advertising main module and call the setup method with no slots given', () => {
-  let originalGoogletag, advertising;
+  let originalGoogletag, originalApstag, advertising;
   beforeEach(() => {
     originalGoogletag = setupGoogletag();
+    originalApstag = setupAps();
     advertising = new Advertising(configWithoutSlots);
     advertising.setup();
   });
@@ -571,10 +741,11 @@ describe('When I instantiate an advertising main module and call the setup metho
   });
   afterEach(() => {
     global.googletag = originalGoogletag;
+    global.apstag = originalApstag;
   });
 });
 
-describe('When I instantiate an advertising main module without Prebid.js library being loaded', () => {
+describe('When I instantiate an advertising main module without Prebid.js or APS library being loaded', () => {
   let originalGoogletag, advertising;
   beforeEach(() => {
     originalGoogletag = setupGoogletag();
@@ -587,6 +758,9 @@ describe('When I instantiate an advertising main module without Prebid.js librar
     describe('the property `isPrebidUsed`', () =>
       void it('is set to false', () =>
         expect(advertising.isPrebidUsed).toBeFalsy()));
+    describe('the property `isAPSUsed`', () =>
+      void it('is set to false', () =>
+        expect(advertising.isAPSUsed).toBeFalsy()));
     describe('initial loading of ad creatives through GPT', () =>
       void it('is disabled', () =>
         expect(
@@ -688,26 +862,51 @@ describe('When I instantiate an advertising main module without Prebid.js librar
 });
 
 // https://github.com/eBayClassifiedsGroup/react-advertising/issues/50
-describe(
-  'When I instantiate and initialize an Advertising module, ' +
-    'with gpt.js and prebid.js available, with config.usePrebid set to false',
-  () => {
-    let originalPbjs, originalGoogletag, advertising;
-    beforeEach(() => {
-      originalPbjs = setupPbjs();
-      originalGoogletag = setupGoogletag();
-      advertising = new Advertising({ ...config, usePrebid: false });
-      advertising.setup();
+// eslint-disable-next-line max-len
+describe('When I instantiate and initialize an Advertising module, with gpt.js and prebid.js available, with config.usePrebid set to false', () => {
+  let originalPbjs, originalGoogletag, advertising;
+  beforeEach(() => {
+    originalPbjs = setupPbjs();
+    originalGoogletag = setupGoogletag();
+    advertising = new Advertising({ ...config, usePrebid: false });
+    advertising.setup();
+  });
+  describe('the property `isPrebidUsed`', () =>
+    void it('is set to false', () =>
+      expect(advertising.isPrebidUsed).toBeFalsy()));
+  afterEach(() => {
+    global.pbjs = originalPbjs;
+    global.googletag = originalGoogletag;
+  });
+});
+
+// eslint-disable-next-line max-len
+describe('When I instantiate and initialize an Advertising module, with gpt.js and apstag.js available, with config.useAPS set to false', () => {
+  it('the property `isAPSUsed` is set to false', () => {
+    const originalApstag = setupAps();
+    const originalGoogletag = setupGoogletag();
+    const advertising = new Advertising({
+      ...config,
+      useAPS: false,
     });
-    describe('the property `isPrebidUsed`', () =>
-      void it('is set to false', () =>
-        expect(advertising.isPrebidUsed).toBeFalsy()));
-    afterEach(() => {
-      global.pbjs = originalPbjs;
-      global.googletag = originalGoogletag;
-    });
-  }
-);
+
+    advertising.setup();
+    expect(advertising.isAPSUsed).toBeFalsy();
+
+    global.apstag = originalApstag;
+    global.googletag = originalGoogletag;
+  });
+});
+
+function setupAps() {
+  const originalApstag = global.apstag;
+  global.apstag = {
+    init: jest.fn(),
+    fetchBids: jest.fn((_, callback) => callback()),
+    setDisplayBids: jest.fn(),
+  };
+  return originalApstag;
+}
 
 function setupPbjs() {
   const originalPbjs = global.pbjs;
@@ -734,7 +933,12 @@ function setupGoogletag() {
   };
   global.googletag.fakeSlots = [];
   global.googletag.defineSlot = jest.fn(() => {
-    const fakeSlot = {};
+    const fakeSizes = [{ width: 100, height: 100 }];
+    const fakeSlot = {
+      getSlotElementId: jest.fn(),
+      getAdUnitPath: jest.fn(),
+      getSizes: jest.fn().mockReturnValue(fakeSizes),
+    };
     fakeSlot.setTargeting = jest.fn().mockReturnValue(fakeSlot);
     fakeSlot.defineSizeMapping = jest.fn().mockReturnValue(fakeSlot);
     fakeSlot.addService = jest.fn().mockReturnValue(fakeSlot);
@@ -753,6 +957,7 @@ function setupGoogletag() {
     fakeSlot.addService = jest.fn().mockReturnValue(fakeSlot);
     fakeSlot.setTargeting = jest.fn();
     global.googletag.fakeSlots.push(fakeSlot);
+    // eslint-disable-next-line consistent-return
     return fakeSlot;
   });
   global.googletag.setTargeting = jest.fn().mockReturnValue(global.googletag);
