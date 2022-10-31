@@ -11,6 +11,7 @@ function AdvertisingSlot({
   className,
   children,
   customEventHandlers,
+  ...restProps
 }) {
   const observerRef = useRef(null);
   const containerDivRef = useRef();
@@ -54,6 +55,7 @@ function AdvertisingSlot({
       className={className}
       children={children}
       ref={containerDivRef}
+      {...restProps}
     />
   );
 }
