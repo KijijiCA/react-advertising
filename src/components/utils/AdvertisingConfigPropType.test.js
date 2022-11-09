@@ -142,10 +142,6 @@ describe('When I check the prop types with a price granularity', () => {
       expectToPass: true,
     },
     {
-      priceGranularity: { buckets: [{ max: 3, increment: 4 }] },
-      expectToPass: false,
-    },
-    {
       priceGranularity: { buckets: [{ increment: 4 }] },
       expectToPass: false,
     },
