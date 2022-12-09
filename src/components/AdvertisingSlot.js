@@ -18,6 +18,7 @@ function AdvertisingSlot({
   const { activate, config } = useContext(AdvertisingContext);
   const lazyLoadConfig = getLazyLoadConfig(config, id);
   const isLazyLoadEnabled = isLazyLoading(lazyLoadConfig);
+  const dataTestId = restProps['data-testid'];
   useLayoutEffect(() => {
     if (!config || !isLazyLoadEnabled) {
       return () => {};
@@ -48,6 +49,7 @@ function AdvertisingSlot({
     }
     activate(id, customEventHandlers);
   }, [activate, config]);
+
   return (
     <div
       id={id}
@@ -55,6 +57,7 @@ function AdvertisingSlot({
       className={className}
       children={children}
       ref={containerDivRef}
+      data-testid={dataTestId}
       {...restProps}
     />
   );
