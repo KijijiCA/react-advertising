@@ -19,6 +19,8 @@ function AdvertisingSlot({
   const lazyLoadConfig = getLazyLoadConfig(config, id);
   const isLazyLoadEnabled = isLazyLoading(lazyLoadConfig);
   const dataTestId = restProps['data-testid'];
+  const ariaHidden = restProps['aria-hidden'];
+
   useLayoutEffect(() => {
     if (!config || !isLazyLoadEnabled) {
       return () => {};
@@ -58,6 +60,7 @@ function AdvertisingSlot({
       children={children}
       ref={containerDivRef}
       data-testid={dataTestId}
+      aria-hidden={ariaHidden}
       {...restProps}
     />
   );
