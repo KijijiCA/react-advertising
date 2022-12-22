@@ -19,7 +19,9 @@ layout!**
 - Supports lazy loading, even for Prebid ads, individually configurable per ad
   slot
 
-[![Test](https://github.com/eBayClassifiedsGroup/react-advertising/actions/workflows/ci.yml/badge.svg)](https://github.com/eBayClassifiedsGroup/react-advertising/actions/workflows/ci.yml)[![Coverage Status](https://coveralls.io/repos/github/eBayClassifiedsGroup/react-advertising/badge.svg?branch=master)](https://coveralls.io/github/eBayClassifiedsGroup/react-advertising?branch=master)
+[![Test](https://github.com/eBayClassifiedsGroup/react-advertising/actions/workflows/ci.yml/badge.svg)](https://github.com/eBayClassifiedsGroup/react-advertising/actions/workflows/ci.yml)
+[![Coverage Status](https://coveralls.io/repos/github/eBayClassifiedsGroup/react-advertising/badge.svg?branch=master)](https://coveralls.io/github/eBayClassifiedsGroup/react-advertising?branch=master)
+[![npm version](https://badge.fury.io/js/react-advertising.svg)](https://badge.fury.io/js/react-advertising)
 
 ## Prerequisites
 
