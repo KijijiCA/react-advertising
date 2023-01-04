@@ -1,30 +1,45 @@
-name: Test
-on: ["push", "pull_request"]
+name: Development workflow
+
+on:
+  pull_request:
+    branches:
+      - master
+      - next
+      - beta
+    types: [opened, synchronize, reopened]
+
 jobs:
   test:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node: [14]
     name: Unit and E2E tests
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Use node ${{ matrix.node }}
-        uses: actions/setup-node@v2
+
+      - name: Detect Node version
+        run: echo "##[set-output name=version;]$(cat .nvmrc)"
+        id: nvmrc
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node }}
+          node-version: '${{ steps.nvmrc.outputs.version }}'
+
       - name: Install npm packages
         run: yarn --frozen-lockfile
+
       - name: Run unit Tests
         run: yarn test --coverage
+
       - name: Run end-to-end tests
         uses: cypress-io/github-action@v2
         with:
           build: yarn build:instrumented
           start: yarn storybook:instrumented
+
       - name: Prepare combined coverage report (unit + E2E tests)
         run: yarn build:coverage
+
       - name: Report code coverage
         uses: coverallsapp/github-action@master
         with:
