@@ -1,0 +1,30 @@
+name: Publish to NPM
+on:
+  release:
+    types: [created]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [14]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Use node ${{ matrix.node }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Install npm packages
+        run: yarn --frozen-lockfile
+
+      - name: Install dependencies and build 🔧
+        run: yarn build
+
+      - name: Publish package on NPM 📦
+        run: yarn publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

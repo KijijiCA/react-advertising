@@ -1,6 +1,8 @@
-![eBay Tech Logo](ebay-tech-logo.png 'eBay Tech Logo')
-
 # react-advertising
+
+[![Test](https://github.com/eBayClassifiedsGroup/react-advertising/actions/workflows/ci.yml/badge.svg)](https://github.com/eBayClassifiedsGroup/react-advertising/actions/workflows/ci.yml)
+[![Coverage Status](https://coveralls.io/repos/github/eBayClassifiedsGroup/react-advertising/badge.svg?branch=master)](https://coveralls.io/github/eBayClassifiedsGroup/react-advertising?branch=master)
+[![npm version](https://badge.fury.io/js/react-advertising.svg)](https://badge.fury.io/js/react-advertising)
 
 A JavaScript library for display ads in [React](https://reactjs.org)
 applications.
@@ -18,10 +20,6 @@ layout!**
 - Suitable for server-side-rendering
 - Supports lazy loading, even for Prebid ads, individually configurable per ad
   slot
-
-[![Test](https://github.com/eBayClassifiedsGroup/react-advertising/actions/workflows/ci.yml/badge.svg)](https://github.com/eBayClassifiedsGroup/react-advertising/actions/workflows/ci.yml)
-[![Coverage Status](https://coveralls.io/repos/github/eBayClassifiedsGroup/react-advertising/badge.svg?branch=master)](https://coveralls.io/github/eBayClassifiedsGroup/react-advertising?branch=master)
-[![npm version](https://badge.fury.io/js/react-advertising.svg)](https://badge.fury.io/js/react-advertising)
 
 ## Prerequisites
 
@@ -58,5 +56,3 @@ You can find documentation on how to use this library in the project's wiki:
 ## License
 
 [MIT licensed](LICENSE)
-
-Copyright © 2018-2021 mobile.de GmbH
