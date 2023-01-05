@@ -16,7 +16,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Detect Node version
-        run: echo "##[set-output name=version;]$(cat .nvmrc)"
+        run: echo "version=$(cat .nvmrc)" >> $GITHUB_OUTPUT
         id: nvmrc
 
       - name: Setup Node.js
