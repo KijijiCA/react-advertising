@@ -1,0 +1,38 @@
+name: Storybook deploy
+
+on:
+  workflow_run:
+    workflows: ['Production workflow']
+    types:
+      - completed
+
+jobs:
+  storybook:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Git checkout
+        uses: actions/checkout@v3
+
+      - name: Detect Node version
+        run: echo "version=$(cat .nvmrc)" >> $GITHUB_OUTPUT
+        id: nvmrc
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '${{ steps.nvmrc.outputs.version }}'
+
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+
+      - name: Build Storybook
+        run: yarn build:storybook
+
+      - name: Deploy Storybook
+        uses: peaceiris/actions-gh-pages@v3
+        if: github.ref == 'refs/heads/master'
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: storybook-static
