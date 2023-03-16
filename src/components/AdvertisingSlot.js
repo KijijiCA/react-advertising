@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useEffect, useRef, useContext } from 'react';
+import React, { useLayoutEffect, useRef, useContext } from 'react';
 import AdvertisingContext from '../AdvertisingContext';
 import calculateRootMargin from './utils/calculateRootMargin';
 import isLazyLoading from './utils/isLazyLoading';
@@ -18,7 +18,7 @@ function AdvertisingSlot({
   const { activate, config } = useContext(AdvertisingContext);
   const lazyLoadConfig = getLazyLoadConfig(config, id);
   const isLazyLoadEnabled = isLazyLoading(lazyLoadConfig);
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!config || !isLazyLoadEnabled) {
       return () => {};
     }
@@ -42,7 +42,7 @@ function AdvertisingSlot({
     };
   }, [activate, config]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!config || isLazyLoadEnabled) {
       return;
     }
