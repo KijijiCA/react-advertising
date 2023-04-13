@@ -74,6 +74,11 @@ export default class Advertising {
     const selectedSlots = queue.map(
       ({ id }) => slots[id].gpt || outOfPageSlots[id]
     );
+    console.log(
+      '🚀 turbo ~ Advertising ~ setup ~ selectedSlots:',
+      selectedSlots
+    );
+
     if (isPrebidUsed) {
       Advertising.queueForPrebid(
         () =>
@@ -325,6 +330,43 @@ export default class Advertising {
         this.slots[id] = { gpt: gptSlot, aps: apsSlot };
       }
     );
+    // This listener is called when a slot has finished rendering.
+
+    window.googletag.pubads().addEventListener('slotRenderEnded', (event) => {
+      const slot = event.slot;
+      console.group('Slot', slot.getSlotElementId(), 'finished rendering.');
+
+      // Log details of the rendered ad.
+      console.log('Advertiser ID:', event.advertiserId);
+      console.log('Campaign ID:', event.campaignId);
+      console.log('Company IDs:', event.companyIds);
+      console.log('Creative ID:', event.creativeId);
+      console.log('Creative Template ID:', event.creativeTemplateId);
+      console.log('Is backfill?:', event.isBackfill);
+      console.log('Is empty?:', event.isEmpty);
+      console.log('Label IDs:', event.labelIds);
+      console.log('Line Item ID:', event.lineItemId);
+      console.log('Size:', event.size);
+      console.log('Slot content changed?', event.slotContentChanged);
+      console.log(
+        'Source Agnostic Creative ID:',
+        event.sourceAgnosticCreativeId
+      );
+      console.log(
+        'Source Agnostic Line Item ID:',
+        event.sourceAgnosticLineItemId
+      );
+      console.log('Yield Group IDs:', event.yieldGroupIds);
+      console.groupEnd();
+    });
+    window.googletag.pubads().addEventListener('slotOnload', (event) => {
+      const slot = event.slot;
+      console.log(
+        'Creative iframe for slot',
+        slot.getSlotElementId(),
+        'has loaded.'
+      );
+    });
   }
 
   defineOutOfPageSlots() {

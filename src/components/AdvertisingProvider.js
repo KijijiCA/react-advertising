@@ -17,12 +17,15 @@ export default class AdvertisingProvider extends Component {
   }
 
   async componentDidMount() {
+    console.log(' turbo componentDidMount AdvertisingProvider');
     if (this.advertising.isConfigReady() && this.props.active) {
+      console.log('turbo initializing GPT setup from componentDidMount');
       await this.advertising.setup();
     }
   }
 
   async componentDidUpdate(prevProps) {
+    console.log(' turbo componentDidUpdate AdvertisingProvider');
     // this means teardown method has been invoked already
     if (!this.advertising) {
       return;
@@ -33,6 +36,7 @@ export default class AdvertisingProvider extends Component {
 
     // activate advertising when the config changes from `undefined`
     if (!isConfigReady && config && active) {
+      console.log('turbo initializing GPT setup from componentDidUpdate');
       this.advertising.setConfig(config);
       // eslint-disable-next-line react/no-did-update-set-state
       await this.advertising.setup();
@@ -46,6 +50,8 @@ export default class AdvertisingProvider extends Component {
         });
       }
     } else if (isConfigReady && !equal(prevProps.config, config)) {
+      console.log('turbo ReactAd config teardown');
+
       // teardown the old configuration
       // to make sure the teardown and initialization are in a right sequence, need `await`
       await this.teardown();
@@ -83,6 +89,8 @@ export default class AdvertisingProvider extends Component {
   }
 
   render() {
+    console.log(' turbo rendering AdvertisingProvider');
+
     const { activate, config } = this.state;
     return (
       <AdvertisingContext.Provider value={{ activate, config }}>
