@@ -1,3 +1,10 @@
+## [4.2.5](https://github.com/KijijiCA/react-advertising/compare/v4.2.4...v4.2.5) (2023-04-14)
+
+
+### Bug Fixes
+
+* switch back to useLayoutEffect in AdvertisingSlot ([#122](https://github.com/KijijiCA/react-advertising/issues/122)) ([414f55f](https://github.com/KijijiCA/react-advertising/commit/414f55f6048a0721b0304ef3f8faabe94ec7c6b5))
+
 # Changelog
 
 ## 4.1.1 / 6 May 2022
