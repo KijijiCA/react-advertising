@@ -17,6 +17,17 @@ const GLOBAL_AD_UNIT_PATH = 'global/ad/unit/path';
 const SLOT_AD_UNIT_PATH = 'slot/ad/unit/path';
 const USD_TO_EUR_RATE = 2;
 
+export const TWO_SLOT_QUEUE = [
+  {
+    id: DIV_ID_FOO,
+    customEventHandlers: {},
+  },
+  {
+    id: DIV_ID_BAR,
+    customEventHandlers: {},
+  },
+];
+
 export const configWithoutSlots = {
   active: true,
   path: GLOBAL_AD_UNIT_PATH,
