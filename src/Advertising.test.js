@@ -920,6 +920,18 @@ describe('When I instantiate an advertising main module, with both APS and Prebi
     expect(global.googletag.pubads().refresh).toHaveBeenCalledTimes(1);
   });
 
+  it('should call googletag.pubads().refresh() once when a slot requests a new ad', async () => {
+    const advertising = new Advertising(config);
+    advertising.queue = TWO_SLOT_QUEUE;
+    await advertising.setup();
+
+    // setup should call global.googletag.pubads().refresh once
+    expect(global.googletag.pubads().refresh).toHaveBeenCalledTimes(1);
+
+    advertising.activate(DIV_ID_FOO);
+    expect(global.googletag.pubads().refresh).toHaveBeenCalledTimes(2);
+  });
+
   it('should call googletag.pubads().refresh() twice if two slots request new ads simultaneously', async () => {
     const advertising = new Advertising(config);
     advertising.queue = TWO_SLOT_QUEUE;
