@@ -1,3 +1,10 @@
+## [4.2.6](https://github.com/KijijiCA/react-advertising/compare/v4.2.5...v4.2.6) (2023-05-05)
+
+
+### Bug Fixes
+
+* race condition with requestManager for tam & prebid bids ([#127](https://github.com/KijijiCA/react-advertising/issues/127)) ([751bf77](https://github.com/KijijiCA/react-advertising/commit/751bf771bee1d210cb3b4a4c29b7cc90d77b7de2))
+
 ## [4.2.5](https://github.com/KijijiCA/react-advertising/compare/v4.2.4...v4.2.5) (2023-04-14)
 
 
