@@ -4,6 +4,7 @@ import {
   configWithoutSlots,
   DIV_ID_BAR,
   DIV_ID_FOO,
+  TWO_SLOT_QUEUE,
 } from './utils/testAdvertisingConfig';
 
 const GPT_SIZE_MAPPING = [
@@ -895,6 +896,53 @@ describe('When I instantiate and initialize an Advertising module, with gpt.js a
 
     global.apstag = originalApstag;
     global.googletag = originalGoogletag;
+  });
+});
+
+describe('When I instantiate an advertising main module, with both APS and Prebid', () => {
+  let originalApstag, originalPbjs, originalGoogletag;
+  beforeEach(() => {
+    originalPbjs = setupPbjs();
+    originalApstag = setupAps();
+    originalGoogletag = setupGoogletag();
+  });
+
+  afterEach(() => {
+    global.apstag = originalApstag;
+    global.pbjs = originalPbjs;
+    global.googletag = originalGoogletag;
+  });
+
+  it('should call googletag.pubads().refresh() once during setup', async () => {
+    const advertising = new Advertising(config);
+    advertising.queue = TWO_SLOT_QUEUE;
+    await advertising.setup();
+    expect(global.googletag.pubads().refresh).toHaveBeenCalledTimes(1);
+  });
+
+  it('should call googletag.pubads().refresh() once when a slot requests a new ad', async () => {
+    const advertising = new Advertising(config);
+    advertising.queue = TWO_SLOT_QUEUE;
+    await advertising.setup();
+
+    // setup should call global.googletag.pubads().refresh once
+    expect(global.googletag.pubads().refresh).toHaveBeenCalledTimes(1);
+
+    advertising.activate(DIV_ID_FOO);
+    expect(global.googletag.pubads().refresh).toHaveBeenCalledTimes(2);
+  });
+
+  it('should call googletag.pubads().refresh() twice if two slots request new ads simultaneously', async () => {
+    const advertising = new Advertising(config);
+    advertising.queue = TWO_SLOT_QUEUE;
+    await advertising.setup();
+
+    // setup should call global.googletag.pubads().refresh once
+    expect(global.googletag.pubads().refresh).toHaveBeenCalledTimes(1);
+
+    advertising.activate(DIV_ID_FOO);
+    advertising.activate(DIV_ID_BAR);
+    expect(global.googletag.pubads().refresh).toHaveBeenCalledTimes(3);
   });
 });
 

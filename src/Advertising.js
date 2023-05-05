@@ -5,6 +5,11 @@ const defaultLazyLoadConfig = {
   mobileScaling: 1,
 };
 
+const createNewRequestManager = () => ({
+  aps: false,
+  prebid: false,
+});
+
 export default class Advertising {
   constructor(config, plugins = [], onError = () => {}) {
     this.config = config;
@@ -17,11 +22,6 @@ export default class Advertising {
     this.customEventHandlers = {};
     this.queue = [];
     this.setDefaultConfig();
-
-    this.requestManager = {
-      aps: false,
-      prebid: false,
-    };
   }
 
   // ---------- PUBLIC METHODS ----------
@@ -74,6 +74,9 @@ export default class Advertising {
     const selectedSlots = queue.map(
       ({ id }) => slots[id].gpt || outOfPageSlots[id]
     );
+
+    const requestManager = createNewRequestManager();
+
     if (isPrebidUsed) {
       Advertising.queueForPrebid(
         () =>
@@ -81,8 +84,8 @@ export default class Advertising {
             adUnitCodes: divIds,
             bidsBackHandler: () => {
               window.pbjs.setTargetingForGPTAsync(divIds);
-              this.requestManager.prebid = true;
-              this.refreshSlots(selectedSlots);
+              requestManager.prebid = true;
+              this.refreshSlots(selectedSlots, requestManager);
             },
           }),
         this.onError
@@ -98,8 +101,8 @@ export default class Advertising {
           () => {
             Advertising.queueForGPT(() => {
               window.apstag.setDisplayBids();
-              this.requestManager.aps = true; // signals that APS request has completed
-              this.refreshSlots(selectedSlots); // checks whether both APS and Prebid have returned
+              requestManager.aps = true; // signals that APS request has completed
+              this.refreshSlots(selectedSlots, requestManager); // checks whether both APS and Prebid have returned
             }, this.onError);
           }
         );
@@ -146,6 +149,9 @@ export default class Advertising {
       return (this.customEventCallbacks[customEventId][id] =
         customEventHandlers[customEventId]);
     });
+
+    const requestManager = createNewRequestManager();
+
     if (isPrebidUsed) {
       Advertising.queueForPrebid(
         () =>
@@ -153,8 +159,8 @@ export default class Advertising {
             adUnitCodes: [id],
             bidsBackHandler: () => {
               window.pbjs.setTargetingForGPTAsync([id]);
-              this.requestManager.prebid = true;
-              this.refreshSlots([slots[id].gpt]);
+              requestManager.prebid = true;
+              this.refreshSlots([slots[id].gpt], requestManager);
             },
           }),
         this.onError
@@ -170,8 +176,8 @@ export default class Advertising {
           () => {
             Advertising.queueForGPT(() => {
               window.apstag.setDisplayBids();
-              this.requestManager.aps = true; // signals that APS request has completed
-              this.refreshSlots([slots[id].gpt]); // checks whether both APS and Prebid have returned
+              requestManager.aps = true; // signals that APS request has completed
+              this.refreshSlots([slots[id].gpt], requestManager); // checks whether both APS and Prebid have returned
             }, this.onError);
           }
         );
@@ -458,12 +464,12 @@ export default class Advertising {
   }
 
   // when both APS and Prebid have returned, initiate ad request
-  refreshSlots(selectedSlots) {
+  refreshSlots(selectedSlots, requestManager) {
     // If using APS, we need to check that we got a bid from APS.
     // If using Prebid, we need to check that we got a bid from Prebid.
     if (
-      this.isAPSUsed !== this.requestManager.aps ||
-      this.isPrebidUsed !== this.requestManager.prebid
+      this.isAPSUsed !== requestManager.aps ||
+      this.isPrebidUsed !== requestManager.prebid
     ) {
       return;
     }
@@ -471,9 +477,6 @@ export default class Advertising {
     Advertising.queueForGPT(() => {
       window.googletag.pubads().refresh(selectedSlots);
     }, this.onError);
-
-    this.requestManager.aps = false;
-    this.requestManager.prebid = false;
   }
 
   static queueForGPT(func, onError) {
