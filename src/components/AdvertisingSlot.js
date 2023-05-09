@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
-import React, { useLayoutEffect, useRef, useContext } from 'react';
+import React, { useRef, useContext } from 'react';
 import AdvertisingContext from '../AdvertisingContext';
 import calculateRootMargin from './utils/calculateRootMargin';
 import isLazyLoading from './utils/isLazyLoading';
 import getLazyLoadConfig from './utils/getLazyLoadConfig';
+import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
 
 function AdvertisingSlot({
   id,
@@ -18,7 +19,8 @@ function AdvertisingSlot({
   const { activate, config } = useContext(AdvertisingContext);
   const lazyLoadConfig = getLazyLoadConfig(config, id);
   const isLazyLoadEnabled = isLazyLoading(lazyLoadConfig);
-  useLayoutEffect(() => {
+
+  useIsomorphicLayoutEffect(() => {
     if (!config || !isLazyLoadEnabled) {
       return () => {};
     }
@@ -42,7 +44,7 @@ function AdvertisingSlot({
     };
   }, [activate, config]);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (!config || isLazyLoadEnabled) {
       return;
     }
