@@ -1,3 +1,5 @@
+## [4.2.7](https://github.com/KijijiCA/react-advertising/compare/v4.2.6...v4.2.7) (2023-05-09)
+
 ## [4.2.6](https://github.com/KijijiCA/react-advertising/compare/v4.2.5...v4.2.6) (2023-05-05)
 
 
