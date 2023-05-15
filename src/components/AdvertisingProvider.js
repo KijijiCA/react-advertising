@@ -20,16 +20,36 @@ export default class AdvertisingProvider extends Component {
     if (this.advertising.isConfigReady() && this.props.active) {
       await this.advertising.setup();
     }
+    console.log(
+      '🚀 turbo ~ AdvertisingProvider ~ componentDidMount ~ config:',
+      this.config
+    );
   }
 
   async componentDidUpdate(prevProps) {
+    console.log(
+      '%c 🚀 turbo ~ AdvertisingProvider ~ componentDidUpdate fired, this.advertising',
+      'color: orange; font-size: 16px',
+      this.advertising
+    );
     // this means teardown method has been invoked already
     if (!this.advertising) {
       return;
     }
 
     const { config, active } = this.props;
+    console.log(
+      '%c 🚀 turbo ~ AdvertisingProvider ~ componentDidUpdate ~ config & active:',
+      'color: orange; font-size: 16px',
+      config,
+      active
+    );
+
     const isConfigReady = this.advertising.isConfigReady();
+    console.log(
+      '🚀 turbo ~ AdvertisingProvider ~ componentDidUpdate ~ !isConfigReady && config && active:',
+      !isConfigReady && config && active
+    );
 
     // activate advertising when the config changes from `undefined`
     if (!isConfigReady && config && active) {
@@ -72,12 +92,20 @@ export default class AdvertisingProvider extends Component {
   }
 
   async teardown() {
+    console.log(
+      '%c 🚀 turbo ~ AdvertisingProvider ~ teardown fired',
+      'color: blue; font-size: 16px'
+    );
     this.setState({ activate: () => {}, config: null });
     await this.advertising?.teardown();
     this.advertising = null;
   }
 
   initialize() {
+    console.log(
+      '%c 🚀 turbo ~ AdvertisingProvider ~ initialize fired',
+      'color: red; font-size: 16px'
+    );
     const { config, plugins, onError } = this.props;
     this.advertising = new Advertising(config, plugins, onError);
   }

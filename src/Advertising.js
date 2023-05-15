@@ -12,6 +12,7 @@ const createNewRequestManager = () => ({
 
 export default class Advertising {
   constructor(config, plugins = [], onError = () => {}) {
+    console.log('🚀 turbo ~ Advertising ~ constructor ~ config:', config);
     this.config = config;
     this.slots = {};
     this.outOfPageSlots = {};
@@ -37,6 +38,11 @@ export default class Advertising {
         : this.config.useAPS;
     this.executePlugins('setup');
     const { slots, outOfPageSlots, queue, isPrebidUsed, isAPSUsed } = this;
+    console.log(
+      '%c 🚀 turbo ~ Advertising ~ setup ~ slots:',
+      'color: green; font-size: 16px',
+      slots
+    );
     this.setupCustomEvents();
     const setUpQueueItems = [
       Advertising.queueForGPT(this.setupGpt.bind(this), this.onError),
@@ -120,6 +126,10 @@ export default class Advertising {
   }
 
   async teardown() {
+    console.log(
+      '%c 🚀 turbo ~ Advertising ~ teardown fired',
+      'color: purple; font-size: 16px'
+    );
     this.teardownCustomEvents();
     const teardownQueueItems = [
       Advertising.queueForGPT(this.teardownGpt.bind(this), this.onError),
@@ -136,6 +146,11 @@ export default class Advertising {
   }
 
   activate(id, customEventHandlers = {}) {
+    console.log(
+      '%c 🚀 turbo ~ Advertising ~ activate ~ id:',
+      'color: blue; font-size: 16px',
+      id
+    );
     const { slots, isPrebidUsed } = this;
     // check if have slots from configurations
     if (Object.values(slots).length === 0) {
