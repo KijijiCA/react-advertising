@@ -1009,6 +1009,7 @@ function setupGoogletag() {
     return fakeSlot;
   });
   global.googletag.setTargeting = jest.fn().mockReturnValue(global.googletag);
+  global.googletag.clearTargeting = jest.fn().mockReturnValue(global.googletag);
   global.googletag.addService = jest.fn().mockReturnValue(global.googletag);
   global.googletag.pubads = jest.fn().mockReturnValue(global.googletag);
   global.googletag.fakeSizeMapping = {

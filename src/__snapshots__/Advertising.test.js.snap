@@ -67,6 +67,17 @@ Array [
             Array [
               Object {
                 "addService": [MockFunction],
+                "clearTargeting": [MockFunction] {
+                  "calls": Array [
+                    Array [],
+                  ],
+                  "results": Array [
+                    Object {
+                      "type": "return",
+                      "value": [Circular],
+                    },
+                  ],
+                },
                 "cmd": Object {
                   "push": [MockFunction] {
                     "calls": Array [
@@ -920,6 +931,17 @@ Object {
           Array [
             Object {
               "addService": [MockFunction],
+              "clearTargeting": [MockFunction] {
+                "calls": Array [
+                  Array [],
+                ],
+                "results": Array [
+                  Object {
+                    "type": "return",
+                    "value": [Circular],
+                  },
+                ],
+              },
               "cmd": Object {
                 "push": [MockFunction] {
                   "calls": Array [
@@ -1498,6 +1520,17 @@ Object {
           Array [
             Object {
               "addService": [MockFunction],
+              "clearTargeting": [MockFunction] {
+                "calls": Array [
+                  Array [],
+                ],
+                "results": Array [
+                  Object {
+                    "type": "return",
+                    "value": [Circular],
+                  },
+                ],
+              },
               "cmd": Object {
                 "push": [MockFunction] {
                   "calls": Array [
@@ -2333,6 +2366,17 @@ Array [
             Array [
               Object {
                 "addService": [MockFunction],
+                "clearTargeting": [MockFunction] {
+                  "calls": Array [
+                    Array [],
+                  ],
+                  "results": Array [
+                    Object {
+                      "type": "return",
+                      "value": [Circular],
+                    },
+                  ],
+                },
                 "cmd": Object {
                   "push": [MockFunction] {
                     "calls": Array [
@@ -3254,6 +3298,17 @@ Object {
           Array [
             Object {
               "addService": [MockFunction],
+              "clearTargeting": [MockFunction] {
+                "calls": Array [
+                  Array [],
+                ],
+                "results": Array [
+                  Object {
+                    "type": "return",
+                    "value": [Circular],
+                  },
+                ],
+              },
               "cmd": Object {
                 "push": [MockFunction] {
                   "calls": Array [
@@ -3832,6 +3887,17 @@ Object {
           Array [
             Object {
               "addService": [MockFunction],
+              "clearTargeting": [MockFunction] {
+                "calls": Array [
+                  Array [],
+                ],
+                "results": Array [
+                  Object {
+                    "type": "return",
+                    "value": [Circular],
+                  },
+                ],
+              },
               "cmd": Object {
                 "push": [MockFunction] {
                   "calls": Array [
