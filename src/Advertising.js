@@ -23,6 +23,7 @@ export default class Advertising {
     this.customEventHandlers = {};
     this.queue = [];
     this.setDefaultConfig();
+    this.instanceId = Math.random().toString(36).substr(2, 9);
   }
 
   // ---------- PUBLIC METHODS ----------
@@ -39,7 +40,7 @@ export default class Advertising {
     this.executePlugins('setup');
     const { slots, outOfPageSlots, queue, isPrebidUsed, isAPSUsed } = this;
     console.log(
-      '%c 🚀 turbo ~ Advertising ~ setup ~ slots:',
+      `%c 🚀 turbo ~ Advertising ~ setup ~ slots: ${this.instanceId}`,
       'color: green; font-size: 16px',
       slots
     );
@@ -147,9 +148,10 @@ export default class Advertising {
 
   activate(id, customEventHandlers = {}) {
     console.log(
-      '%c 🚀 turbo ~ Advertising ~ activate ~ id:',
+      `%c 🚀 turbo ~ Advertising ~ activate ~ id: ${this.instanceId}`,
       'color: blue; font-size: 16px',
-      id
+      id,
+      this.config
     );
     const { slots, isPrebidUsed } = this;
     // check if have slots from configurations
@@ -291,6 +293,12 @@ export default class Advertising {
   }
 
   defineSlots() {
+    console.log(
+      '%c 🚀 turbo ~ Advertising ~ defineSlots ~ this.config.slots:',
+      'color: teal; font-size: 16px',
+      this.config
+    );
+
     if (!this.config.slots) {
       return;
     }

@@ -28,8 +28,9 @@ export default class AdvertisingProvider extends Component {
 
   async componentDidUpdate(prevProps) {
     console.log(
-      '%c 🚀 turbo ~ AdvertisingProvider ~ componentDidUpdate fired, this.advertising',
+      `%c 🚀 turbo ~ AdvertisingProvider ~ componentDidUpdate fired, this.advertising ${this.advertising.instanceId}`,
       'color: orange; font-size: 16px',
+
       this.advertising
     );
     // this means teardown method has been invoked already
@@ -93,7 +94,7 @@ export default class AdvertisingProvider extends Component {
 
   async teardown() {
     console.log(
-      '%c 🚀 turbo ~ AdvertisingProvider ~ teardown fired',
+      `%c 🚀 turbo ~ AdvertisingProvider ~ teardown fired ${this.advertising.instanceId}`,
       'color: blue; font-size: 16px'
     );
     this.setState({ activate: () => {}, config: null });
@@ -102,12 +103,13 @@ export default class AdvertisingProvider extends Component {
   }
 
   initialize() {
-    console.log(
-      '%c 🚀 turbo ~ AdvertisingProvider ~ initialize fired',
-      'color: red; font-size: 16px'
-    );
     const { config, plugins, onError } = this.props;
     this.advertising = new Advertising(config, plugins, onError);
+    console.log(
+      `%c 🚀 turbo ~ AdvertisingProvider ~ initialize fired ${this.advertising.instanceId}`,
+      'color: red; font-size: 16px',
+      config
+    );
   }
 
   render() {
