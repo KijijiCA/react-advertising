@@ -1,3 +1,10 @@
+## [4.2.8](https://github.com/KijijiCA/react-advertising/compare/v4.2.7...v4.2.8) (2023-05-17)
+
+
+### Bug Fixes
+
+* persistent page-level targeting values ([#129](https://github.com/KijijiCA/react-advertising/issues/129)) ([791b9a6](https://github.com/KijijiCA/react-advertising/commit/791b9a6440121f36f229a820da9eff99d0219196))
+
 ## [4.2.7](https://github.com/KijijiCA/react-advertising/compare/v4.2.6...v4.2.7) (2023-05-09)
 
 ## [4.2.6](https://github.com/KijijiCA/react-advertising/compare/v4.2.5...v4.2.6) (2023-05-05)
