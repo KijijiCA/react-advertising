@@ -411,6 +411,10 @@ export default class Advertising {
     this.defineOutOfPageSlots();
     this.defineInterstitialSlot();
     const entries = Object.entries(targeting);
+
+    // clear all previous targeting values before updating
+    pubads.clearTargeting();
+    // set or update page-level targeting
     for (let i = 0; i < entries.length; i++) {
       const [key, value] = entries[i];
       pubads.setTargeting(key, value);
