@@ -8,14 +8,14 @@ export const DefaultStory = () => {
   const config = {
     slots: [
       {
-        id: "div-slot",
-        path: "/6355419/Travel/Europe",
-        sizes: [[100, 100]]
-      }
+        id: 'div-slot',
+        path: '/6355419/Travel/Europe',
+        sizes: [[100, 100]],
+      },
     ],
     interstitialSlot: {
-      path: "/6355419/Travel/Europe/France/Paris"
-    }
+      path: '/6355419/Travel/Europe/France/Paris',
+    },
   };
   return (
     <AdvertisingProvider config={config}>
@@ -49,7 +49,8 @@ https://developers.google.com/publisher-tag/samples/display-web-interstitial-ad
 You can prevent specific links from triggering GPT-managed web interstials by adding a 
 data-google-interstitial="false" attribute to the anchor element or any ancestor of the anchor element.
 
-⚠️ **Please note** currently an interstitial is not working standalone, there must be a basic slot available that would be displayed.
+⚠️ **Please note** currently an interstitial is not working standalone, 
+there must be a basic slot available that would be displayed.
 
 ⚠️ **Please note** an interstistial can only triggered in separate window, it doesn't work in an iframe....
         `,
