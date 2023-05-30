@@ -1,5 +1,5 @@
 {
-  "name": "react-advertising",
+  "name": "react-delayed-advertising",
   "version": "4.3.4",
   "description": "Library for display ads in React applications",
   "main": "lib/index.js",
