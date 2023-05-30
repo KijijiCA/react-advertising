@@ -14,6 +14,7 @@ export default class Advertising {
   constructor(config, plugins = [], onError = () => {}) {
     this.config = config;
     this.slots = {};
+    this.delayedDisplay = {};
     this.outOfPageSlots = {};
     this.plugins = plugins;
     this.onError = onError;
@@ -112,10 +113,7 @@ export default class Advertising {
     }
 
     if (!isPrebidUsed && !isAPSUsed) {
-      Advertising.queueForGPT(
-        () => window.googletag.pubads().refresh(selectedSlots),
-        this.onError
-      );
+      this.displayAndRefreshSlots(selectedSlots);
     }
   }
 
@@ -187,10 +185,7 @@ export default class Advertising {
     }
 
     if (!this.isPrebidUsed && !this.isAPSUsed) {
-      Advertising.queueForGPT(
-        () => window.googletag.pubads().refresh([slots[id].gpt]),
-        this.onError
-      );
+      this.displayAndRefreshSlots([slots[id].gpt]);
     }
   }
 
@@ -368,7 +363,11 @@ export default class Advertising {
   displaySlots() {
     this.executePlugins('displaySlots');
     this.config.slots.forEach(({ id }) => {
-      window.googletag.display(id);
+      if (document.getElementById(id)) {
+        window.googletag.display(id);
+      } else {
+        this.delayedDisplay[id] = true;
+      }
     });
   }
 
@@ -478,7 +477,21 @@ export default class Advertising {
       return;
     }
 
+    this.displayAndRefreshSlots(selectedSlots);
+  }
+
+  displayAndRefreshSlots(selectedSlots) {
+    const displayFirst = [];
+    selectedSlots.forEach((slot) => {
+      const id = slot.getSlotElementId();
+      if (this.delayedDisplay[id]) {
+        displayFirst.push(id);
+        delete this.delayedDisplay[id];
+      }
+    });
+
     Advertising.queueForGPT(() => {
+      displayFirst.forEach((slotId) => window.googletag.display(slotId));
       window.googletag.pubads().refresh(selectedSlots);
     }, this.onError);
   }

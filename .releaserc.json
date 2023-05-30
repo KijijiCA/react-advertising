@@ -10,7 +10,7 @@
       "prerelease": true
     }
   ],
-  "repositoryUrl": "https://github.com/KijijiCA/react-advertising",
+  "repositoryUrl": "https://github.com/spossner/react-advertising",
   "debug": "true",
   "plugins": [
     [
