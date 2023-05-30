@@ -1,6 +1,6 @@
 {
-  "name": "react-advertising",
-  "version": "4.2.8",
+  "name": "react-delayed-advertising",
+  "version": "4.3.4",
   "description": "Library for display ads in React applications",
   "main": "lib/index.js",
   "unpkg": "dist/react-advertising.min.js",
@@ -45,21 +45,21 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/kijijica/react-advertising.git"
+    "url": "https://github.com/spossner/react-advertising.git"
   },
   "license": "MIT",
   "peerDependencies": {
     "react": ">=16.3.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.13.14",
-    "@babel/core": "^7.13.14",
-    "@babel/plugin-proposal-object-rest-spread": "^7.13.8",
-    "@babel/plugin-proposal-private-property-in-object": "^7.14.0",
-    "@babel/plugin-transform-modules-commonjs": "^7.13.8",
-    "@babel/plugin-transform-runtime": "^7.13.10",
-    "@babel/preset-env": "^7.13.12",
-    "@babel/preset-react": "^7.13.13",
+    "@babel/cli": "^7.21.5",
+    "@babel/core": "^7.22.1",
+    "@babel/plugin-proposal-object-rest-spread": "^7.20.7",
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.0",
+    "@babel/plugin-transform-modules-commonjs": "^7.21.5",
+    "@babel/plugin-transform-runtime": "^7.22.4",
+    "@babel/preset-env": "^7.22.4",
+    "@babel/preset-react": "^7.22.3",
     "@cypress/code-coverage": "^3.9.5",
     "@semantic-release/changelog": "^6.0.2",
     "@semantic-release/git": "^10.0.1",
@@ -96,8 +96,8 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "rimraf": "^3.0.2",
-    "webpack": "^5.28.0",
-    "webpack-cli": "^4.6.0"
+    "webpack": "^5.84.1",
+    "webpack-cli": "^5.1.1"
   },
   "dependencies": {
     "@babel/runtime": "^7.13.10",
