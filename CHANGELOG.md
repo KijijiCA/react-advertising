@@ -1,3 +1,10 @@
+# [4.3.0-beta.1](https://github.com/KijijiCA/react-advertising/compare/v4.2.8...v4.3.0-beta.1) (2023-06-12)
+
+
+### Features
+
+* add callback function to AdvertisingSlot ([#131](https://github.com/KijijiCA/react-advertising/issues/131)) ([fbeff4e](https://github.com/KijijiCA/react-advertising/commit/fbeff4e038e2527b7b38a0a6fd916aa8b4dadb1c))
+
 ## [4.2.8](https://github.com/KijijiCA/react-advertising/compare/v4.2.7...v4.2.8) (2023-05-17)
 
 
