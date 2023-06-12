@@ -1,4 +1,3 @@
-import { Title, Description, Primary } from '@storybook/addon-docs/blocks';
 import React from 'react';
 import AdvertisingConfigPropType from '../components/utils/AdvertisingConfigPropType';
 import { AdvertisingProvider, AdvertisingSlot } from '../index';
@@ -37,17 +36,10 @@ export default {
       description: {
         component: `
 In this most basic example of them all, we show a medium rectangle banner
-(320x200 pixels) delivered by the Google Ad Manager, through Google Publisher 
+(320x200 pixels) delivered by the Google Ad Manager, through Google Publisher
 Tag (GPT).
         `,
       },
-      page: () => (
-        <>
-          <Title />
-          <Description />
-          <Primary />
-        </>
-      ),
     },
   },
 };
