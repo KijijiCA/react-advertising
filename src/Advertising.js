@@ -147,13 +147,14 @@ export default class Advertising {
   }
 
   activate(id, customEventHandlers = {}) {
+    const { slots, isPrebidUsed } = this;
     console.log(
       `%c 🚀 turbo ~ Advertising ~ activate ~ id: ${this.instanceId}`,
       'color: blue; font-size: 16px',
       id,
-      this.config
+      this.config,
+      slots
     );
-    const { slots, isPrebidUsed } = this;
     // check if have slots from configurations
     if (Object.values(slots).length === 0) {
       this.queue.push({ id, customEventHandlers });

@@ -28,7 +28,7 @@ export default class AdvertisingProvider extends Component {
 
   async componentDidUpdate(prevProps) {
     console.log(
-      `%c 🚀 turbo ~ AdvertisingProvider ~ componentDidUpdate fired, this.advertising ${this.advertising.instanceId}`,
+      `%c 🚀 turbo ~ AdvertisingProvider ~ componentDidUpdate fired, this.advertising ${this.advertising?.instanceId}`,
       'color: orange; font-size: 16px',
 
       this.advertising
@@ -50,6 +50,10 @@ export default class AdvertisingProvider extends Component {
     console.log(
       '🚀 turbo ~ AdvertisingProvider ~ componentDidUpdate ~ !isConfigReady && config && active:',
       !isConfigReady && config && active
+    );
+    console.log(
+      '🚀 turbo ~ AdvertisingProvider ~ componentDidUpdate ~ this.advertising',
+      this.advertising
     );
 
     // activate advertising when the config changes from `undefined`
@@ -87,14 +91,18 @@ export default class AdvertisingProvider extends Component {
   }
 
   async componentWillUnmount() {
+    console.log(
+      '%c 🚀 turbo ~ AdvertisingProvider ~ componentWillUnmount ~ componentWillUnmount:',
+      'font-size: 16px; color: pink'
+    );
     if (this.props.config) {
-      await this.teardown();
+      this.teardown();
     }
   }
 
   async teardown() {
     console.log(
-      `%c 🚀 turbo ~ AdvertisingProvider ~ teardown fired ${this.advertising.instanceId}`,
+      `%c 🚀 turbo ~ AdvertisingProvider ~ teardown fired ${this.advertising?.instanceId}`,
       'color: blue; font-size: 16px'
     );
     this.setState({ activate: () => {}, config: null });
@@ -106,7 +114,7 @@ export default class AdvertisingProvider extends Component {
     const { config, plugins, onError } = this.props;
     this.advertising = new Advertising(config, plugins, onError);
     console.log(
-      `%c 🚀 turbo ~ AdvertisingProvider ~ initialize fired ${this.advertising.instanceId}`,
+      `%c 🚀 turbo ~ AdvertisingProvider ~ initialize fired ${this.advertising?.instanceId}`,
       'color: red; font-size: 16px',
       config
     );

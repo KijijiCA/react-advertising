@@ -19,6 +19,11 @@ function AdvertisingSlot({
   const { activate, config } = useContext(AdvertisingContext);
   const lazyLoadConfig = getLazyLoadConfig(config, id);
   const isLazyLoadEnabled = isLazyLoading(lazyLoadConfig);
+  console.log(
+    '%c 🚀 turbo ~ isLazyLoadEnabled:',
+    'font-size: 18px',
+    isLazyLoadEnabled
+  );
 
   useIsomorphicLayoutEffect(() => {
     if (!config || !isLazyLoadEnabled) {
