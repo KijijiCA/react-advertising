@@ -13,6 +13,7 @@ export default class AdvertisingProvider extends Component {
     this.state = {
       activate: this.advertising.activate.bind(this.advertising),
       config: this.props.config,
+      isInitialSetupComplete: false,
     };
   }
 
@@ -66,7 +67,11 @@ export default class AdvertisingProvider extends Component {
   }
 
   async componentWillUnmount() {
-    if (this.props.config) {
+    /**
+     * Prevent the teardown call while initial setup still in progress
+     * otherwise it can create a race condition that breaks the setup process
+     */
+    if (this.props.config && this.state.isInitialSetupComplete) {
       await this.teardown();
     }
   }
