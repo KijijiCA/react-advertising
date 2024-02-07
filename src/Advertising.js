@@ -96,7 +96,7 @@ export default class Advertising {
       try {
         window.apstag.fetchBids(
           {
-            slots: selectedSlots.map((slot) => slot.aps),
+            slots: queue.map(({ id }) => slots[id].aps),
           },
           () => {
             Advertising.queueForGPT(() => {
