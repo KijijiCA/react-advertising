@@ -6,13 +6,6 @@
 * correctly get aps config for queued ad ids ([#133](https://github.com/KijijiCA/react-advertising/issues/133)) ([e377243](https://github.com/KijijiCA/react-advertising/commit/e377243b430570f7503c2d0a8311259a4ac8601b))
 * teardown happening during initial setup ([#134](https://github.com/KijijiCA/react-advertising/issues/134)) ([05f2bb8](https://github.com/KijijiCA/react-advertising/commit/05f2bb8f88211eb976014f3fdbcd878f9847c7e8))
 
-## [4.2.9](https://github.com/KijijiCA/react-advertising/compare/v4.2.8...v4.2.9) (2024-02-07)
-
-
-### Bug Fixes
-
-* correctly get aps config for queued ad ids ([#133](https://github.com/KijijiCA/react-advertising/issues/133)) ([e377243](https://github.com/KijijiCA/react-advertising/commit/e377243b430570f7503c2d0a8311259a4ac8601b))
-* teardown happening during initial setup ([#134](https://github.com/KijijiCA/react-advertising/issues/134)) ([05f2bb8](https://github.com/KijijiCA/react-advertising/commit/05f2bb8f88211eb976014f3fdbcd878f9847c7e8))
 
 ## [4.2.8](https://github.com/KijijiCA/react-advertising/compare/v4.2.7...v4.2.8) (2023-05-17)
 
