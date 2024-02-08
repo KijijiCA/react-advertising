@@ -1,3 +1,10 @@
+## [4.2.11](https://github.com/KijijiCA/react-advertising/compare/v4.2.10...v4.2.11) (2024-02-08)
+
+
+### Bug Fixes
+
+* missing setState for isInitialSetupComplete ([#135](https://github.com/KijijiCA/react-advertising/issues/135)) ([70eeef7](https://github.com/KijijiCA/react-advertising/commit/70eeef74ce7b55ecba1167cd2416777dbd450f7b)), closes [#134](https://github.com/KijijiCA/react-advertising/issues/134)
+
 ## [4.2.9](https://github.com/KijijiCA/react-advertising/compare/v4.2.8...v4.2.9) (2024-02-07)
 
 
