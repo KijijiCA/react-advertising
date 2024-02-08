@@ -20,6 +20,8 @@ export default class AdvertisingProvider extends Component {
   async componentDidMount() {
     if (this.advertising.isConfigReady() && this.props.active) {
       await this.advertising.setup();
+      // eslint-disable-next-line react/no-did-mount-set-state
+      this.setState({ isInitialSetupComplete: true });
     }
   }
 
