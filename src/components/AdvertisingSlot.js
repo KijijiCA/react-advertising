@@ -67,7 +67,7 @@ AdvertisingSlot.propTypes = {
   style: PropTypes.object,
   className: PropTypes.string,
   children: PropTypes.node,
-  customEventHandlers: PropTypes.objectOf(PropTypes.func).isRequired,
+  customEventHandlers: PropTypes.objectOf(PropTypes.func),
 };
 
 export default AdvertisingSlot;
