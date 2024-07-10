@@ -1,3 +1,10 @@
+## [4.2.12](https://github.com/KijijiCA/react-advertising/compare/v4.2.11...v4.2.12) (2024-07-10)
+
+
+### Bug Fixes
+
+* remove defaultprops ([#137](https://github.com/KijijiCA/react-advertising/issues/137)) ([7771da4](https://github.com/KijijiCA/react-advertising/commit/7771da466bd7ada7a88ea91e99ee2e17058b7b9f))
+
 ## [4.2.11](https://github.com/KijijiCA/react-advertising/compare/v4.2.10...v4.2.11) (2024-02-08)
 
 
