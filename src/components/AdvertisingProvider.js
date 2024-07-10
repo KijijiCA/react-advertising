@@ -10,15 +10,19 @@ export default class AdvertisingProvider extends Component {
     super(props);
     this.initialize();
 
+    const { config, active = true } = props;
+
     this.state = {
       activate: this.advertising.activate.bind(this.advertising),
-      config: this.props.config,
+      config,
       isInitialSetupComplete: false,
     };
+
+    this.active = active;
   }
 
   async componentDidMount() {
-    if (this.advertising.isConfigReady() && this.props.active) {
+    if (this.advertising.isConfigReady() && this.active) {
       await this.advertising.setup();
       // eslint-disable-next-line react/no-did-mount-set-state
       this.setState({ isInitialSetupComplete: true });
@@ -31,7 +35,7 @@ export default class AdvertisingProvider extends Component {
       return;
     }
 
-    const { config, active } = this.props;
+    const { config, active = true } = this.props;
     const isConfigReady = this.advertising.isConfigReady();
 
     // activate advertising when the config changes from `undefined`
@@ -112,8 +116,4 @@ AdvertisingProvider.propTypes = {
       teardownGpt: PropTypes.func,
     })
   ),
-};
-
-AdvertisingProvider.defaultProps = {
-  active: true,
 };

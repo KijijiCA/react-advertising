@@ -11,7 +11,7 @@ function AdvertisingSlot({
   style,
   className,
   children,
-  customEventHandlers,
+  customEventHandlers = {},
   ...restProps
 }) {
   const observerRef = useRef(null);
@@ -68,10 +68,6 @@ AdvertisingSlot.propTypes = {
   className: PropTypes.string,
   children: PropTypes.node,
   customEventHandlers: PropTypes.objectOf(PropTypes.func).isRequired,
-};
-
-AdvertisingSlot.defaultProps = {
-  customEventHandlers: {},
 };
 
 export default AdvertisingSlot;
