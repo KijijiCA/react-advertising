@@ -1,3 +1,10 @@
+## [4.2.13](https://github.com/KijijiCA/react-advertising/compare/v4.2.12...v4.2.13) (2024-07-11)
+
+
+### Bug Fixes
+
+* mark customEventHandlers as optional ([#138](https://github.com/KijijiCA/react-advertising/issues/138)) ([0f4589c](https://github.com/KijijiCA/react-advertising/commit/0f4589c60fded83ee034d80aa83b83f1f1099fc8))
+
 ## [4.2.12](https://github.com/KijijiCA/react-advertising/compare/v4.2.11...v4.2.12) (2024-07-10)
 
 
