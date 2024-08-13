@@ -21,6 +21,8 @@ export default class Advertising {
     this.customEventCallbacks = {};
     this.customEventHandlers = {};
     this.queue = [];
+    this.activatedSlots = [];
+    this.apsSlotType = 'aps';
     this.setDefaultConfig();
   }
 
@@ -35,6 +37,7 @@ export default class Advertising {
       typeof this.config.useAPS === 'undefined'
         ? typeof window.apstag !== 'undefined'
         : this.config.useAPS;
+    this.apsSlotType = this.config.aps && this.config.aps.simplerGPT ? 'gpt' : 'aps';
     this.executePlugins('setup');
     const { slots, outOfPageSlots, queue, isPrebidUsed, isAPSUsed } = this;
     this.setupCustomEvents();
@@ -95,16 +98,16 @@ export default class Advertising {
     if (this.isAPSUsed) {
       try {
         window.apstag.fetchBids(
-          {
-            slots: queue.map(({ id }) => slots[id].aps),
-          },
-          () => {
-            Advertising.queueForGPT(() => {
-              window.apstag.setDisplayBids();
-              requestManager.aps = true; // signals that APS request has completed
-              this.refreshSlots(selectedSlots, requestManager); // checks whether both APS and Prebid have returned
-            }, this.onError);
-          }
+            {
+              slots: queue.map(({ id }) => slots[id][this.apsSlotType]),
+            },
+            () => {
+              Advertising.queueForGPT(() => {
+                window.apstag.setDisplayBids();
+                requestManager.aps = true; // signals that APS request has completed
+                this.refreshSlots(selectedSlots, requestManager); // checks whether both APS and Prebid have returned
+              }, this.onError);
+            }
         );
       } catch (error) {
         this.onError(error);
@@ -137,6 +140,7 @@ export default class Advertising {
 
   activate(id, customEventHandlers = {}) {
     const { slots, isPrebidUsed } = this;
+    this.activatedSlots.push(id);
     // check if have slots from configurations
     if (Object.values(slots).length === 0) {
       this.queue.push({ id, customEventHandlers });
@@ -170,16 +174,16 @@ export default class Advertising {
     if (this.isAPSUsed) {
       try {
         window.apstag.fetchBids(
-          {
-            slots: [slots[id].aps],
-          },
-          () => {
-            Advertising.queueForGPT(() => {
-              window.apstag.setDisplayBids();
-              requestManager.aps = true; // signals that APS request has completed
-              this.refreshSlots([slots[id].gpt], requestManager); // checks whether both APS and Prebid have returned
-            }, this.onError);
-          }
+            {
+              slots: [slots[id][this.apsSlotType]],
+            },
+            () => {
+              Advertising.queueForGPT(() => {
+                window.apstag.setDisplayBids();
+                requestManager.aps = true; // signals that APS request has completed
+                this.refreshSlots([slots[id][apsSlotType]], requestManager); // checks whether both APS and Prebid have returned
+              }, this.onError);
+            }
         );
       } catch (error) {
         this.onError(error);
@@ -368,7 +372,9 @@ export default class Advertising {
   displaySlots() {
     this.executePlugins('displaySlots');
     this.config.slots.forEach(({ id }) => {
-      window.googletag.display(id);
+      if (this.activatedSlots.includes(id)) {
+        window.googletag.display(id);
+      }
     });
   }
 
