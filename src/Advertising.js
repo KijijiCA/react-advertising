@@ -97,16 +97,16 @@ export default class Advertising {
     if (this.isAPSUsed) {
       try {
         window.apstag.fetchBids(
-            {
-              slots: queue.map(({ id }) => slots[id][this.apsSlotType]),
-            },
-            () => {
-              Advertising.queueForGPT(() => {
-                window.apstag.setDisplayBids();
-                requestManager.aps = true; // signals that APS request has completed
-                this.refreshSlots(selectedSlots, requestManager); // checks whether both APS and Prebid have returned
-              }, this.onError);
-            }
+          {
+            slots: queue.map(({ id }) => slots[id][this.apsSlotType]),
+          },
+          () => {
+            Advertising.queueForGPT(() => {
+              window.apstag.setDisplayBids();
+              requestManager.aps = true; // signals that APS request has completed
+              this.refreshSlots(selectedSlots, requestManager); // checks whether both APS and Prebid have returned
+            }, this.onError);
+          }
         );
       } catch (error) {
         this.onError(error);
@@ -172,16 +172,16 @@ export default class Advertising {
     if (this.isAPSUsed) {
       try {
         window.apstag.fetchBids(
-            {
-              slots: [slots[id][this.apsSlotType]],
-            },
-            () => {
-              Advertising.queueForGPT(() => {
-                window.apstag.setDisplayBids();
-                requestManager.aps = true; // signals that APS request has completed
-                this.refreshSlots([slots[id][apsSlotType]], requestManager); // checks whether both APS and Prebid have returned
-              }, this.onError);
-            }
+          {
+            slots: [slots[id][this.apsSlotType]],
+          },
+          () => {
+            Advertising.queueForGPT(() => {
+              window.apstag.setDisplayBids();
+              requestManager.aps = true; // signals that APS request has completed
+              this.refreshSlots([slots[id][apsSlotType]], requestManager); // checks whether both APS and Prebid have returned
+            }, this.onError);
+          }
         );
       } catch (error) {
         this.onError(error);
