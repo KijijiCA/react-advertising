@@ -21,7 +21,6 @@ export default class Advertising {
     this.customEventCallbacks = {};
     this.customEventHandlers = {};
     this.queue = [];
-    this.activatedSlots = [];
     this.apsSlotType = 'aps';
     this.setDefaultConfig();
   }
@@ -140,7 +139,6 @@ export default class Advertising {
 
   activate(id, customEventHandlers = {}) {
     const { slots, isPrebidUsed } = this;
-    this.activatedSlots.push(id);
     // check if have slots from configurations
     if (Object.values(slots).length === 0) {
       this.queue.push({ id, customEventHandlers });
@@ -372,9 +370,7 @@ export default class Advertising {
   displaySlots() {
     this.executePlugins('displaySlots');
     this.config.slots.forEach(({ id }) => {
-      if (this.activatedSlots.includes(id)) {
-        window.googletag.display(id);
-      }
+      window.googletag.display(id);
     });
   }
 
