@@ -1,3 +1,10 @@
+## [4.2.14](https://github.com/KijijiCA/react-advertising/compare/v4.2.13...v4.2.14) (2024-08-28)
+
+
+### Bug Fixes
+
+* aps integration with regards to size mismatch ([#140](https://github.com/KijijiCA/react-advertising/issues/140)) ([0bb7284](https://github.com/KijijiCA/react-advertising/commit/0bb728455e5e51c1300ab987c3992fd0d0a34222))
+
 ## [4.2.13](https://github.com/KijijiCA/react-advertising/compare/v4.2.12...v4.2.13) (2024-07-11)
 
 
