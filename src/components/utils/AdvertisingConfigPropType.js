@@ -80,6 +80,7 @@ export default PropTypes.shape({
     pubID: PropTypes.string,
     bidTimeout: PropTypes.number,
     deals: PropTypes.bool,
+    simplerGPT: PropTypes.bool,
   }),
   sizeMappings: PropTypes.objectOf(
     PropTypes.arrayOf(
