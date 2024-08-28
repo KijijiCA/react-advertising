@@ -179,7 +179,7 @@ export default class Advertising {
             Advertising.queueForGPT(() => {
               window.apstag.setDisplayBids();
               requestManager.aps = true; // signals that APS request has completed
-              this.refreshSlots([slots[id][apsSlotType]], requestManager); // checks whether both APS and Prebid have returned
+              this.refreshSlots([slots[id][this.apsSlotType]], requestManager); // checks whether both APS and Prebid have returned
             }, this.onError);
           }
         );
