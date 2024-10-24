@@ -404,6 +404,13 @@ describe('When I instantiate an advertising main module, with Prebid', () => {
           expect(
             global.googletag.pubads().refresh.mock.calls
           ).toMatchSnapshot()));
+
+      describe('the display method of GPT', () => {
+        it('is called once', () =>
+          expect(global.googletag.display).toHaveBeenCalledTimes(1));
+        it('is called with the DIV ID of the “foo” ad', () =>
+          expect(global.googletag.display).toHaveBeenCalledWith(DIV_ID_FOO));
+      });
     });
     describe('and I activate the “foo” ad with a custom events object to collapse its slot', () => {
       let collapse;
@@ -460,9 +467,12 @@ describe('When I instantiate an advertising main module', () => {
     describe('the targeting for asynchronous GPT', () =>
       void it('is not set', () =>
         expect(global.pbjs.setTargetingForGPTAsync).toHaveBeenCalledTimes(0)));
-    describe('the ad slot', () =>
+    describe('the ad slot', () => {
       void it('is not refreshed', () =>
-        expect(global.googletag.pubads().refresh).toHaveBeenCalledTimes(0)));
+        expect(global.googletag.pubads().refresh).toHaveBeenCalledTimes(0));
+      void it('is not displayed', () =>
+        expect(global.googletag.pubads().display).toHaveBeenCalledTimes(0));
+    });
     describe('and I call the setup method', () => {
       beforeEach(() => advertising.setup());
       describe('a bid', () =>
@@ -835,6 +845,12 @@ describe('When I instantiate an advertising main module without Prebid.js or APS
           expect(
             global.googletag.pubads().refresh.mock.calls
           ).toMatchSnapshot()));
+      describe('the display method of GPT', () => {
+        it('is called for each slot', () =>
+          expect(global.googletag.display).toHaveBeenCalledTimes(1));
+        it('is called with the DIV ID of the “foo” ad', () =>
+          expect(global.googletag.display).toHaveBeenCalledWith(DIV_ID_FOO));
+      });
     });
   });
   afterEach(() => {
