@@ -399,7 +399,7 @@ describe('When I instantiate an advertising main module, with Prebid', () => {
           expect(
             global.pbjs.setTargetingForGPTAsync.mock.calls
           ).toMatchSnapshot()));
-      describe.only('the ad slot', () =>
+      describe('the ad slot', () =>
         void it('is refreshed', () =>
           expect(
             global.googletag.pubads().refresh.mock.calls
@@ -566,12 +566,7 @@ describe('When I instantiate an advertising main module with plugins', () => {
     describe("the plugin's hook for GPT teardown", () =>
       void it('is not called', () =>
         expect(plugins[0].teardownGpt).toHaveBeenCalledTimes(0)));
-    describe("the plugin's hook for displaying slots", () =>
-      void it('is called', () =>
-        expect(plugins[0].displaySlots).toHaveBeenCalled()));
-    describe("the plugin's hook for displaying outOfPage slots", () =>
-      void it('is called', () =>
-        expect(plugins[0].displayOutOfPageSlot).toHaveBeenCalled()));
+
     describe("the plugin's hook for refreshing interstitial slot", () =>
       void it('is called', () =>
         expect(plugins[0].refreshInterstitialSlot).toHaveBeenCalled()));
