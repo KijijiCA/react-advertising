@@ -247,15 +247,8 @@ Array [
                     Array [
                       "div-gpt-ad-foo",
                     ],
-                    Array [
-                      "div-gpt-ad-bar",
-                    ],
                   ],
                   "results": Array [
-                    Object {
-                      "type": "return",
-                      "value": undefined,
-                    },
                     Object {
                       "type": "return",
                       "value": undefined,
@@ -1040,26 +1033,7 @@ Object {
                   },
                 ],
               },
-              "display": [MockFunction] {
-                "calls": Array [
-                  Array [
-                    "div-gpt-ad-foo",
-                  ],
-                  Array [
-                    "div-gpt-ad-bar",
-                  ],
-                ],
-                "results": Array [
-                  Object {
-                    "type": "return",
-                    "value": undefined,
-                  },
-                  Object {
-                    "type": "return",
-                    "value": undefined,
-                  },
-                ],
-              },
+              "display": [MockFunction],
               "enableServices": [MockFunction] {
                 "calls": Array [
                   Array [],
@@ -1688,26 +1662,7 @@ Object {
                   },
                 ],
               },
-              "display": [MockFunction] {
-                "calls": Array [
-                  Array [
-                    "div-gpt-ad-foo",
-                  ],
-                  Array [
-                    "div-gpt-ad-bar",
-                  ],
-                ],
-                "results": Array [
-                  Object {
-                    "type": "return",
-                    "value": undefined,
-                  },
-                  Object {
-                    "type": "return",
-                    "value": undefined,
-                  },
-                ],
-              },
+              "display": [MockFunction],
               "enableServices": [MockFunction] {
                 "calls": Array [
                   Array [],
@@ -2546,15 +2501,8 @@ Array [
                     Array [
                       "div-gpt-ad-foo",
                     ],
-                    Array [
-                      "div-gpt-ad-bar",
-                    ],
                   ],
                   "results": Array [
-                    Object {
-                      "type": "return",
-                      "value": undefined,
-                    },
                     Object {
                       "type": "return",
                       "value": undefined,
@@ -3407,26 +3355,7 @@ Object {
                   },
                 ],
               },
-              "display": [MockFunction] {
-                "calls": Array [
-                  Array [
-                    "div-gpt-ad-foo",
-                  ],
-                  Array [
-                    "div-gpt-ad-bar",
-                  ],
-                ],
-                "results": Array [
-                  Object {
-                    "type": "return",
-                    "value": undefined,
-                  },
-                  Object {
-                    "type": "return",
-                    "value": undefined,
-                  },
-                ],
-              },
+              "display": [MockFunction],
               "enableServices": [MockFunction] {
                 "calls": Array [
                   Array [],
@@ -4055,26 +3984,7 @@ Object {
                   },
                 ],
               },
-              "display": [MockFunction] {
-                "calls": Array [
-                  Array [
-                    "div-gpt-ad-foo",
-                  ],
-                  Array [
-                    "div-gpt-ad-bar",
-                  ],
-                ],
-                "results": Array [
-                  Object {
-                    "type": "return",
-                    "value": undefined,
-                  },
-                  Object {
-                    "type": "return",
-                    "value": undefined,
-                  },
-                ],
-              },
+              "display": [MockFunction],
               "enableServices": [MockFunction] {
                 "calls": Array [
                   Array [],
