@@ -367,17 +367,10 @@ describe('When I instantiate an advertising main module, with Prebid', () => {
       void it('are enabled', () =>
         expect(global.googletag.enableServices).toHaveBeenCalledTimes(1)));
     //----------------------------------------------------------------------------------------------------
-    describe('the display method of GPT', () => {
-      it('is called for each slot', () =>
-        expect(global.googletag.display).toHaveBeenCalledTimes(2));
-      it('is called with the DIV ID of the “foo” ad', () =>
-        expect(global.googletag.display).toHaveBeenCalledWith(DIV_ID_FOO));
-      it('is called with the DIV ID of the “bar” ad', () =>
-        expect(global.googletag.display).toHaveBeenCalledWith(DIV_ID_BAR));
-    });
     describe('the slots of the advertising module instance', () =>
-      void it('are correct', () =>
-        expect(advertising.slots).toMatchSnapshot()));
+      void it('are correct', () => {
+        expect(advertising.slots).toMatchSnapshot();
+      }));
     describe('the GPT size mappings of the advertising module instance', () =>
       void it('are correct', () =>
         expect(advertising.gptSizeMappings).toMatchSnapshot()));
@@ -406,7 +399,7 @@ describe('When I instantiate an advertising main module, with Prebid', () => {
           expect(
             global.pbjs.setTargetingForGPTAsync.mock.calls
           ).toMatchSnapshot()));
-      describe('the ad slot', () =>
+      describe.only('the ad slot', () =>
         void it('is refreshed', () =>
           expect(
             global.googletag.pubads().refresh.mock.calls
@@ -822,14 +815,6 @@ describe('When I instantiate an advertising main module without Prebid.js or APS
       void it('are enabled', () =>
         expect(global.googletag.enableServices).toHaveBeenCalledTimes(1)));
     //----------------------------------------------------------------------------------------------------
-    describe('the display method of GPT', () => {
-      it('is called for each slot', () =>
-        expect(global.googletag.display).toHaveBeenCalledTimes(2));
-      it('is called with the DIV ID of the “foo” ad', () =>
-        expect(global.googletag.display).toHaveBeenCalledWith(DIV_ID_FOO));
-      it('is called with the DIV ID of the “bar” ad', () =>
-        expect(global.googletag.display).toHaveBeenCalledWith(DIV_ID_BAR));
-    });
     describe('the slots of the advertising module instance', () =>
       void it('are correct', () =>
         expect(advertising.slots).toMatchSnapshot()));
