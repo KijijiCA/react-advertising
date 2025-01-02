@@ -1,3 +1,10 @@
+## [4.2.15](https://github.com/KijijiCA/react-advertising/compare/v4.2.14...v4.2.15) (2025-01-02)
+
+
+### Bug Fixes
+
+* googletag.display errors when ad slot not in DOM ([#142](https://github.com/KijijiCA/react-advertising/issues/142)) ([3e9615b](https://github.com/KijijiCA/react-advertising/commit/3e9615bc2f3eb187d72674afe67c4be1dea1b4e3))
+
 ## [4.2.14](https://github.com/KijijiCA/react-advertising/compare/v4.2.13...v4.2.14) (2024-08-28)
 
 
