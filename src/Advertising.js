@@ -36,7 +36,8 @@ export default class Advertising {
       typeof this.config.useAPS === 'undefined'
         ? typeof window.apstag !== 'undefined'
         : this.config.useAPS;
-    this.apsSlotType = this.config.aps && this.config.aps.simplerGPT ? 'gpt' : 'aps';
+    this.apsSlotType =
+      this.config.aps && this.config.aps.simplerGPT ? 'gpt' : 'aps';
     this.executePlugins('setup');
     const { slots, outOfPageSlots, queue, isPrebidUsed, isAPSUsed } = this;
     this.setupCustomEvents();
@@ -194,6 +195,8 @@ export default class Advertising {
         this.onError
       );
     }
+
+    this.displaySlots(id);
   }
 
   isConfigReady() {
@@ -367,20 +370,9 @@ export default class Advertising {
     }
   }
 
-  displaySlots() {
+  displaySlots(id) {
     this.executePlugins('displaySlots');
-    this.config.slots.forEach(({ id }) => {
-      window.googletag.display(id);
-    });
-  }
-
-  displayOutOfPageSlots() {
-    this.executePlugins('displayOutOfPageSlot');
-    if (this.config.outOfPageSlots) {
-      this.config.outOfPageSlots.forEach(({ id }) => {
-        window.googletag.display(id);
-      });
-    }
+    window.googletag.display(id);
   }
 
   refreshInterstitialSlot() {
@@ -425,8 +417,6 @@ export default class Advertising {
     pubads.enableSingleRequest();
 
     window.googletag.enableServices();
-    this.displaySlots();
-    this.displayOutOfPageSlots();
     this.refreshInterstitialSlot();
   }
 
